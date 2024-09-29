@@ -26,5 +26,9 @@ export async function middleware(request: NextRequest) {
 }
  
 export const config = {
-  matcher: ['/dashboard/:page*', '/admin-dashboard/:page*', '/user-dashboard/:page*'],
+  matcher: ['/about'],
 }
+
+// export const config = {
+//   matcher: ['/dashboard/:page*', '/admin-dashboard/:page*', '/user-dashboard/:page*'],
+// }

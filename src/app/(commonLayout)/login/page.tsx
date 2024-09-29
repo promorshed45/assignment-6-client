@@ -1,11 +1,9 @@
-import { title } from "@/src/components/primitives";
-import GoogleLogin from "./_components/GoogleLogin";
+import Login from "./_components/Login"
 
-export default function Login() {
+export default function LoginPage() {
   return (
     <div>
-      <h1 className={title()}>Login</h1>
-      <GoogleLogin/>
+      <Login />
     </div>
   );
 }
