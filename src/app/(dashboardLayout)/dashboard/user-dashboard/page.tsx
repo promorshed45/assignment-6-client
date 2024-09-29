@@ -1,10 +1,10 @@
-import { title } from "@/src/components/primitives";
-import UserProfile from "./_components/UserProfile";
+
+import UserDashboardOverView from "./_components/UserDashboardOverView";
 
 export default function Login() {
   return (
     <div>
-      <UserProfile/>
+      <UserDashboardOverView/>
     </div>
   );
 }
