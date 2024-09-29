@@ -4,6 +4,7 @@ import { Select, SelectItem } from "@nextui-org/select";
 import React, { useState } from "react";
 import { Card, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
+import { Link } from "@nextui-org/link";
 
 const categories = [
   { key: 'all', label: 'All' },
@@ -67,7 +68,7 @@ const NewsFeed = () => {
   });
 
   return (
-    <div className="flex flex-col items-center p-8 bg-gray-50 min-h-screen">
+    <div className="flex flex-col items-center p-8 min-h-screen">
       <div className="w-full max-w-2xl mb-6">
         <Input
           placeholder="Search posts..."
@@ -114,13 +115,15 @@ const NewsFeed = () => {
               <h2 className="font-bold text-xl mb-2 hover:text-blue-600 transition">{post.title}</h2>
               <p className="text-gray-500 text-sm mb-2">{new Date(post.date).toLocaleDateString()}</p>
               <p className="text-gray-700 mb-4">{post.snippet}</p>
+              <Link
+              href={`/post-details/${post.id}`}              >
               <Button
                 color="primary"
                 className="mt-2"
-                onClick={() => alert(`Read more about ${post.title}`)}
               >
                 Read More
               </Button>
+              </Link>
             </CardBody>
           </Card>
         ))}
