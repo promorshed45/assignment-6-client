@@ -1,9 +1,10 @@
 import { title } from "@/src/components/primitives";
+import UserProfile from "./_components/UserProfile";
 
 export default function Login() {
   return (
     <div>
-      <h1 className={title()}>user dashboard </h1>
+      <UserProfile/>
     </div>
   );
 }
