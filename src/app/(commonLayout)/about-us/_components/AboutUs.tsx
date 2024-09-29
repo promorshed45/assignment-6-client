@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, Button, CardBody } from '@nextui-org/react';
+'use client'
+import { Card, CardBody } from '@nextui-org/react';
 
 const AboutUs = () => {
   return (
@@ -18,7 +18,7 @@ const AboutUs = () => {
 
       <Card className="w-full max-w-4xl shadow-lg mb-8">
         <CardBody>
-          <p h3 className="mb-4">Our Mission</p>
+          <h3 className="mb-4">Our Mission</h3>
           <p>
             Our mission is to empower individuals to share their stories and ideas in a safe and welcoming space. We believe that everyone has a voice and deserves to be heard.
           </p>
