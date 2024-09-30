@@ -10,7 +10,7 @@ import { Divider } from "@nextui-org/divider";
 import { useUserLogin } from "@/src/hooks/auth.hook";
 
 const Login = () => {
-  const { mutate: handleUserLogin, isPending, isSuccess } = useUserLogin();
+  const { mutate: handleUserLogin } = useUserLogin();
 
   const onSubmit = async (userData: any) => {
 

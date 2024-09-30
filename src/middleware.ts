@@ -1,34 +1,40 @@
-import { cookies } from 'next/headers';
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
- 
-export async function middleware(request: NextRequest) {
+import { NextResponse, NextRequest } from 'next/server';
+import { getCurrentUser } from './services/AuthService';
 
+const AuthRoutes = ["/login", "/register"];
+
+type Role = keyof typeof roleBasedRoutes;
+
+const roleBasedRoutes = {
+    user: [/^\/user-dashboard/],
+    admin: [/^\/admin-dashboard/],
+};
+
+// This function can be marked `async` if using `await` inside
+export async function middleware(request: NextRequest) {
     const { pathname } = request.nextUrl;
 
-    const accessToken = cookies().get("accessToken")?.value;
+    const user = await getCurrentUser();
 
-    if(!accessToken){
-        return NextResponse.redirect(new URL("/login"))
+    if (!user) {
+        if (AuthRoutes.includes(pathname)) {
+            return NextResponse.next();
+        } else {
+            return NextResponse.redirect(new URL(`/login?redirect=${pathname}`, request.url));
+        }
     }
 
-    // let decodedToken = null;
+    if (user?.role && roleBasedRoutes[user.role as Role]) {
+        const routes = roleBasedRoutes[user.role as Role];
 
-    // decodedToken = jwtVerify(accessToken);
-    // const {role}= decodedToken;
-    
-    // if(role === "admin" && pathname === "admin-dashboard"){
-    //     return NextResponse.next();
-    // }
+        if (routes.some(route => pathname.match(route))) {
+            return NextResponse.next();
+        }
+    }
 
-
-  return NextResponse.redirect(new URL('/', request.url))
+    return NextResponse.redirect(new URL('/', request.url));
 }
- 
+
 export const config = {
-  matcher: ['/about'],
-}
-
-// export const config = {
-//   matcher: ['/dashboard/:page*', '/admin-dashboard/:page*', '/user-dashboard/:page*'],
-// }
+    matcher: ['/login', '/register', '/user-dashboard', '/admin-dashboard/:path*'],
+};
