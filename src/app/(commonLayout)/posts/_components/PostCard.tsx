@@ -33,6 +33,7 @@ const PostCard = ({ postsData }: any) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
+      <Link href={`/posts/${postsData._id}`} className="block">
         <div className="mx-auto rounded-lg">
           <div className="flex gap-5 justify-between items-center h-44">
             {/* Profile Card */}
@@ -174,12 +175,9 @@ const PostCard = ({ postsData }: any) => {
             </div>
           </div>
         </div>
-      </motion.div>
-      {!disableLink && (
-      <Link href={`/post-details/${postsData._id}`}>
-        <div className="absolute inset-0 cursor-pointer" />
       </Link>
-    )}
+      </motion.div>
+      
     </div>
   );
 };

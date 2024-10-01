@@ -1,13 +1,11 @@
-import NewsFeedPage from './(Home)/page';
+import Hero from "@/src/components/Hero";
 
 const Home = () => {
   
   return (
-    <div className='container'>
-      <div className='flex pl-3 md:pl-8 '>
-      <NewsFeedPage/>
-      </div>
-    </div>
+    <>
+    <Hero/>
+    </>
   );
 };
 

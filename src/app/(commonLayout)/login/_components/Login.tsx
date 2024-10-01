@@ -41,10 +41,10 @@ const Login = () => {
           {/* ReusableForm with ReusableInput */}
           <div className="py-3">
             <ReusableForm
-              // defaultValues={{
-              //   email: "admin@gmail.com",
-              //   password: "admin123",
-              // }}
+              defaultValues={{
+                email: "admin@gmail.com",
+                password: "admin123",
+              }}
               onSubmit={onSubmit}
               resolver={zodResolver(loginValidationSchema)}
             >

@@ -5,8 +5,8 @@ import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <section className="py-10">
-      <div className="container mx-auto px-4">
+    <section className="">
+      <div className="mx-auto">
         {/* Company Overview */}
 
         <div className="grid grid-cols-3 gap-10">
