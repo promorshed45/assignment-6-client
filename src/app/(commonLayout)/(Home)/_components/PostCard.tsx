@@ -1,40 +1,44 @@
-'use client';
+"use client";
 import { Avatar, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { timeAgo } from "@/src/utilis/timeFormat";
 import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 
-interface PostDetailsProps {
-    data: {
-        title: string;
-        description: string;
-        images: string[];
-        authorId: {
-            name: string;
-            profilePhoto?: string;
-        };
-        createdAt: string;
-    };
-}
+import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
+import Link from "next/link";
+import { timeAgo } from "@/src/utilis/timeFormat";
 
-const PostDetails = ({ data }: PostDetailsProps) => {
+const PostCard = ({ postsData }: any) => {
   const [isFollowed, setIsFollowed] = useState(false);
+  const [disableLink, setDisableLink] = useState(false);
+
+  // console.log("postData", postsData);
+  const { title, description, images, authorId, createdAt } = postsData || {};
 
 
-    const { title, description, images, authorId, createdAt } = data;
-    const postDate = timeAgo(createdAt);
-    const authPhoto = authorId.profilePhoto || 'https://nextui.org/avatars/avatar-1.png';
+  const authPhoto = authorId.profilePhoto || 'https://nextui.org/avatars/avatar-1.png';
 
-    return (
-        <motion.div
-            className="max-w-3xl mx-auto py-10"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-        >
-            <Card className="shadow-lg">
-            <CardHeader className="justify-between">
+  const { createdAt: any } = postsData || {};
+  const postDate = createdAt ? timeAgo(createdAt) : '';
+
+
+  return (
+    <div className="">
+      <motion.div
+        className="max-w-3xl mx-auto py-16 border-b border-b-gray-200 dark:border-b-gray-700"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="mx-auto rounded-lg">
+          <div className="flex gap-5 justify-between items-center h-44">
+            {/* Profile Card */}
+            <div className="flex w-2/3">
+              <Card className="overflow-hidden bg-transparent shadow-none">
+                <CardHeader className="justify-between">
                   <div className="flex gap-5">
                     <Avatar
                       isBordered
@@ -64,30 +68,28 @@ const PostDetails = ({ data }: PostDetailsProps) => {
                     variant={isFollowed ? "bordered" : "solid"}
                     onPress={() => {
                       setIsFollowed(!isFollowed);
+                      setDisableLink(true);
                     }}
                     
                   >
                     {isFollowed ? "Unfollow" : "Follow"}
                   </Button>
                 </CardHeader>
-                <CardBody className="px-4">
-                    <h2 className="text-2xl font-bold my-4">{title}</h2>
-                    <p className="text-lg text-gray-700 mb-4">{description}</p>
-                    <div className="flex flex-col gap-4">
-                        {images.map((image, index) => (
-                            <Image
-                                key={index}
-                                src={image}
-                                alt={`Post image ${index + 1}`}
-                                width={700}
-                                height={400}
-                                className="rounded-lg object-cover"
-                            />
-                        ))}
-                    </div>
+                <CardBody className="px-3 space-y-1 overflow-hidden py-0 text-small text-default-400">
+                  <p className="text-xl text-black font-bold dark:text-gray-100">
+                    {title}
+                  </p>
+                  <p className="text-black dark:text-gray-400">{description}</p>
+                  <span className="pt-2">
+                    #FrontendWithZoey
+                    <span className="py-2" aria-label="computer" role="img">
+                      💻
+                    </span>
+                  </span>
                 </CardBody>
-                 {/* icons */}
-                 <div className="mt-4 flex justify-between px-4 pb-4">
+                
+                  {/* icons */}
+                  <div className="mt-4 flex justify-between px-4 pb-4">
                     <div className="flex items-center gap-2">
                       <svg
                         className="w-6 fill-[#1E293B] dark:fill-white/90"
@@ -141,9 +143,45 @@ const PostDetails = ({ data }: PostDetailsProps) => {
                       </h2>
                     </div>
                   </div>
-            </Card>
-        </motion.div>
-    );
+              </Card>
+            </div>
+
+            {/* Image Carousel */}
+            <div className="w-1/3 h-44">
+              <Swiper
+                modules={[Navigation, Autoplay]}
+                navigation
+                autoplay={{ delay: 5000 }}
+                pagination={{ clickable: true }}
+                scrollbar={{ draggable: true }}
+                slidesPerView={1}
+                onSlideChange={() => console.log("slide change")}
+                onSwiper={(swiper) => console.log(swiper)}
+                className="mySwiper w-full h-full object-contain rounded-xl"
+              >
+                {images.map((image: string, index: any) => (
+                  <SwiperSlide key={index}>
+                    <Image
+                      width={500}
+                      height={500}
+                      alt={`Image ${index}`}
+                      className="size-full object-cover"
+                      src={image}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+      {!disableLink && (
+      <Link href={`/post-details/${postsData._id}`}>
+        <div className="absolute inset-0 cursor-pointer" />
+      </Link>
+    )}
+    </div>
+  );
 };
 
-export default PostDetails;
+export default PostCard;

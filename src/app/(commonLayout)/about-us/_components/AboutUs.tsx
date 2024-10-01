@@ -1,68 +1,120 @@
-'use client'
-import { Card, CardBody } from '@nextui-org/react';
+"use client";
+
+import { Button } from "@nextui-org/react";
+import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
-      <Card className="w-full max-w-4xl shadow-lg mb-8">
-        <CardBody>
-          <h2 className="text-center mb-4">About Us</h2>
-          <p className="mb-4">
-            Welcome to our project! We are dedicated to building a platform that fosters community engagement, sharing, and learning. Our mission is to create an inclusive environment where everyone can share their ideas and connect with like-minded individuals.
-          </p>
-          <p className="mb-4">
-            Our team is composed of passionate individuals who believe in the power of collaboration and innovation. We strive to empower users by providing the tools they need to express themselves and connect with others.
-          </p>
-        </CardBody>
-      </Card>
+    <section className="py-10">
+      <div className="container mx-auto px-4">
+        {/* Company Overview */}
 
-      <Card className="w-full max-w-4xl shadow-lg mb-8">
-        <CardBody>
-          <h3 className="mb-4">Our Mission</h3>
-          <p>
-            Our mission is to empower individuals to share their stories and ideas in a safe and welcoming space. We believe that everyone has a voice and deserves to be heard.
-          </p>
-        </CardBody>
-      </Card>
-
-      <Card className="w-full max-w-4xl shadow-lg mb-8">
-        <CardBody>
-          <h3 className="mb-4">Meet Our Team</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {teamMembers.map((member) => (
-              <Card key={member.id} className="shadow-sm">
-                <CardBody>
-                  <p className="font-semibold">{member.name}</p>
-                  <p className="text-gray-500">{member.role}</p>
-                  <p>{member.bio}</p>
-                </CardBody>
-              </Card>
-            ))}
+        <div className="grid grid-cols-3 gap-10">
+          {/* Vision */}
+          <div>
+          <h1 className="text-3xl font-semibold text-center mb-4">
+            Our Vision
+          </h1>
+          <h1 className="text-lg text-gray-700 mb-8">
+            To create a world where every traveler feels empowered to embark on
+            their own adventure, discovering new cultures and experiences.
+          </h1>
           </div>
-        </CardBody>
-      </Card>
-    </div>
+
+         <div>
+           {/* Mission */}
+           <h1 className="text-3xl font-semibold text-center mb-4">
+            Our Mission
+          </h1>
+          <h1 className="text-lg text-gray-700 mb-8">
+            We aim to provide practical travel tips, destination guides, and
+            cultural insights, making travel accessible and enjoyable for
+            everyone.
+          </h1>
+         </div>
+
+         <div>
+           {/* What We Do */}
+        <h1 className="text-3xl font-semibold text-center mb-4">What We Do</h1>
+        <div className="mb-8  pl-5">
+          <h1 className="text-lg  text-gray-700 mb-2">
+            We provide a wealth of information about diverse destinations,
+            including:
+          </h1>
+          <ul className="list-disc list-inside text-gray-700">
+            <li>Comprehensive Guides</li>
+            <li>Travel Tips</li>
+            <li>Cultural Insights</li>
+            <li>Traveler Stories</li>
+          </ul>
+        </div>
+         </div>
+        </div>
+
+       
+
+        {/* Our Team */}
+        <h1 className="text-3xl font-semibold text-center py-4">Our Team</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 py-5">
+          {teamMembers.map((member) => (
+            <div
+              key={member.name}
+              className="p-4 bg-white/10 rounded-lg shadow-lg text-center"
+            >
+              <Image
+                height={350}
+                width={350}
+                src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+                alt={member.name}
+                className="w-32 h-32 mx-auto rounded-full mb-4"
+              />
+              <h3 className="text-xl font-semibold">{member.name}</h3>
+              <h1 className="text-gray-600">{member.role}</h1>
+              <h1 className="mt-2">{member.description}</h1>
+            </div>
+          ))}
+        </div>
+
+        {/* Call to Action */}
+        <div className="text-center mt-8">
+          <Button className="bg-rose-500 text-white hover:bg-rose-600 transition duration-200">
+            Join Us on Our Journey
+          </Button>
+        </div>
+      </div>
+    </section>
   );
 };
 
+// Sample team member data
 const teamMembers = [
   {
-    id: 1,
-    name: 'Alice Johnson',
-    role: 'Project Manager',
-    bio: 'Alice is passionate about community building and project management. She ensures everything runs smoothly.',
+    name: "Jane Doe",
+    role: "Founder & Chief Explorer",
+    description:
+      "A seasoned traveler with a passion for discovering off-the-beaten-path locations.",
+    image: "/path/to/jane.jpg",
   },
   {
-    id: 2,
-    name: 'Bob Smith',
-    role: 'Lead Developer',
-    bio: 'Bob is an experienced developer with a love for coding and technology. He drives the technical vision of the project.',
+    name: "John Smith",
+    role: "Content Strategist & Travel Writer",
+    description:
+      "With a background in journalism, John crafts engaging stories and guides.",
+    image: "/path/to/john.jpg",
   },
   {
-    id: 3,
-    name: 'Charlie Davis',
-    role: 'UX/UI Designer',
-    bio: 'Charlie creates intuitive and beautiful designs that enhance user experience and engagement.',
+    name: "Sarah Lee",
+    role: "Photographer & Visual Storyteller",
+    description:
+      "Sarah captures the beauty of travel through her lens, inspiring our guides.",
+    image: "/path/to/sarah.jpg",
+  },
+  {
+    name: "Mark Chen",
+    role: "Technical Director",
+    description:
+      "Mark ensures our website runs smoothly and efficiently for our users.",
+    image: "/path/to/mark.jpg",
   },
 ];
 

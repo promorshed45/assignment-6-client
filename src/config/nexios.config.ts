@@ -1,7 +1,7 @@
 import { Nexios } from "nexios-http";
 
 const nexiosInstance = new Nexios({
-    baseURL: "http://localhost:5000/api",
+    baseURL: process.env.NEXT_PUBLIC_BASE_API,
     timeout: 10000,
     headers: {
         "Content-Type": "application/json",

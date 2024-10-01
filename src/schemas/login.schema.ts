@@ -6,4 +6,6 @@ const loginValidationSchema = z.object({
   password: z.string().trim().min(1, "Password must be at least 6 characters").nonempty("Password is required")
 });
 
+
+
 export default loginValidationSchema;

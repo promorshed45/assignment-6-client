@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-const userRegistrationValidationSchema = z.object({
+const RegistrationValidationSchema = z.object({
   name: z.string()
     .trim()
     .min(1, "Name is required"),
@@ -26,4 +26,4 @@ const userRegistrationValidationSchema = z.object({
 
 });
 
-export default userRegistrationValidationSchema;
+export default RegistrationValidationSchema;
