@@ -1,7 +1,7 @@
 'use client';
 import { Card, Button, CardBody } from '@nextui-org/react';
 
-const UserDashboardOverView = () => {
+const UserOverView = () => {
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
       <Card className="w-full max-w-4xl shadow-lg">
@@ -82,7 +82,7 @@ const UserDashboardOverView = () => {
   );
 };
 
-export default UserDashboardOverView;
+export default UserOverView;
 
 const user = {
     username: 'JohnDoe',

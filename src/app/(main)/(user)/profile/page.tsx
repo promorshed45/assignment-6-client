@@ -1,9 +1,9 @@
-import UserProfile from '../_components/UserProfile';
+import UserOverView from './_components/UserOverView';
 
 const page = () => {
     return (
         <div>
-            <UserProfile/>
+            <UserOverView/>
         </div>
     );
 };

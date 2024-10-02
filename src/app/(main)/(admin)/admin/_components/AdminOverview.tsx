@@ -4,7 +4,7 @@ import { Card, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
 import { Line } from 'react-chartjs-2';
 
-const AdminDashboardOverview = () => {
+const AdminOverview = () => {
   const data = {
     totalUsers: 150,
     totalPosts: 300,
@@ -165,4 +165,4 @@ const AdminDashboardOverview = () => {
   );
 };
 
-export default AdminDashboardOverview;
+export default AdminOverview;

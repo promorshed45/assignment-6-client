@@ -33,7 +33,7 @@ const Login = () => {
       if (redirect) {
         router.push(redirect);
       } else {
-        router.push("/dashboard");
+        router.push("/");
       }
     }
   }, [isLoading, isSuccess]);
