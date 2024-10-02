@@ -4,17 +4,23 @@ import ReusableInput from "@/src/components/ui/ReusableInput";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useUserLogin } from "@/src/hooks/auth.hook";
+import { useUserRegistration } from "@/src/hooks/auth.hook";
 import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
 import RegistrationValidationSchema from "@/src/schemas/register.schema";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
-  const { mutate: handleUserLogin } = useUserLogin();
+  const {mutate: handleUserRegistration} = useUserRegistration();
+  
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => { 
 
-  const onSubmit = async (userData: any) => {
-    handleUserLogin(userData);
-
-    console.log("login page teke", userData);
+    const userData = {
+        ...data,
+        role: "USER",
+        profileImage: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
+    }
+    console.log("ui form hote", userData);
+    handleUserRegistration(userData);
   };
 
   return (

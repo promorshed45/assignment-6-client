@@ -6,8 +6,8 @@ const AuthRoutes = ["/login", "/register"];
 type Role = keyof typeof roleBasedRoutes;
 
 const roleBasedRoutes = {
-    user: [/^\/user-dashboard/],
-    admin: [/^\/admin-dashboard/],
+    USER: [/^\/dashboard\/user-dashboard/],
+    ADMIN: [/^\/dashboard\/admin-dashboard/],
 };
 
 // This function can be marked `async` if using `await` inside
@@ -31,10 +31,11 @@ export async function middleware(request: NextRequest) {
             return NextResponse.next();
         }
     }
+    
 
     return NextResponse.redirect(new URL('/', request.url));
 }
 
 export const config = {
-    matcher: ['/login', '/register', '/user-dashboard', '/admin-dashboard/:path*'],
+    matcher: ['/login', '/register', '/contact-us', '/dashboard/:path*', '/dashboard/user-dashboard/:path*', '/dashboard/admin-dashboard/:path*'],
 };
