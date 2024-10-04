@@ -30,12 +30,12 @@ export interface IUser {
   role: string;
   email: string;
   status: string;
-  mobileNumber: string;
-  profilePhoto: string;
+  mobileNumber?: string;  // This can be optional
+  profilePhoto?: string;
   verified: string;
+  flower: string;
   createdAt?: string;
   updatedAt?: string;
-  __v?: number;
 }
 
 export interface IPost {

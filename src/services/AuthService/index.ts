@@ -65,6 +65,20 @@ export const getCurrentUser = async () => {
   return decodedToken;
 };
 
+
+export const gettoken = () => {
+  const accessToken = cookies().get("accessToken")?.value;
+
+  if (!accessToken) {
+    console.error("No access token found");
+    return null;
+  }
+
+  return accessToken;
+};
+
+
+
 export const getNewAccessToken = async () => {
   try {
     const refreshToken = cookies().get("refreshToken")?.value;
