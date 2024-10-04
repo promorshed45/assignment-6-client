@@ -15,7 +15,7 @@ const NavDropdownMenu = () => {
   const pathname = usePathname();
   const { user, setIsLoading: userLoading } = useUser();
 
-  console.log('user dropdown teke', user);
+  // console.log('user dropdown teke', user);
   const handleLogout = () => {
     logout();
     userLoading(true);
@@ -47,11 +47,11 @@ const NavDropdownMenu = () => {
         </DropdownTrigger>
         <DropdownMenu variant="faded" aria-label="Dropdown menu with icons">
         <DropdownItem
-          onClick={() => handleNavigation("/profile")}
+          onClick={() => handleNavigation("/profile/my-profile")}
           key="edit"
           startContent={<ProfileIcon className="size-4" />}
         >
-          Profile
+          My Profile
         </DropdownItem>
         <DropdownItem
           key="edit"

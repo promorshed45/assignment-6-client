@@ -32,7 +32,22 @@ export interface IUser {
   status: string;
   mobileNumber: string;
   profilePhoto: string;
+  verified: string;
   createdAt?: string;
   updatedAt?: string;
   __v?: number;
+}
+
+export interface IPost {
+  _id?: string;
+  user: string[]; 
+  images?: string[];
+  title: string;
+  description: string;
+  comments?: string[];
+  status: string;
+  report?: string[];
+  reportCount: number;
+  Upvotes: string;
+  downvotes: string;
 }

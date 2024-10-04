@@ -15,14 +15,9 @@ const RegistrationValidationSchema = z.object({
     .min(6, "Password must be at least 6 characters")
     .nonempty("Password is required"),
   
-  phone: z.string()
+    mobileNumber: z.string()
     .trim()
     .min(1, "Phone number is required"),
-  
-  
-  address: z.string()
-    .trim()
-    .min(1, "Address is required"),
 
 });
 

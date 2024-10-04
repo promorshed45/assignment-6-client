@@ -9,7 +9,7 @@ import axiosInstance from "@/src/lib/axiosInstance";
 export const registerUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/register", userData);
-
+    console.log('service teke', data);
     if (data.success) {
       cookies().set("accessToken", data?.data?.accessToken);
       cookies().set("refreshToken", data?.data?.refreshToken);
@@ -17,6 +17,7 @@ export const registerUser = async (userData: FieldValues) => {
 
     return data;
   } catch (error: any) {
+    console.error(error);
     throw new Error(error);
   }
 };
@@ -57,6 +58,7 @@ export const getCurrentUser = async () => {
       role: decodedToken.role,
       status: decodedToken.status,
       profilePhoto: decodedToken.profilePhoto,
+      verified: decodedToken.verified,
     };
   }
 

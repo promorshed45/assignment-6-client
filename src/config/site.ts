@@ -9,6 +9,10 @@ export const siteConfig = {
       href: "/",
     },
     {
+      label: "News Feed",
+      href: "/posts",
+    },
+    {
       label: "About Us",
       href: "/about-us",
     },

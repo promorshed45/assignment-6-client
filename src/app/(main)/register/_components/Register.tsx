@@ -5,23 +5,25 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
-import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
 import RegistrationValidationSchema from "@/src/schemas/register.schema";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import Loading from "@/src/components/ui/Loading";
 
 const Register = () => {
-  const {mutate: handleUserRegistration} = useUserRegistration();
-  
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => { 
+  const { mutate: handleUserRegistration } = useUserRegistration();
 
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
-        ...data,
-        role: "USER",
-        profileImage: "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png",
-    }
-    console.log("ui form hote", userData);
+      ...data,
+      mobileNumber: String(data.mobileNumber),
+      profilePhoto:
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png",
+    };
+
     handleUserRegistration(userData);
   };
+
+
 
   return (
     <section>
@@ -53,7 +55,6 @@ const Register = () => {
               <ReusableInput label="Full Name" name="name" type="name" />
               <ReusableInput label="Mobile Number" name="mobileNumber" type="mobileNumber" />
               <ReusableInput label="Email" name="email" type="email" />
-              <ReusableTextarea  label="Message" name="message"/>
               <ReusableInput name="password" type="password" label="Password" />
 
               <Button type="submit" className="w-full mt-4">
