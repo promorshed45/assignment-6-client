@@ -28,10 +28,14 @@ import {
   ArrowBigUp,
   MessageCircleMore,
 } from "lucide-react";
+import ReusableInput from "@/src/components/ui/ReusableInput";
+import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
+import ReusableForm from "@/src/components/ui/ReusableForm";
+import { FieldValues, SubmitHandler } from "react-hook-form";
 
 const PostCard = ({ post }: any) => {
 
-  console.log('post card', post);
+  // console.log('post card', post);
   const [upvoteCount, setUpvoteCount] = useState(post?.upvote || 0);
   const [downvoteCount, setDownvoteCount] = useState(post?.downvote || 0);
   const [isFollowed, setIsFollowed] = useState(false);
@@ -48,13 +52,25 @@ const PostCard = ({ post }: any) => {
   const handleUpvote = () => setUpvoteCount((prev: any) => prev + 1);
   const handleDownvote = () => setDownvoteCount((prev: any) => prev + 1);
 
-  const handleAddComment = () => {
-    if (commentInput.trim()) {
-      setComments([...comments, { author: user.name, text: commentInput }]);
-      setCommentInput(""); // Clear the input
-    }
-  };
+  // const handleCoomentSubmit = () => {
 
+  //   if (commentInput.trim()) {
+  //     setComments([...comments, { author: user.name, text: commentInput }]);
+  //     setCommentInput(""); // Clear the input
+  //   }
+  // };
+
+
+ 
+    // const { mutate: handlePostComments } = useUserRegistration();
+  
+    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+      const commentData = {
+        comments: data.comments
+       
+        // handlePostComments(commentData);
+    };
+  }
   const handleShowComment = () => {
     setShowComments(!showComments);
   };
@@ -68,6 +84,7 @@ const PostCard = ({ post }: any) => {
         transition={{ duration: 0.5 }}
       >
         <Link href={`/posts/${post._id}`} className="block">
+        {/* <Link href="#" className="block"> */}
           <div className="mx-auto rounded-lg pb-10">
             <div className="flex gap-5 justify-between items-center pb-10">
               {/* Profile Card */}
@@ -189,22 +206,24 @@ const PostCard = ({ post }: any) => {
                         </div>
                       ))}
                       <div className="flex gap-2 mt-4">
-                        <input
-                          className="border p-2 w-full"
-                          type="text"
-                          value={commentInput}
-                          onChange={(e) => setCommentInput(e.target.value)}
-                          placeholder="Add a comment..."
-                        />
+                      <form onSubmit={onSubmit}> 
+                       <ReusableTextarea name="comments" type="comments" label="comment"/>
                         <button
                           className="bg-blue-500 text-white p-2 rounded-md"
-                          onClick={handleAddComment}
+                          type="submit"
                         >
                           Comment
                         </button>
+                        </form>
                       </div>
                     </div>
                   )}
+
+
+
+
+
+
                 </Card>
               </div>
 
@@ -243,5 +262,6 @@ const PostCard = ({ post }: any) => {
     </div>
   );
 };
+
 
 export default PostCard;

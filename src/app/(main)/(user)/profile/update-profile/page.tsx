@@ -1,99 +1,185 @@
-"use client";
-import ReusableForm from "@/src/components/ui/ReusableForm";
-import ReusableInput from "@/src/components/ui/ReusableInput";
+'use client';
+
+import React, { ChangeEvent, useEffect, useState } from "react";
+import {
+  Modal,
+  ModalContent,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/modal";
+import { toast } from "sonner";
+import Image from "next/image";
 import { Button } from "@nextui-org/button";
-import Link from "next/link";
-import { zodResolver } from "@hookform/resolvers/zod";
-import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
-import RegistrationValidationSchema from "@/src/schemas/register.schema";
-import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { useUserUpdateProfile } from "@/src/hooks/updateProfile.hooks";
-import ImageUpload from "@/src/components/ui/ImageUpload";
-import { useState } from "react";
-import { useUser } from "@/src/providers/user.provider";
+import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { Images, Pencil } from "lucide-react";
+import ReusableInput from "@/src/components/ui/ReusableInput";
 
-const EditProfile = () => {
-  const { user, setIsLoading: userLoading } = useUser();
+interface CloudinaryResponse {
+  secure_url: string;
+}
 
-  console.log('user', user);
+interface FormInputs {
+  name: string;
+  imageFile: File | null;
+  country: string;
+  address: string;
+}
 
-  const methods = useForm({
+interface UpdateUserModalProps {
+  user: {
+    data: {
+      _id: string;
+      name: string;
+      profilePhoto: string;
+      country?: string;
+      address?: string;
+    };
+  };
+}
+
+export default function UpdateUserModal({ user }: UpdateUserModalProps) {
+  const { name, profilePhoto } = user.data;
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [image, setImage] = useState<string>(profilePhoto || "");
+  const [isUploading, setIsUploading] = useState<boolean>(false);
+
+  const methods = useForm<FormInputs>({
     defaultValues: {
-      name: user?.name || "",
-      email: user?.email || "",
-      mobileNumber: user?.mobileNumber || "",
-      password: "",
+      name: user.data.name,
+      imageFile: null,
+      country: user.data.country || "",
+      address: user.data.address || "",
     },
   });
 
-  const { mutate: handleUpdateProfile } = useUserUpdateProfile();
-  const { handleSubmit } = methods;
+  const { setValue, watch, reset, handleSubmit, formState: { isSubmitting } } = methods;
 
-  const [imageFiles, setImageFiles] = useState<File[]>([]);
+  // Watch for image file changes to display preview
+  const imageFile = watch("imageFile");
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log("data", data);
+  // Set default values when modal opens
+  useEffect(() => {
+    if (isOpen) {
+      reset({
+        name: user.data.name,
+        imageFile: null,
+        country: user.data.country || "",
+        address: user.data.address || "",
+      });
+      setImage(profilePhoto || "");
+    }
+  }, [isOpen, user, reset]);
 
-    const formData = new FormData();
+  // Handle image selection and preview
+  const handleImageChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setValue("imageFile", file);
+      setImage(URL.createObjectURL(file));
+    }
+  };
 
-    const productData = {
-      ...data,
-      price: Number(data.price),
-      inventory: { quantity: Number(data?.quantity) },
-      tags: data.tags ? data.tags.split(",").map((tag: any) => tag.trim()) : [],
-      images: Array.isArray(data.images) ? data.images : String(data.images),
-    };
+  // Handle form submission
+  const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
+    let uploadedImageUrl = image;
 
-    formData.append("data", JSON.stringify(productData));
+    if (formData.imageFile) {
+      setIsUploading(true);
+      try {
+        // Upload image to Cloudinary or any service
+        const formDataObj = new FormData();
+        formDataObj.append("file", formData.imageFile);
+        formDataObj.append("upload_preset", "your_upload_preset");
 
-    for (const images of imageFiles) {
-      formData.append("productImages", images);
+        const response = await fetch("https://api.cloudinary.com/v1_1/your_cloud_name/image/upload", {
+          method: "POST",
+          body: formDataObj,
+        });
+
+        const data: CloudinaryResponse = await response.json();
+        uploadedImageUrl = data.secure_url;
+      } catch (error) {
+        toast.error("Failed to upload image");
+      } finally {
+        setIsUploading(false);
+      }
     }
 
-    // Debugging logs
-    console.log("Form data:", formData.get("data"));
-    console.log("Image files:", imageFiles);
+    // Submit form with updated data
+    const updatedUser = {
+      ...formData,
+      profilePhoto: uploadedImageUrl,
+    };
+    console.log("Updated user data:", updatedUser);
 
-    // Call the mutation function
-    handleUpdateProfile(formData);
+    // Handle successful submission (close modal, etc.)
+    toast.success("Profile updated successfully!");
+    onOpenChange(false);
   };
 
   return (
-    <section>
-      <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-10 lg:px-8">
-        <div className="xl:mx-auto xl:w-full xl:max-w-sm 2xl:max-w-md space-y-5">
-          <h2 className="text-center text-3xl font-bold leading-tight">
-            Update your profile...
-          </h2>
-
-          {/* ReusableForm with ReusableInput */}
-          <div className="py-3">
+    <>
+      <Button
+        isIconOnly
+        size="sm"
+        radius="full"
+        className="bg-default-50 hover:bg-default-100"
+        startContent={<Pencil size={18} />}
+        onPress={onOpen}
+      />
+      <Modal
+        placement="center"
+        className="m-2"
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+      >
+        <ModalContent className="m-2">
           <FormProvider {...methods}>
-            <form
-              
-              onSubmit={handleSubmit(onSubmit)}
-              // resolver={zodResolver(RegistrationValidationSchema)}
-            >
-              <ReusableInput label="Name" name="name" type="name" />
-              <ReusableInput label="Email" name="email" type="email" />
-              <ReusableInput label="Mobile Number" name="mobileNumber" type="mobileNumber" />
-              <ReusableInput name="password" type="password" label="Password" />
-
-              <ImageUpload
-                label="Upload Product Images"
-                name="images"
-                setImageFiles={setImageFiles}
-              />
-              <Button type="submit" className="w-full mt-4">
-                Submit
-              </Button>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <ModalBody>
+                <div className="flex flex-col gap-4 mt-3">
+                  <div className="flex items-center justify-center mt-3">
+                    {image && (
+                      <Image
+                        src={image}
+                        alt="Image Preview"
+                        className="w-24 h-24 object-cover rounded-full mt-2"
+                        width={96}
+                        height={96}
+                      />
+                    )}
+                  </div>
+                  <ReusableInput type="text" name="name" label="Name" />
+                  <ReusableInput type="text" name="country" label="Country" />
+                  <ReusableInput type="text" name="address" label="Address" />
+                  <div className="mt-3">
+                    <label htmlFor="image">
+                      <Images className="text-pink-500 cursor-pointer" />
+                    </label>
+                    <input
+                      className="hidden"
+                      id="image"
+                      type="file"
+                      accept="image/*"
+                      onChange={handleImageChange}
+                    />
+                  </div>
+                </div>
+              </ModalBody>
+              <ModalFooter className="flex items-center gap-8">
+                <Button
+                  className="bg-green-500"
+                  type="submit"
+                  isDisabled={isSubmitting || isUploading}
+                >
+                  {isUploading ? "Uploading..." : "Save"}
+                </Button>
+              </ModalFooter>
             </form>
-            </FormProvider>
-          </div>
-        </div>
-      </div>
-    </section>
+          </FormProvider>
+        </ModalContent>
+      </Modal>
+    </>
   );
-};
-
-export default EditProfile;
+}

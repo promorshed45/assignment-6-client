@@ -1,4 +1,4 @@
-'use server'
+
 import React from 'react';
 import MyProfile from './_components/MyProfile';
 import { gettoken } from '@/src/services/AuthService';
@@ -16,11 +16,11 @@ const page = async () => {
     });
   
     const { data } = response;
-    console.log("My profile", data);
+    // console.log("My profile", data);
 
 
     return (
-        <div className='py-5 md:py-10'>
+        <div className='py-5 md:py-16'>
             <MyProfile user={data}/>
         </div>
     );

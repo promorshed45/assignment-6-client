@@ -3,15 +3,20 @@ import React from "react";
 import { Avatar } from "@nextui-org/avatar";
 import { Divider } from "@nextui-org/divider";
 import { motion } from "framer-motion";
-import { AlignVerticalJustifyEnd, GitCommitVerticalIcon, ShieldEllipsis } from "lucide-react";
+import {
+  AlignVerticalJustifyEnd,
+  GitCommitVerticalIcon,
+  ShieldEllipsis,
+} from "lucide-react";
 import { IUser } from "@/src/types";
 import { Button } from "@nextui-org/button";
-
-
+import Link from "next/link";
+import UpdateUserModal from "../../update-profile/page";
 
 export default function Profile({ user }: any) {
-  const { name, email, profilePhoto, verified, flower } = user || "";
+  const { name, email, profilePhoto, verified, flower } = user.data;
 
+  // console.log('my-profile--', user.data);
   return (
     <motion.div
       className="bg-white/5 shadow-lg rounded-lg w-full md:w-[500px] xl:w-[600px] mx-auto px-6 py-10"
@@ -21,26 +26,21 @@ export default function Profile({ user }: any) {
     >
       {/* Profile Section */}
       <div className="flex flex-col items-center relative">
+        <UpdateUserModal user={user}/>
         {/* Avatar and Name */}
-        <Avatar
-          className="cursor-pointer text-[24px] font-bold"
-          name={name?.charAt(0)?.toUpperCase()}
-          size="lg"
-          src={profilePhoto || undefined}
-        />
+        <Avatar src={profilePhoto} className="w-28 h-28 text-large" />
+        <div>
+          <p className="text-lg uppercase font-bold"> {name} </p>
+          <p className="text-sm text-gray-500">{email}</p>
+          </div>
         <h2 className="text-xl font-semibold mt-2">
-          {name}{" "}
           {verified && <GitCommitVerticalIcon className="text-green-500" />}
         </h2>
-        <p className="text-sm text-gray-500">{email}</p>
 
         {/* Verify Now Button */}
         {!verified && (
-          <Button
-            variant="bordered"
-            className="border-green-700/50"
-          >
-            <ShieldEllipsis className="text-green-500 size-6"  />
+          <Button variant="bordered" className="border-green-700/50">
+            <ShieldEllipsis className="text-green-500 size-6" />
             Verify Now
           </Button>
         )}
@@ -77,7 +77,6 @@ export default function Profile({ user }: any) {
             </h2> */}
           </div>
         </div>
-
         <Divider className="my-6" />
 
         {/* Add more tabs or actions here */}
