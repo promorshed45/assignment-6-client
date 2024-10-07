@@ -1,11 +1,11 @@
-import ContactUs from './_components/ContactUs';
+import ContactUs from "./_components/ContactUs";
 
 const page = () => {
-    return (
-        <div>
-            <ContactUs/>
-        </div>
-    );
+  return (
+    <div>
+      <ContactUs />
+    </div>
+  );
 };
 
 export default page;

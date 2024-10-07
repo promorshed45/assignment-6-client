@@ -1,7 +1,16 @@
 "use client";
-import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useEffect, useState } from "react";
-import { IUser } from "../types";
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
+
 import { getCurrentUser } from "../services/AuthService";
+import { IUser } from "../types";
 
 const UserContext = createContext<IUserProviderValues | undefined>(undefined);
 

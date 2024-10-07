@@ -10,14 +10,14 @@ export default function Hero() {
           background:
             "linear-gradient(143.6deg, rgba(192, 132, 252, 0) 20.79%, rgba(232, 121, 249, 0.26) 40.92%, rgba(204, 171, 238, 0) 70.35%)",
         }}
-      ></div>
+      />
       <div className="relative">
         <section>
           <div className="max-w-screen-xl mx-auto px-4 py-28 gap-12 text-white overflow-hidden md:px-8 md:flex justify-center items-center">
             <div className="flex-none space-y-5 max-w-xl">
               <Link
-                href="/posts"
                 className="inline-flex gap-x-6 items-center rounded-full p-1 pr-6 border dark:border-dashed border-rose-100 dark:border-white/10 text-sm font-medium duration-150 hover:bg-transparent/10"
+                href="/posts"
               >
                 <span className="inline-block rounded-full px-3 py-1 bg-pink-600 text-white">
                   News
@@ -25,15 +25,15 @@ export default function Hero() {
                 <p className="flex items-center text-default-foreground dark:text-default-600">
                   Read the launch post from here
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
                     className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
                       clipRule="evenodd"
+                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                      fillRule="evenodd"
                     />
                   </svg>
                 </p>
@@ -59,20 +59,20 @@ export default function Hero() {
 
               <div className="flex items-center gap-x-3 sm:text-sm">
                 <Link
-                  href="/posts"
                   className="flex items-center justify-center gap-x-1 py-3 px-4 text-default-900 font-medium transform-gpu bg-rose-500/10 dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-full md:inline-flex"
+                  href="/posts"
                 >
                   Get started
                   <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 20 20"
-                    fill="currentColor"
                     className="w-5 h-5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      fillRule="evenodd"
-                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
                       clipRule="evenodd"
+                      d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                      fillRule="evenodd"
                     />
                   </svg>
                 </Link>

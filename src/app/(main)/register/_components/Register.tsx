@@ -1,13 +1,13 @@
 "use client";
-import ReusableForm from "@/src/components/ui/ReusableForm";
-import ReusableInput from "@/src/components/ui/ReusableInput";
 import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { FieldValues, SubmitHandler } from "react-hook-form";
+
+import ReusableForm from "@/src/components/ui/ReusableForm";
+import ReusableInput from "@/src/components/ui/ReusableInput";
 import { useUserRegistration } from "@/src/hooks/auth.hook";
 import RegistrationValidationSchema from "@/src/schemas/register.schema";
-import { FieldValues, SubmitHandler } from "react-hook-form";
-import Loading from "@/src/components/ui/Loading";
 
 const Register = () => {
   const { mutate: handleUserRegistration } = useUserRegistration();
@@ -23,8 +23,6 @@ const Register = () => {
     handleUserRegistration(userData);
   };
 
-
-
   return (
     <section>
       <div className="flex items-center justify-center px-4 py-10 sm:px-6 sm:py-10 lg:px-8">
@@ -35,8 +33,8 @@ const Register = () => {
           <p className="mt-2 text-center text-sm text-gray-600">
             Already have an account?{" "}
             <Link
-              href="/login"
               className="font-semibold text-rose-500 transition-all duration-200 hover:underline"
+              href="/login"
             >
               Sign In
             </Link>
@@ -49,15 +47,19 @@ const Register = () => {
               //   email: "admin@gmail.com",
               //   password: "admin123",
               // }}
-              onSubmit={onSubmit}
               resolver={zodResolver(RegistrationValidationSchema)}
+              onSubmit={onSubmit}
             >
               <ReusableInput label="Full Name" name="name" type="name" />
-              <ReusableInput label="Mobile Number" name="mobileNumber" type="mobileNumber" />
+              <ReusableInput
+                label="Mobile Number"
+                name="mobileNumber"
+                type="mobileNumber"
+              />
               <ReusableInput label="Email" name="email" type="email" />
-              <ReusableInput name="password" type="password" label="Password" />
+              <ReusableInput label="Password" name="password" type="password" />
 
-              <Button type="submit" className="w-full mt-4">
+              <Button className="w-full mt-4" type="submit">
                 Submit
               </Button>
             </ReusableForm>

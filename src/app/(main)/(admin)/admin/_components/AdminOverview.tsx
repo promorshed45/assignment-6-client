@@ -1,21 +1,20 @@
-'use client';
-import React from 'react';
+"use client";
+import React from "react";
 import { Card, CardBody } from "@nextui-org/card";
 import { Button } from "@nextui-org/button";
-import { Line } from 'react-chartjs-2';
 
 const AdminOverview = () => {
   const data = {
     totalUsers: 150,
     totalPosts: 300,
     totalPayments: 12000,
-    paymentLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    paymentLabels: ["Jan", "Feb", "Mar", "Apr", "May"],
     monthlyPayments: [2000, 2500, 3000, 1500, 3500],
-    userLabels: ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
+    userLabels: ["Jan", "Feb", "Mar", "Apr", "May"],
     activeUsers: [50, 60, 70, 80, 90],
-    postLabels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    postLabels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     postsOverTime: [20, 30, 25, 40],
-    activityLabels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+    activityLabels: ["Week 1", "Week 2", "Week 3", "Week 4"],
     platformActivity: [100, 200, 300, 400],
   };
 
@@ -29,7 +28,9 @@ const AdminOverview = () => {
           <CardBody>
             <h4 className="font-bold">User Management</h4>
             <p>Total Users: {data.totalUsers}</p>
-            <Button color="primary" className="mt-4">Manage Users</Button>
+            <Button className="mt-4" color="primary">
+              Manage Users
+            </Button>
           </CardBody>
         </Card>
 
@@ -38,7 +39,9 @@ const AdminOverview = () => {
           <CardBody>
             <h4 className="font-bold">Content Management</h4>
             <p>Total Posts: {data.totalPosts}</p>
-            <Button color="primary" className="mt-4">Manage Content</Button>
+            <Button className="mt-4" color="primary">
+              Manage Content
+            </Button>
           </CardBody>
         </Card>
 
@@ -47,7 +50,9 @@ const AdminOverview = () => {
           <CardBody>
             <h4 className="font-bold">Payment Management</h4>
             <p>Total Payments: ${data.totalPayments}</p>
-            <Button color="primary" className="mt-4">Manage Payments</Button>
+            <Button className="mt-4" color="primary">
+              Manage Payments
+            </Button>
           </CardBody>
         </Card>
       </div>

@@ -31,4 +31,18 @@ yarn install
 
 ## License
 
+Live Link (client): https://travel-tips-client-three.vercel.app/
+Live Link (Server): https://travel-tips-server-nine.vercel.app/
+
+github Link (client): https://github.com/promorshed45/assignment-6-client
+github Link (Server): https://github.com/promorshed45/assignment-6-server
+
+## Admin Login
+Email:* admin@gmail.com
+Password: admin123
+
+## User Login
+Email:* user@gmail.com
+Password: user123
+
 

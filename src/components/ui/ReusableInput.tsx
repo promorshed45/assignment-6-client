@@ -1,15 +1,16 @@
 "user client";
 import { Input } from "@nextui-org/input";
 import { useFormContext } from "react-hook-form";
+
 import { IInput } from "@/src/types";
 
 interface IProps extends IInput {}
 
 const ReusableInput = ({
-  variant = "bordered",
-  size = "md",
+  // variant = "bordered",
+  // size = "md",
   required = false,
-  type = "text",
+  // type = "text",
   label,
   name,
 }: IProps) => {
@@ -22,13 +23,12 @@ const ReusableInput = ({
     <div className="space-y-2">
       <Input
         {...register(name)}
-        errorMessage={errors[name] ? (errors[name].message as string) : ""}
+        errorMessage={
+          errors[name]?.message ? (errors[name]?.message as string) : ""
+        }
         isInvalid={!!errors[name]}
         label={label}
         required={required}
-        size={size}
-        type={type}
-        variant={variant}
       />
     </div>
   );

@@ -3,13 +3,14 @@
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
-import axiosInstance from "@/src/lib/axiosInstance";
 
+import axiosInstance from "@/src/lib/axiosInstance";
 
 export const registerUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/register", userData);
-    console.log('service teke', data);
+
+    console.log("service teke", data);
     if (data.success) {
       cookies().set("accessToken", data?.data?.accessToken);
       cookies().set("refreshToken", data?.data?.refreshToken);
@@ -65,19 +66,17 @@ export const getCurrentUser = async () => {
   return decodedToken;
 };
 
-
 export const gettoken = () => {
   const accessToken = cookies().get("accessToken")?.value;
 
   if (!accessToken) {
     console.error("No access token found");
+
     return null;
   }
 
   return accessToken;
 };
-
-
 
 export const getNewAccessToken = async () => {
   try {

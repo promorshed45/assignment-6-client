@@ -1,35 +1,21 @@
 "use client";
-import React from "react";
-import {
-  Card,
-  CardHeader,
-  CardBody,
-  Image,
-  Avatar,
-  Button,
-  Divider,
-  Tooltip,
-} from "@nextui-org/react";
-import { useUser } from "@/src/providers/user.provider";
+
+import { Avatar, Button, Divider, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
-import {
-  ArrowBigDownIcon,
-  ArrowBigUpIcon,
-  Heart,
-  ThumbsDown,
-  ThumbsUp,
-  UserRound,
-} from "lucide-react";
+import { Heart, UserRound } from "lucide-react";
+import CreatePost from "../../../(user)/profile/create-post/page";
+import { useUser } from "@/src/providers/user.provider"
 
 const NewsFeedSideBar = () => {
-  const { user, setIsLoading: userLoading } = useUser();
+  const { user } = useUser();
 
   return (
     <>
+    {/* {userLoading && <Loading/>} */}
       {user ? (
         <div className="justify-center items-center text-center mx-auto">
           <div className="flex justify-center">
-            <Avatar src={user?.profilePhoto} className="w-32 h-32 text-large" />
+            <Avatar className="w-32 h-32 text-large" src={user?.profilePhoto} />
           </div>
           <div className="pb-0 pt-2 px-4 flex-col items-start space-y-1">
             <p className="text-lg uppercase font-bold"> {user?.name} </p>
@@ -67,11 +53,7 @@ const NewsFeedSideBar = () => {
 
             <Divider className="w-full" />
             <div className="py-4">
-             <Link href="/profile/create-post"> 
-             <Button variant="solid" className="w-full">
-                Create New Post
-              </Button></Link>
-
+              <CreatePost />
             </div>
           </div>
         </div>

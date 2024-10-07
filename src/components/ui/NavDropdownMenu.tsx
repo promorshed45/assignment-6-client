@@ -1,21 +1,26 @@
 "use client";
-import {Dropdown, DropdownTrigger, DropdownMenu, DropdownItem, User} from "@nextui-org/react";
+
+import {
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
+  User,
+} from "@nextui-org/react";
+import { usePathname, useRouter } from "next/navigation";
+
 import DashboardIcon from "../iconComponents/DashboardIcon";
 import LogOutIcon from "../iconComponents/LogOutIcon";
 import ProfileIcon from "../iconComponents/ProfileIcon";
 import { useUser } from "@/src/providers/user.provider";
 import { logout } from "@/src/services/AuthService";
 import { protectedRoutes } from "@/src/constant";
-import { usePathname, useRouter } from "next/navigation";
-
-
 
 const NavDropdownMenu = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const { user, setIsLoading: userLoading } = useUser();
+  const { setIsLoading: userLoading } = useUser();
 
-  // console.log('user dropdown teke', user);
   const handleLogout = () => {
     logout();
     userLoading(true);
@@ -31,7 +36,6 @@ const NavDropdownMenu = () => {
 
   return (
     <div className="flex items-center gap-4">
-      
       <Dropdown placement="bottom-start">
         <DropdownTrigger>
           <User
@@ -45,39 +49,37 @@ const NavDropdownMenu = () => {
             name="Tony Reichert"
           />
         </DropdownTrigger>
-        <DropdownMenu variant="faded" aria-label="Dropdown menu with icons">
-        <DropdownItem
-          onClick={() => handleNavigation("/profile/my-profile")}
-          key="edit"
-          startContent={<ProfileIcon className="size-4" />}
-        >
-          My Profile
-        </DropdownItem>
-        <DropdownItem
-          key="edit"
-          onClick={() => handleNavigation("/profile/create-post")}
-          startContent={<DashboardIcon className="size-4" />}
-        >
-          Dashboard
-        </DropdownItem>
-        <DropdownItem
-          key="edit"
-          startContent={<DashboardIcon className="size-4" />}
-        >
-          Dashboard
-        </DropdownItem>
-        <DropdownItem
-          key="delete"
-          className="text-danger"
-          color="danger"
-          onClick={() => handleLogout()}
-          startContent={<LogOutIcon className="size-4" />}
-        >
-          LogOut
-        </DropdownItem>
-
-      
-      </DropdownMenu>
+        <DropdownMenu aria-label="Dropdown menu with icons" variant="faded">
+          <DropdownItem
+            key="edit"
+            startContent={<ProfileIcon className="size-4" />}
+            onClick={() => handleNavigation("/profile/my-profile")}
+          >
+            My Profile
+          </DropdownItem>
+          <DropdownItem
+            key="dashboard"
+            startContent={<DashboardIcon className="size-4" />}
+            onClick={() => handleNavigation("/profile/create-post")}
+          >
+            Dashboard
+          </DropdownItem>
+          <DropdownItem
+            key="another-dashboard" // Unique key
+            startContent={<DashboardIcon className="size-4" />}
+          >
+            Another Dashboard
+          </DropdownItem>
+          <DropdownItem
+            key="logout"
+            className="text-danger"
+            color="danger"
+            startContent={<LogOutIcon className="size-4" />}
+            onClick={handleLogout}
+          >
+            LogOut
+          </DropdownItem>
+        </DropdownMenu>
       </Dropdown>
     </div>
   );

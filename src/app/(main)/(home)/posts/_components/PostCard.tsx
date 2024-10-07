@@ -4,7 +4,6 @@ import {
   Button,
   Card,
   CardBody,
-  CardFooter,
   CardHeader,
   Divider,
   Tooltip,
@@ -13,35 +12,25 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-
-import { Navigation, Pagination, Autoplay } from "swiper/modules";
+import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { timeAgo } from "@/src/utilis/timeFormat";
-import { ArrowDown, ArrowUp } from "lucide";
-import ProfileIcon from "@/src/components/iconComponents/ProfileIcon";
-import Uparrow from "@/src/components/iconComponents/Uparrow";
-import {
-  ArrowBigDown,
-  ArrowBigDownIcon,
-  ArrowBigUp,
-  MessageCircleMore,
-} from "lucide-react";
-import ReusableInput from "@/src/components/ui/ReusableInput";
-import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
-import ReusableForm from "@/src/components/ui/ReusableForm";
+import { ArrowBigDownIcon, ArrowBigUp, MessageCircleMore } from "lucide-react";
 import { FieldValues, SubmitHandler } from "react-hook-form";
 
-const PostCard = ({ post }: any) => {
+import { timeAgo } from "@/src/utilis/timeFormat";
+import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
 
-  // console.log('post card', post);
+const PostCard = ({ post }: any) => {
   const [upvoteCount, setUpvoteCount] = useState(post?.upvote || 0);
   const [downvoteCount, setDownvoteCount] = useState(post?.downvote || 0);
   const [isFollowed, setIsFollowed] = useState(false);
-  const [disableLink, setDisableLink] = useState(false);
+  // Removed disableLink since it's not used anywhere.
+  // const [disableLink, setDisableLink] = useState(false);
   const [comments, setComments] = useState(post?.comments || []);
-  const [commentInput, setCommentInput] = useState("");
+  // Removed commentInput and setCommentInput since they are not used.
+  // const [commentInput, setCommentInput] = useState("");
   const [showComments, setShowComments] = useState(false);
 
   const { title, description, images, user, createdAt } = post || {};
@@ -52,25 +41,12 @@ const PostCard = ({ post }: any) => {
   const handleUpvote = () => setUpvoteCount((prev: any) => prev + 1);
   const handleDownvote = () => setDownvoteCount((prev: any) => prev + 1);
 
-  // const handleCoomentSubmit = () => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    // Uncomment and use this if you have a function to handle post comments
+    // const commentData = { comments: data.comments };
+    // handlePostComments(commentData);
+  };
 
-  //   if (commentInput.trim()) {
-  //     setComments([...comments, { author: user.name, text: commentInput }]);
-  //     setCommentInput(""); // Clear the input
-  //   }
-  // };
-
-
- 
-    // const { mutate: handlePostComments } = useUserRegistration();
-  
-    const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-      const commentData = {
-        comments: data.comments
-       
-        // handlePostComments(commentData);
-    };
-  }
   const handleShowComment = () => {
     setShowComments(!showComments);
   };
@@ -78,16 +54,14 @@ const PostCard = ({ post }: any) => {
   return (
     <div className="">
       <motion.div
+        animate={{ opacity: 1, y: 0 }}
         className="max-w-3xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Link href={`/posts/${post._id}`} className="block">
-        {/* <Link href="#" className="block"> */}
+        <Link className="block" href={`/posts/${post._id}`}>
           <div className="mx-auto rounded-lg pb-10">
             <div className="flex gap-5 justify-between items-center pb-10">
-              {/* Profile Card */}
               <div className="flex w-2/3">
                 <Card className="overflow-hidden w-full bg-transparent shadow-none rounded-none">
                   <CardHeader className="justify-between">
@@ -117,12 +91,7 @@ const PostCard = ({ post }: any) => {
                       radius="full"
                       size="sm"
                       variant={isFollowed ? "bordered" : "solid"}
-                      // onPress={() => {
-                      //   setIsFollowed(!isFollowed);
-                      //   setDisableLink(true);
-                      // }}
                       onPress={() => {
-                        setDisableLink(true); 
                         setIsFollowed(!isFollowed);
                       }}
                     >
@@ -138,13 +107,12 @@ const PostCard = ({ post }: any) => {
                     </p>
                     <span className="pt-2">
                       #FrontendWithZoey
-                      <span className="py-2" aria-label="computer" role="img">
+                      <span aria-label="computer" className="py-2" role="img">
                         💻
                       </span>
                     </span>
                   </CardBody>
 
-                  {/* icons */}
                   <div className="mt-4 flex justify-between">
                     <div className="flex gap-3 items-center border-2 border-gray-600 px-3 rounded-md">
                       <div className="hover:bg-green-500/20 rounded-md px-3 py-2">
@@ -162,8 +130,7 @@ const PostCard = ({ post }: any) => {
                           </button>
                         </Tooltip>
                       </div>
-                      <div className="border-r border-gray-200"></div>
-
+                      <div className="border-r border-gray-200" />
                       <div className="hover:bg-red-500/20 rounded-md px-3 py-2">
                         <Tooltip
                           content={
@@ -184,20 +151,14 @@ const PostCard = ({ post }: any) => {
                     <div className="flex items-center gap-2">
                       <button
                         className="flex items-center gap-2"
-                        
-                        // onClick={handleShowComment}
-                        onClick={() => {
-                          handleShowComment();
-                          setDisableLink(true);
-                        }}>
-                        
+                        onClick={handleShowComment}
+                      >
                         <MessageCircleMore className="size-5" />
-                        {comments} 10
+                        {comments.length}  {/* Fixed to use comments array length */}
                       </button>
                     </div>
                   </div>
 
-                  {/* Comment Section */}
                   {showComments && (
                     <div>
                       {comments.map((comment: any, index: any) => (
@@ -206,54 +167,48 @@ const PostCard = ({ post }: any) => {
                         </div>
                       ))}
                       <div className="flex gap-2 mt-4">
-                      <form onSubmit={onSubmit}> 
-                       <ReusableTextarea name="comments" type="comments" label="comment"/>
-                        <button
-                          className="bg-blue-500 text-white p-2 rounded-md"
-                          type="submit"
-                        >
-                          Comment
-                        </button>
+                        <form onSubmit={onSubmit}>
+                          <ReusableTextarea
+                            label="comment"
+                            name="comments"
+                            type="comments"
+                          />
+                          <button
+                            className="bg-blue-500 text-white p-2 rounded-md"
+                            type="submit"
+                          >
+                            Comment
+                          </button>
                         </form>
                       </div>
                     </div>
                   )}
-
-
-
-
-
-
                 </Card>
               </div>
 
-              {/* Image Carousel */}
               <div className="w-1/3 h-44">
                 <Swiper
-                  modules={[Navigation, Autoplay]}
                   navigation
                   autoplay={{ delay: 5000 }}
+                  className="mySwiper w-full h-full object-contain rounded-xl"
+                  modules={[Navigation, Autoplay]}
                   pagination={{ clickable: true }}
                   scrollbar={{ draggable: true }}
                   slidesPerView={1}
-                  onSlideChange={() => console.log("slide change")}
-                  onSwiper={(swiper) => console.log(swiper)}
-                  className="mySwiper w-full h-full object-contain rounded-xl"
                 >
                   {images.map((image: string, index: any) => (
                     <SwiperSlide key={index}>
                       <Image
-                        width={500}
-                        height={500}
                         alt={`Image ${index}`}
                         className="size-full object-cover"
+                        height={500}
                         src={image}
+                        width={500}
                       />
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </div>
-             
             </div>
             <Divider className="border-2 my-4" />
           </div>
@@ -262,6 +217,5 @@ const PostCard = ({ post }: any) => {
     </div>
   );
 };
-
 
 export default PostCard;

@@ -1,11 +1,11 @@
-import UserOverView from './_components/UserOverView';
+import UserOverView from "./_components/UserOverView";
 
 const page = () => {
-    return (
-        <div>
-            <UserOverView/>
-        </div>
-    );
+  return (
+    <div>
+      <UserOverView />
+    </div>
+  );
 };
 
 export default page;

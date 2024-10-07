@@ -1,10 +1,11 @@
-import React from 'react';
-import AdminOverview from './_components/AdminOverview';
+import React from "react";
+
+import AdminOverview from "./_components/AdminOverview";
 
 const page = () => {
   return (
     <div>
-      <AdminOverview/>
+      <AdminOverview />
     </div>
   );
 };

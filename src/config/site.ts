@@ -2,7 +2,8 @@ export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
   name: "Travel Trove",
-  description: "Travel Trove: Your go-to for curated travel tips and inspiration.",
+  description:
+    "Travel Trove: Your go-to for curated travel tips and inspiration.",
   navItems: [
     {
       label: "Home",
@@ -20,7 +21,6 @@ export const siteConfig = {
       label: "Contact Us",
       href: "/contact-us",
     },
-    
   ],
   navMenuItems: [
     {

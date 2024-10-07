@@ -14,37 +14,44 @@ import { link as linkStyles } from "@nextui-org/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+
+import { useUser } from "../providers/user.provider";
+import NavDropdownMenu from "./ui/NavDropdownMenu";
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { SearchIcon, Logo } from "@/src/components/icons";
-import { useUser } from "../providers/user.provider";
-import { useForm } from "react-hook-form";
-import NavDropdownMenu from "./ui/NavDropdownMenu";
 
 export const Navbar = () => {
   const { user } = useUser();
-  const { register, handleSubmit, watch } = useForm();
-  console.log(watch("search"));
+  const { register, handleSubmit } = useForm();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     console.log(data);
+    // Perform search action here
   };
 
   const searchInput = (
-    <Input
-      aria-label="Search"
-      classNames={{
-        inputWrapper:
-          "flex items-center justify-center gap-x-1 py-2 px-4 text-default-500 transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-md md:inline-flex",
-        input: "text-sm rounded-md",
-      }}
-      labelPlacement="outside"
-      placeholder="Search..."
-      startContent={
-        <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
-      }
-      type="search"
-    />
+    <form onSubmit={handleSubmit(onSubmit)} className="flex">
+      <Input
+        {...register("search")} // Register input for form
+        aria-label="Search"
+        classNames={{
+          inputWrapper:
+            "flex items-center justify-center gap-x-1 py-2 px-4 text-default-500 transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-md md:inline-flex",
+          input: "text-sm rounded-md",
+        }}
+        labelPlacement="outside"
+        placeholder="Search..."
+        startContent={
+          <SearchIcon className="text-base text-default-400 pointer-events-none flex-shrink-0" />
+        }
+        type="search"
+      />
+      <button type="submit" className="ml-2">
+        Search
+      </button>
+    </form>
   );
 
   return (
@@ -63,7 +70,7 @@ export const Navbar = () => {
               <NextLink
                 className={clsx(
                   linkStyles({ color: "foreground" }),
-                  "data-[active=true]:text-primary data-[active=true]:font-medium"
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
                 )}
                 color="foreground"
                 href={item.href}
@@ -85,24 +92,24 @@ export const Navbar = () => {
         <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
 
         {user?.email ? (
-          <NavDropdownMenu/>
+          <NavDropdownMenu />
         ) : (
           <NavbarItem className="hidden md:flex">
             <Link
-              href="/login"
               className="flex items-center justify-center gap-x-1 py-2 px-4 text-default-500 transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-md md:inline-flex"
+              href="/login"
             >
               Login
               <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
                 className="w-5 h-5"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fillRule="evenodd"
-                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
                   clipRule="evenodd"
+                  d="M7.21 14.77a.75.75 0 01.02-1.06L11.168 10 7.23 6.29a.75.75 0 111.04-1.08l4.5 4.25a.75.75 0 010 1.08l-4.5 4.25a.75.75 0 01-1.06-.02z"
+                  fillRule="evenodd"
                 />
               </svg>
             </Link>
@@ -125,8 +132,8 @@ export const Navbar = () => {
                   index === 2
                     ? "primary"
                     : index === siteConfig.navMenuItems.length - 1
-                    ? "danger"
-                    : "foreground"
+                      ? "danger"
+                      : "foreground"
                 }
                 href="#"
                 size="lg"

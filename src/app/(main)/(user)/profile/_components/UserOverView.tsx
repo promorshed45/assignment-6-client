@@ -1,14 +1,12 @@
-'use client';
-import { Card, Button, CardBody } from '@nextui-org/react';
+"use client";
+import { Card, Button, CardBody } from "@nextui-org/react";
 
 const UserOverView = () => {
   return (
     <div className="flex flex-col items-center p-6 bg-gray-100 min-h-screen">
       <Card className="w-full max-w-4xl shadow-lg">
         <CardBody>
-          <h2 className="text-center mb-4">
-            Welcome, {user.username}!
-          </h2>
+          <h2 className="text-center mb-4">Welcome, {user.username}!</h2>
 
           <div className="flex justify-around mb-8">
             <div className="text-center">
@@ -37,7 +35,7 @@ const UserOverView = () => {
               </Card>
             ))}
           </div>
-          <Button color="primary" className="mb-4">
+          <Button className="mb-4" color="primary">
             View All Posts
           </Button>
 
@@ -47,7 +45,7 @@ const UserOverView = () => {
               <p key={follower.id}>{follower.name}</p>
             ))}
           </div>
-          <Button color="primary" className="mb-4">
+          <Button className="mb-4" color="primary">
             View All Followers
           </Button>
 
@@ -57,7 +55,7 @@ const UserOverView = () => {
               <p key={followedUser.id}>{followedUser.name}</p>
             ))}
           </div>
-          <Button color="primary" className="mb-4">
+          <Button className="mb-4" color="primary">
             View All Followed Users
           </Button>
 
@@ -67,7 +65,7 @@ const UserOverView = () => {
               <p key={index}>{notification}</p>
             ))}
           </div>
-          <Button color="primary" className="mb-4">
+          <Button className="mb-4" color="primary">
             View All Notifications
           </Button>
 
@@ -85,25 +83,30 @@ const UserOverView = () => {
 export default UserOverView;
 
 const user = {
-    username: 'JohnDoe',
-    totalPosts: 10,
-    followers: 25,
-    following: 15,
-    posts: [
-      { id: 1, title: 'First Post', date: '2024-01-01', snippet: 'This is my first post.' },
-      // Add more posts as needed
-    ],
-    followersList: [
-      { id: 1, name: 'Jane Smith' },
-      // Add more followers as needed
-    ],
-    followingList: [
-      { id: 1, name: 'Mike Johnson' },
-      // Add more followed users as needed
-    ],
-    notifications: [
-      'Jane liked your post',
-      'Mike started following you',
-      // Add more notifications as needed
-    ],
-  };
+  username: "JohnDoe",
+  totalPosts: 10,
+  followers: 25,
+  following: 15,
+  posts: [
+    {
+      id: 1,
+      title: "First Post",
+      date: "2024-01-01",
+      snippet: "This is my first post.",
+    },
+    // Add more posts as needed
+  ],
+  followersList: [
+    { id: 1, name: "Jane Smith" },
+    // Add more followers as needed
+  ],
+  followingList: [
+    { id: 1, name: "Mike Johnson" },
+    // Add more followed users as needed
+  ],
+  notifications: [
+    "Jane liked your post",
+    "Mike started following you",
+    // Add more notifications as needed
+  ],
+};
