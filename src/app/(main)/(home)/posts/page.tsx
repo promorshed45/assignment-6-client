@@ -18,7 +18,7 @@ const NewsFeedPage = async () => {
 
   const premiumPosts = data?.filter((post: IPost) => post.status === "PREMIUM");
   const freePost = data?.filter((post: IPost) => post.status === "FREE");
-  const myPosts = data.filter((post: IPost) => post?.user?.email === currentUserEmail);
+  const myPosts = data.filter((post: any) => post?.user?.email === currentUserEmail);
 
   // console.log('premiumPosts', premiumPosts);
   // console.log('freePost', freePost);
@@ -26,7 +26,7 @@ const NewsFeedPage = async () => {
   return (
     <>
       <div className="flex py-8 md:py-16">
-        <NewsFeedTabs myPosts={myPosts} freePost={freePost} premiumPosts={premiumPosts} />
+        <NewsFeedTabs freePost={freePost} myPosts={myPosts} premiumPosts={premiumPosts} />
       </div>
     </>
   );

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import {
   Avatar,
@@ -41,7 +42,7 @@ const PostCard = ({ post }: any) => {
   const handleUpvote = () => setUpvoteCount((prev: any) => prev + 1);
   const handleDownvote = () => setDownvoteCount((prev: any) => prev + 1);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
     // Uncomment and use this if you have a function to handle post comments
     // const commentData = { comments: data.comments };
     // handlePostComments(commentData);

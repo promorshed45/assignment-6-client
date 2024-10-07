@@ -50,21 +50,6 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
               ))}
             </div>
           </Tab>
-          {/* My Posts Tab */}
-          <Tab
-            key="myPosts-posts"
-            title={
-              <div className="flex items-center space-x-2">
-                <span>My Posts</span>
-              </div>
-            }
-          >
-            <div className={`user ? "w-4/5" : "w-full" `}>
-              {myPosts?.map((post: Post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
-            </div>
-          </Tab>
 
           {/* Premium Posts Tab */}
           <Tab
@@ -90,6 +75,22 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
                 </p>{" "}
               </Link>
             )}
+          </Tab>
+
+          {/* My Posts Tab */}
+          <Tab
+            key="myPosts-posts"
+            title={
+              <div className="flex items-center space-x-2">
+                <span>My Posts</span>
+              </div>
+            }
+          >
+            <div className={`user ? "w-4/5" : "w-full" `}>
+              {myPosts?.map((post: Post) => (
+                <PostCard key={post._id} post={post} />
+              ))}
+            </div>
           </Tab>
 
           {/* Videos Tab */}
