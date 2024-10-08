@@ -9,9 +9,9 @@ const CreatePost = () => {
   console.log("create post from user id", user);
 
   return (
-    <div>
+    <>
       <PostCreationModal userInfo={user} />
-    </div>
+    </>
   );
 };
 

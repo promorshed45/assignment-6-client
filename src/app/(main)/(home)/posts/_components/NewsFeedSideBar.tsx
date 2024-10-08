@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Heart, UserRound } from "lucide-react";
 import CreatePost from "../../../(user)/profile/create-post/page";
 import { useUser } from "@/src/providers/user.provider"
+import VerifyAccount from "../../../(user)/profile/my-profile/_components/VerifyAccount";
 
 const NewsFeedSideBar = () => {
   const { user } = useUser();
@@ -54,7 +55,10 @@ const NewsFeedSideBar = () => {
             <Divider className="w-full" />
             <div className="py-4">
               <CreatePost />
+              <VerifyAccount/>
+
             </div>
+
           </div>
         </div>
       ) : (

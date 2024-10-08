@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import NewsFeedTabs from "./_components/NewsFeedTabs";
-
 import nexiosInstance from "@/src/config/nexios.config";
 import { getCurrentUser } from "@/src/services/AuthService";
-import { IPost } from "@/src/types";
+import { TPost } from "@/src/types";
+import CardActions from "./_components/CardActions";
 
 const NewsFeedPage = async () => {
   const currentUser = await getCurrentUser();
@@ -16,8 +16,8 @@ const NewsFeedPage = async () => {
 
   const { data }: any = respone?.data;
 
-  const premiumPosts = data?.filter((post: IPost) => post.status === "PREMIUM");
-  const freePost = data?.filter((post: IPost) => post.status === "FREE");
+  const premiumPosts = data?.filter((post: TPost) => post.status === "PREMIUM");
+  const freePost = data?.filter((post: TPost) => post.status === "FREE");
   const myPosts = data.filter((post: any) => post?.user?.email === currentUserEmail);
 
   // console.log('premiumPosts', premiumPosts);

@@ -17,40 +17,25 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { ArrowBigDownIcon, ArrowBigUp, MessageCircleMore } from "lucide-react";
-import { FieldValues, SubmitHandler } from "react-hook-form";
-
 import { timeAgo } from "@/src/utilis/timeFormat";
-import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
+import CardActions from "./CardActions";
 
 const PostCard = ({ post }: any) => {
-  const [upvoteCount, setUpvoteCount] = useState(post?.upvote || 0);
-  const [downvoteCount, setDownvoteCount] = useState(post?.downvote || 0);
   const [isFollowed, setIsFollowed] = useState(false);
+
   // Removed disableLink since it's not used anywhere.
   // const [disableLink, setDisableLink] = useState(false);
-  const [comments, setComments] = useState(post?.comments || []);
   // Removed commentInput and setCommentInput since they are not used.
   // const [commentInput, setCommentInput] = useState("");
-  const [showComments, setShowComments] = useState(false);
 
   const { title, description, images, user, createdAt } = post || {};
   const userPhoto =
     user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
   const postDate = createdAt ? timeAgo(createdAt) : "";
 
-  const handleUpvote = () => setUpvoteCount((prev: any) => prev + 1);
-  const handleDownvote = () => setDownvoteCount((prev: any) => prev + 1);
+  
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data: any) => {
-    // Uncomment and use this if you have a function to handle post comments
-    // const commentData = { comments: data.comments };
-    // handlePostComments(commentData);
-  };
 
-  const handleShowComment = () => {
-    setShowComments(!showComments);
-  };
 
   return (
     <div className="">
@@ -114,76 +99,11 @@ const PostCard = ({ post }: any) => {
                     </span>
                   </CardBody>
 
-                  <div className="mt-4 flex justify-between">
-                    <div className="flex gap-3 items-center border-2 border-gray-600 px-3 rounded-md">
-                      <div className="hover:bg-green-500/20 rounded-md px-3 py-2">
-                        <Tooltip
-                          content={
-                            <div className="text-sm font-bold">Upvotes</div>
-                          }
-                        >
-                          <button
-                            className="flex items-center gap-2"
-                            onClick={handleUpvote}
-                          >
-                            <ArrowBigUp className="size-5 text-green-600" />
-                            {upvoteCount}
-                          </button>
-                        </Tooltip>
-                      </div>
-                      <div className="border-r border-gray-200" />
-                      <div className="hover:bg-red-500/20 rounded-md px-3 py-2">
-                        <Tooltip
-                          content={
-                            <div className="text-sm font-bold">Downvotes</div>
-                          }
-                        >
-                          <button
-                            className="flex items-center gap-2"
-                            onClick={handleDownvote}
-                          >
-                            <ArrowBigDownIcon className="size-5 text-red-600" />
-                            {downvoteCount}
-                          </button>
-                        </Tooltip>
-                      </div>
-                    </div>
+                 <div className="pt-10">
+                 <CardActions post={post}/>
+                 </div>
 
-                    <div className="flex items-center gap-2">
-                      <button
-                        className="flex items-center gap-2"
-                        onClick={handleShowComment}
-                      >
-                        <MessageCircleMore className="size-5" />
-                        {comments.length}  {/* Fixed to use comments array length */}
-                      </button>
-                    </div>
-                  </div>
-
-                  {showComments && (
-                    <div>
-                      {comments.map((comment: any, index: any) => (
-                        <div key={index} className="mb-2">
-                          <strong>{comment.author}</strong>: {comment.text}
-                        </div>
-                      ))}
-                      <div className="flex gap-2 mt-4">
-                        <form onSubmit={onSubmit}>
-                          <ReusableTextarea
-                            label="comment"
-                            name="comments"
-                            type="comments"
-                          />
-                          <button
-                            className="bg-blue-500 text-white p-2 rounded-md"
-                            type="submit"
-                          >
-                            Comment
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                  )}
+                 
                 </Card>
               </div>
 

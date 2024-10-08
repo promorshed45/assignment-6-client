@@ -133,7 +133,7 @@ const PostModal = ({ userInfo }: any) => {
 
   return (
     <>
-      <div className="h-screen pt-10">
+      <div className="py-5">
         <Button onClick={onOpen}>Create New Post</Button>
         <Modal
           isOpen={isOpen}

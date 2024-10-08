@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import { useUpdateMyPost } from "@/src/hooks/updateMyPost.hooks";
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
@@ -68,7 +68,7 @@ const UpdateMyPostModal = ({ post }: any) => {
   };
 
   // Submit handler
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const formData = new FormData();
 
     // Append files to FormData

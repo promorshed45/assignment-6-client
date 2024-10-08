@@ -1,6 +1,5 @@
-"use client";
-import PostDetails from "./_components/PostDetails";
 
+import PostDetails from "./_components/PostDetails";
 import nexiosInstance from "@/src/config/nexios.config";
 
 interface IProps {
