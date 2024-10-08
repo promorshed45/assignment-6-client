@@ -5,7 +5,7 @@ import { SubmitHandler, FieldValues } from "react-hook-form";
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import { ArrowBigDownIcon, ArrowBigUp, MessageCirclePlus } from "lucide-react";
-import { usePostComment } from "@/src/hooks/comments.hooks";
+import { usePostComment } from "@/src/hooks/post/post.hook";
 
 interface Comment {
   author: string;

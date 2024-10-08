@@ -1,7 +1,5 @@
 "use server";
-
 import { FieldValues } from "react-hook-form";
-
 import axiosInstance from "@/src/lib/axiosInstance";
 
 export const addPost = async (postData: FieldValues) => {
@@ -14,3 +12,38 @@ export const addPost = async (postData: FieldValues) => {
       throw new Error(error);
     }
   };
+
+
+
+  export const updateMyPost = async (id: string, userData: FieldValues) => {
+    try {
+      const { data } = await axiosInstance.put(`/post/${id}`, userData);
+      return data;
+    } catch (error: any) {
+      console.error(error);
+      throw new Error(error.message || "Failed to update post.");
+    }
+  };
+  
+
+  export const postComment = async (userData: FieldValues) => {
+    try {
+      const { data } = await axiosInstance.post("/comment", userData);
+    
+      return data;
+    } catch (error: any) {
+        console.error(error);
+      throw new Error(error);
+    }
+  };
+
+
+  export const deleteComment = async (commentId: string) => {
+    try {
+        const response = await axiosInstance.delete(`/comment/${commentId}`);
+        return response.data;
+    } catch (error: any) {
+        console.error(error);
+        throw new Error(error);
+    }
+};
