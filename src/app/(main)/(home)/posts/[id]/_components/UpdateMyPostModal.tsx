@@ -86,7 +86,7 @@ const UpdateMyPostModal = ({ post }: any) => {
     console.log("Image files:", imageFiles);
 
     // Call mutation function with FormData
-    handlePostUpdate({ formData, id });
+    handlePostUpdate({ formData, id: post._id });
 
   };
 
