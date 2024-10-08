@@ -22,7 +22,7 @@ interface FormData {
   comment: string; // corrected field name
 }
 
-const CardActions = ({post}) => {
+const CardActions = ({post}: any) => {
   const [isClickToComment, setIsClickToComment] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const {mutate: handlePostComment} = usePostComment()
