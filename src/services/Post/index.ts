@@ -14,6 +14,16 @@ export const addPost = async (postData: FieldValues) => {
   };
 
 
+  export const deletePost = async (postId: string) => {
+    try {
+        const response = await axiosInstance.delete(`/post/${postId}`);
+        return response.data; 
+    } catch (error: any) {
+        console.error(error);
+        throw new Error(error);
+    }
+};
+
 
   export const updateMyPost = async (id: string, userData: FieldValues) => {
     try {

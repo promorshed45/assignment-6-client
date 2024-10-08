@@ -15,8 +15,8 @@ import { useState, useEffect } from "react";
 import { Select, SelectItem } from "@nextui-org/select";
 import Image from "next/image";
 import { Button } from "@nextui-org/button";
-import { Editor } from "@tinymce/tinymce-react";
 import { FileAxis3dIcon, Images, Verified } from "lucide-react";
+import QuillEditor from "./QuillEditor";
 
 // Remove unused interface if not needed
 interface PostData {
@@ -27,20 +27,6 @@ interface PostData {
   category: string;
 }
 
-// const categoriesList = [
-//   "Adventure",
-//   "Exploration",
-//   "Business Travel",
-//   "Other",
-//   "Culture",
-//   "Wildlife",
-//   "Beaches",
-//   "Mountaineering",
-//   "Sports",
-//   "Road Trip",
-//   "City Tours",
-//   "Photography",
-// ];
 
 const categoriesList = [
   "Business Travel",
@@ -57,6 +43,8 @@ const PostModal = ({ userInfo }: any) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [imagePreviews, setImagePreviews] = useState<string[]>([]);
   const [isError, setIsError] = useState<string>("");
+  const [discription, setDiscription] = useState<string>("");
+
 
   const {
     handleSubmit,
@@ -141,7 +129,7 @@ const PostModal = ({ userInfo }: any) => {
           size="2xl"
           onOpenChange={onOpenChange}
         >
-          <ModalContent className="w-[90vw] max-w-[700px]">
+          <ModalContent className="">
             <div>
               <ModalHeader>
                 <div className="flex items-center gap-2">
@@ -187,24 +175,7 @@ const PostModal = ({ userInfo }: any) => {
                       )}
                     />
                     <div className="my-4">
-                      <Editor
-                        apiKey="YOUR_API_KEY" // Replace with your actual API key
-                        init={{
-                          plugins:
-                            "anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount",
-                          toolbar:
-                            "undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table | align lineheight | numlist bullist indent outdent | emoticons charmap | removeformat",
-                          height: 250,
-                          emoticons_append: {
-                            custom_mind_blown: {
-                              keywords: ["mind", "blown"],
-                              char: "🤯",
-                            },
-                          },
-                        }}
-                        value={editorContent}
-                        onEditorChange={(content) => setEditorContent(content)}
-                      />
+                    <QuillEditor setDiscription={setDiscription} />
                     </div>
                     <div className="flex gap-5">
                       <Controller
