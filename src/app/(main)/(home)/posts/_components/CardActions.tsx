@@ -5,6 +5,7 @@ import { SubmitHandler, FieldValues } from "react-hook-form";
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import { ArrowBigDownIcon, ArrowBigUp, MessageCirclePlus } from "lucide-react";
+import { usePostComment } from "@/src/hooks/comments.hooks";
 
 interface Comment {
   author: string;
@@ -21,15 +22,21 @@ interface FormData {
   comment: string; // corrected field name
 }
 
-const CardActions = () => {
+const CardActions = ({post}) => {
   const [isClickToComment, setIsClickToComment] = useState(false);
   const [showComment, setShowComment] = useState(false);
+  const {mutate: handlePostComment} = usePostComment()
 
   // handle comment submit
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    console.log(data);
-    // Add logic to handle the comment submission, e.g., updating state
-    setShowComment(true); // Show the comment section after submission
+    const commentData = {
+        postId: post._id,
+        authorId: post?.user?._id,
+        content: data.comment,
+    }
+    handlePostComment(commentData);
+    console.log(commentData);
+    setShowComment(true); 
   };
 
   return (

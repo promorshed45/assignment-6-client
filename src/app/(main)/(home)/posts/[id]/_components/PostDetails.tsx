@@ -85,7 +85,7 @@ const PostDetails = ({ data }: any) => {
         </CardBody>
         {/* icons */}
             <div className="p-10">
-            <CardActions/>
+            <CardActions post={data}/>
             </div>
       </Card>
     </motion.div>
