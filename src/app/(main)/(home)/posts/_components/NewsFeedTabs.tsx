@@ -3,6 +3,8 @@
 import { Tabs, Tab } from "@nextui-org/react";
 import Link from "next/link";
 
+import CreatePost from "../../../(user)/profile/create-post/page";
+
 import PostCard from "./PostCard";
 import NewsFeedSideBar from "./NewsFeedSideBar";
 
@@ -23,78 +25,84 @@ interface NewsFeedTabsProps {
 const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
   freePost,
   premiumPosts,
-  myPosts
+  myPosts,
 }) => {
   const { user } = useUser();
 
   return (
-    <div
-      className={`max-w-full mx-auto flex ${
-        user ? "container justify-between" : ""
-      }`}
-    >
-      <div className="max-w-full">
-        <Tabs aria-label="Options" color="primary" variant="bordered">
-          {/* All Posts Tab */}
-          <Tab
-            key="all-posts"
-            title={
-              <div className="flex items-center space-x-2">
-                <span>All Posts</span>
-              </div>
-            }
-          >
-            <div className={`user ? "w-4/5" : "w-full" `}>
-              {freePost?.map((post: Post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
-            </div>
-          </Tab>
+    <>
+      <div
+        className={`mx-auto flex flex-col md:flex-row ${user ? "container" : ""}`}
+      >
+        <div className="w-full md:w-4/5 mx-auto px-16">
+        {/* <div className={`w-2/3 ${user ? "md:w-4/5" : "md:max-w-3/4"}`}> */}
+          {user ? (<div className="">
+            <CreatePost />
+          </div>) : ("")}
 
-          {/* Premium Posts Tab */}
-          <Tab
-            key="premium-posts"
-            title={
-              <div className="flex items-center space-x-2">
-                <span>Premium Post</span>
-              </div>
-            }
-          >
-            {user && user?.verified === "false" ? (
-              <div className={user ? "w-4/5" : "w-full"}>
-                {premiumPosts?.map((post: Post) => (
-                  <PostCard key={post._id} post={post} />
-                ))}
-              </div>
-            ) : (
-              <Link href="/verify-account">
-                {" "}
-                <p className="text-rose-500 py-5 cursor-pointer text-lg">
-                  {" "}
-                  Please verify your account to see premium posts...{" "}
-                </p>{" "}
-              </Link>
-            )}
-          </Tab>
+          {user ? (
+            <div>
+            <Tabs aria-label="Options" color="primary" variant="bordered">
+              {/* All Posts Tab */}
+              <Tab
+                key="all-posts"
+                title={
+                  <div className="flex items-center space-x-2">
+                    <span>All Posts</span>
+                  </div>
+                }
+              >
+                <div >
+                  {freePost?.map((post: Post) => (
+                    <PostCard key={post._id} post={post} />
+                  ))}
+                </div>
+              </Tab>
 
-          {/* My Posts Tab */}
-          <Tab
-            key="myPosts-posts"
-            title={
-              <div className="flex items-center space-x-2">
-                <span>My Posts</span>
-              </div>
-            }
-          >
-            <div className={`user ? "w-4/5" : "w-full" `}>
-              {myPosts?.map((post: Post) => (
-                <PostCard key={post._id} post={post} />
-              ))}
-            </div>
-          </Tab>
+              {/* Premium Posts Tab */}
+              <Tab
+                key="premium-posts"
+                title={
+                  <div className="flex items-center space-x-2">
+                    <span>Premium Post</span>
+                  </div>
+                }
+              >
+                {user && user?.verified === "false" ? (
+                  <div>
+                    {premiumPosts?.map((post: Post) => (
+                      <PostCard key={post._id} post={post} />
+                    ))}
+                  </div>
+                ) : (
+                  <Link href="/verify-account">
+                    <p className="text-rose-500 py-5 cursor-pointer text-lg text-center">
+                      Please verify your account to see premium posts...
+                    </p>
+                  </Link>
+                )}
+              </Tab>
 
-          {/* Videos Tab */}
-          <Tab
+              {/* My Posts Tab */}
+              {user ? (
+                <Tab
+                key="my-posts"
+                title={
+                  <div className="flex items-center space-x-2">
+                    <span>My Posts</span>
+                  </div>
+                }
+              >
+                <div className="w-full">
+                  {myPosts?.map((post: Post) => (
+                    <PostCard key={post._id} post={post} />
+                  ))}
+                </div>
+              </Tab>
+              ) : ("")}
+
+              {/* Videos Tab */}
+              {/* <Tab
             key="videos"
             title={
               <div className="flex items-center space-x-2">
@@ -102,19 +110,26 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
               </div>
             }
           >
-            {/* Add content here if needed */}
-            <div className="w-4/5">Videos content coming soon...</div>
-          </Tab>
-        </Tabs>
-      </div>
-      {user ? (
-        <div className="w-1/5 h-full">
-          <NewsFeedSideBar />
+            <div className="w-full md:w-4/5 text-center">Videos content coming soon...</div>
+          </Tab> */}
+            </Tabs>
+          </div>
+          ) : (
+            <div >
+                  {freePost?.map((post: Post) => (
+                    <PostCard key={post._id} post={post} />
+                  ))}
+                </div>
+          )}
         </div>
-      ) : (
-        <></>
-      )}
-    </div>
+
+        {user && (
+          <div className="hidden lg:flex w-full lg:w-1/5">
+            <NewsFeedSideBar />
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

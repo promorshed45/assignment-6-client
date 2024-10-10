@@ -1,11 +1,12 @@
 'use client'
-import ReusableInput from "@/src/components/ui/ReusableInput";
-import { useUpdateMyPost } from "@/src/hooks/post/post.hook";
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { EllipsisVertical, ImageIcon } from 'lucide-react';
 import Image from "next/image";
 import React, { ChangeEvent, useState } from 'react';
 import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-form";
+
+import { useUpdateMyPost } from "@/src/hooks/post/post.hook";
+import ReusableInput from "@/src/components/ui/ReusableInput";
 
 interface FormInputs {
   title: string;
@@ -13,14 +14,14 @@ interface FormInputs {
   imageFiles: File[] | null;
 }
 
-interface UpdateMyPostModalProps {
-  post: {
-    _id: string;
-    title: string;
-    description: string;
-    images: string[];
-  };
-}
+// interface UpdateMyPostModalProps {
+//   post: {
+//     _id: string;
+//     title: string;
+//     description: string;
+//     images: string[];
+//   };
+// }
 
 const UpdateMyPostModal = ({ post }: any) => {
   const { mutate: handlePostUpdate } = useUpdateMyPost();
@@ -126,11 +127,11 @@ const UpdateMyPostModal = ({ post }: any) => {
                           <p>Change Image</p>
                         </div>
                         <input
+                          multiple
                           accept="image/*"
                           className="hidden"
                           id="post-images"
                           type="file"
-                          multiple
                           onChange={handleImageChange}
                         />
                       </label>

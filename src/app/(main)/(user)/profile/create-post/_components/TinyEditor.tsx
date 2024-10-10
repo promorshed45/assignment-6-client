@@ -12,7 +12,7 @@ export default function RichTextEditor() {
   return (
     <div className="bg-gray-900 p-6 rounded-lg shadow-lg">
       {/* Editor Label */}
-      <label htmlFor="travel-guide-editor" className="text-lg font-semibold text-white mb-2">
+      <label className="text-lg font-semibold text-white mb-2" htmlFor="travel-guide-editor">
         Write Your Travel Guide
       </label>
 

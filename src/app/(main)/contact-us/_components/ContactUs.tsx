@@ -3,7 +3,7 @@ import { Button, Input, Textarea } from "@nextui-org/react";
 
 const ContactUs = () => {
   return (
-    <section className="py-6 dark:bg-gray-100/10 dark:text-gray-200">
+    <section className="mt-10 md:py-10 dark:bg-gray-100/10 dark:text-gray-200">
       <div className="grid max-w-6xl grid-cols-1 px-6 mx-auto lg:px-8 md:grid-cols-2 md:divide-x">
         <div className="py-6 md:py-0 md:px-6 space-y-5 mt-10">
           <h1 className="text-4xl font-bold">Get in Touch</h1>

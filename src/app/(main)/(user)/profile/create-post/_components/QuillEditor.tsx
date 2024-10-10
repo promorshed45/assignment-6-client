@@ -9,15 +9,14 @@ type TProps = {
 function QuillEditor({ setDiscription }: TProps) {
   const [value, setValue] = useState("");
 
-  //   console.log(value);
-  //   setDiscription(value)
-
   const handleChange = (content: string) => {
     setValue(content);
-    setDiscription(value);
+    // Strip HTML tags from the content
+    const plainText = content.replace(/<[^>]*>/g, ""); // Remove HTML tags
+    setDiscription(plainText);
   };
 
-  return <ReactQuill theme="snow" value={value} onChange={handleChange}/>
+  return <ReactQuill theme="snow" value={value} onChange={handleChange} />;
 }
 
 export default QuillEditor;

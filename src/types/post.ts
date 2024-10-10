@@ -1,6 +1,6 @@
 export interface IComment {
-    userId: string;
-    comment: string;
+    authorId: string;
+    content: string;
     _id: string;
   }
 
@@ -55,7 +55,7 @@ export interface IInput {
   export interface TPost {
     _id: string;
     user: IUser;
-    image: string;
+    images: string;
     category: string;
     postContent: string;
     type: string;
@@ -66,4 +66,10 @@ export interface IInput {
     updatedAt: string;
     status: string;
     __v: number;
+  }
+
+  export interface IParamsProps {
+    params: {
+      id: string;
+    };
   }

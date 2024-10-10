@@ -1,11 +1,12 @@
 "use server";
 import { FieldValues } from "react-hook-form";
+
 import axiosInstance from "@/src/lib/axiosInstance";
 
 export const addPost = async (postData: FieldValues) => {
     try {
       const { data } = await axiosInstance.post("/post", postData);
-    
+      console.log(data);
       return data;
     } catch (error: any) {
         console.error(error);
@@ -19,7 +20,7 @@ export const addPost = async (postData: FieldValues) => {
         const response = await axiosInstance.delete(`/post/${postId}`);
         return response.data; 
     } catch (error: any) {
-        console.error(error);
+        // console.error(error);
         throw new Error(error);
     }
 };
@@ -30,7 +31,7 @@ export const addPost = async (postData: FieldValues) => {
       const { data } = await axiosInstance.put(`/post/${id}`, userData);
       return data;
     } catch (error: any) {
-      console.error(error);
+      // console.error(error);
       throw new Error(error.message || "Failed to update post.");
     }
   };
@@ -53,7 +54,7 @@ export const addPost = async (postData: FieldValues) => {
         const response = await axiosInstance.delete(`/comment/${commentId}`);
         return response.data;
     } catch (error: any) {
-        console.error(error);
+        // console.error(error);
         throw new Error(error);
     }
 };

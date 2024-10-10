@@ -5,11 +5,11 @@ import Image from "next/image";
 
 const AboutUs = () => {
   return (
-    <section className="">
+    <section className="py-5 md:py-10">
       <div className="mx-auto">
         {/* Company Overview */}
 
-        <div className="grid grid-cols-3 gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
           {/* Vision */}
           <div>
             <h1 className="text-3xl font-semibold text-center mb-4">

@@ -34,7 +34,7 @@ const Login = () => {
       if (redirect) {
         router.push(redirect);
       } else {
-        router.push("/");
+        router.push("/posts");
       }
     }
   }, [isLoading, isSuccess]);
@@ -61,10 +61,6 @@ const Login = () => {
             {/* ReusableForm with ReusableInput */}
             <div className="py-3">
               <ReusableForm
-                defaultValues={{
-                  email: "johndoe@example.com",
-                  password: "user123",
-                }}
                 resolver={zodResolver(loginValidationSchema)}
                 onSubmit={onSubmit}
               >

@@ -3,13 +3,15 @@ import { Avatar, Button, Card, CardBody, CardHeader } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
-import { timeAgo } from "@/src/utilis/timeFormat";
-import { useUser } from "@/src/providers/user.provider";
-import UpdateMyPostModal from "./UpdateMyPostModal";
+
 import CardActions from "../../_components/CardActions";
 
+import UpdateMyPostModal from "./UpdateMyPostModal";
 
-const PostDetails = ({ data }: any) => {
+import { timeAgo } from "@/src/utilis/timeFormat";
+import { useUser } from "@/src/providers/user.provider";
+
+const PostDetails = ({ data, comment }: any) => {
   const { user: currentUser } = useUser();
   const [isFollowed, setIsFollowed] = useState(false);
 
@@ -18,7 +20,7 @@ const PostDetails = ({ data }: any) => {
   const userPhoto =
     user.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
 
-  console.log("cu", currentUser?.email, "useremail", user.email);
+  // console.log("cu", currentUser?.email, "useremail", user.email);
 
   return (
     <motion.div
@@ -45,7 +47,7 @@ const PostDetails = ({ data }: any) => {
           {currentUser && user?.email === currentUser?.email ? ( // Corrected the syntax for conditional rendering
             <>
               {/* Your logged-in user UI goes here */}
-              <UpdateMyPostModal post={data}/>
+              <UpdateMyPostModal post={data} />
             </>
           ) : (
             <Button
@@ -69,23 +71,24 @@ const PostDetails = ({ data }: any) => {
         <CardBody className="px-4">
           <h2 className="text-2xl font-bold my-4">{title}</h2>
           <p className="text-lg text-gray-700 mb-4">{description}</p>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4 mx-auto">
             {images.map((image: any, index: any) => (
-              <Image
-                key={index}
-                alt={`Post image ${index + 1}`}
-                className="rounded-lg h-full object-cover"
-                height={400}
-                src={image}
-                width={700}
-              />
+              <div  key={index} className="flex justify-center items-center">
+                <Image
+                  alt={`Post image ${index + 1}`}
+                  className="rounded-lg h-56 object-cover"
+                  height={400}
+                  src={image}
+                  width={700}
+                />
+              </div>
             ))}
           </div>
         </CardBody>
         {/* icons */}
-            <div className="p-10">
-            <CardActions post={data}/>
-            </div>
+        <div className="p-10">
+          <CardActions comment={comment} post={data} />
+        </div>
       </Card>
     </motion.div>
   );

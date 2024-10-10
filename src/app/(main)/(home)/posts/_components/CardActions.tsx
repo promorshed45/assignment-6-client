@@ -1,28 +1,33 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import React, { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
-import { SubmitHandler, FieldValues } from "react-hook-form";
+import { SubmitHandler } from "react-hook-form";
+import { ArrowBigDownIcon, ArrowBigUp, MessageCirclePlus } from "lucide-react";
+
+import CommentBox from "./CommentBox";
+
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
-import { ArrowBigDownIcon, ArrowBigUp, MessageCirclePlus } from "lucide-react";
 import { usePostComment } from "@/src/hooks/post/post.hook";
 
-interface Comment {
-  author: string;
-  text: string;
-}
+// interface Comment {
+//   authorId: string;
+//   content: string;
+//   _id: string;
+// }
 
-interface Post {
-  upvote: number;
-  downvote: number;
-  comments: Comment[];
-}
+// interface Post {
+//   upvote: number;
+//   downvote: number;
+//   comments: Comment[];
+// }
 
 interface FormData {
   comment: string; // corrected field name
 }
 
-const CardActions = ({post}: any) => {
+const CardActions = ({post, comment}: any) => {
   const [isClickToComment, setIsClickToComment] = useState(false);
   const [showComment, setShowComment] = useState(false);
   const {mutate: handlePostComment} = usePostComment()
@@ -79,7 +84,7 @@ const CardActions = ({post}: any) => {
         </div>
       </div>
 
-      {showComment ? "comment box" : ""}
+      <CommentBox  comment={comment}/>
       {/* handle comment */}
       {isClickToComment && (
         <div className="p-5">

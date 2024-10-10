@@ -3,9 +3,10 @@
 import { Avatar, Button, Divider, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
 import { Heart, UserRound } from "lucide-react";
-import CreatePost from "../../../(user)/profile/create-post/page";
-import { useUser } from "@/src/providers/user.provider"
+
 import VerifyAccount from "../../../(user)/profile/my-profile/_components/VerifyAccount";
+
+import { useUser } from "@/src/providers/user.provider"
 
 const NewsFeedSideBar = () => {
   const { user } = useUser();
@@ -14,7 +15,7 @@ const NewsFeedSideBar = () => {
     <>
     {/* {userLoading && <Loading/>} */}
       {user ? (
-        <div className="justify-center items-center text-center mx-auto">
+        <div className="justify-center items-center text-center w-full mx-auto">
           <div className="flex justify-center">
             <Avatar className="w-32 h-32 text-large" src={user?.profilePhoto} />
           </div>
@@ -54,9 +55,7 @@ const NewsFeedSideBar = () => {
 
             <Divider className="w-full" />
             <div className="py-4">
-              <CreatePost />
               <VerifyAccount/>
-
             </div>
 
           </div>

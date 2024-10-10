@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 import {
   Avatar,
@@ -7,7 +6,6 @@ import {
   CardBody,
   CardHeader,
   Divider,
-  Tooltip,
 } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -17,39 +15,30 @@ import { Navigation, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import Link from "next/link";
-import { timeAgo } from "@/src/utilis/timeFormat";
+
 import CardActions from "./CardActions";
+
+import { timeAgo } from "@/src/utilis/timeFormat";
 
 const PostCard = ({ post }: any) => {
   const [isFollowed, setIsFollowed] = useState(false);
-
-  // Removed disableLink since it's not used anywhere.
-  // const [disableLink, setDisableLink] = useState(false);
-  // Removed commentInput and setCommentInput since they are not used.
-  // const [commentInput, setCommentInput] = useState("");
-
   const { title, description, images, user, createdAt } = post || {};
   const userPhoto =
     user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
   const postDate = createdAt ? timeAgo(createdAt) : "";
 
-  
-
-
-
   return (
-    <div className="">
+    <div className="w-full">
       <motion.div
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-3xl mx-auto"
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5 }}
       >
-        <Link className="block" href={`/posts/${post._id}`}>
+        {/* <Link className="block" href={`/posts/${post._id}`}> */}
           <div className="mx-auto rounded-lg pb-10">
-            <div className="flex gap-5 justify-between items-center pb-10">
-              <div className="flex w-2/3">
-                <Card className="overflow-hidden w-full bg-transparent shadow-none rounded-none">
+            <Link className="block" href={`/posts/${post._id}`}>
+            <div className="flex flex-col md:flex-row gap-5 justify-between items-center">
+                <Card className="overflow-hidden w-full md:w-2/3 bg-transparent shadow-none rounded-none">
                   <CardHeader className="justify-between">
                     <div className="flex gap-5">
                       <Avatar
@@ -98,26 +87,19 @@ const PostCard = ({ post }: any) => {
                       </span>
                     </span>
                   </CardBody>
-
-                 <div className="pt-10">
-                 <CardActions post={post}/>
-                 </div>
-
-                 
                 </Card>
-              </div>
 
-              <div className="w-1/3 h-44">
+              <div className="w-full md:w-1/3 h-44">
                 <Swiper
                   navigation
                   autoplay={{ delay: 5000 }}
-                  className="mySwiper w-full h-full object-contain rounded-xl"
+                  className="mySwiper w-full h-44 object-contain rounded-xl"
                   modules={[Navigation, Autoplay]}
                   pagination={{ clickable: true }}
                   scrollbar={{ draggable: true }}
                   slidesPerView={1}
                 >
-                  {images.map((image: string, index: any) => (
+                  {images.map((image: string, index: number) => (
                     <SwiperSlide key={index}>
                       <Image
                         alt={`Image ${index}`}
@@ -131,9 +113,13 @@ const PostCard = ({ post }: any) => {
                 </Swiper>
               </div>
             </div>
+            </Link>
+            <div className="pt-10">
+                    <CardActions post={post} />
+                  </div>
             <Divider className="border-2 my-4" />
           </div>
-        </Link>
+        {/* </Link> */}
       </motion.div>
     </div>
   );

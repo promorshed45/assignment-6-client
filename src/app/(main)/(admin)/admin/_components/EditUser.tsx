@@ -8,47 +8,25 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { RiEdit2Fill } from "react-icons/ri";
 import { FieldValues, SubmitHandler } from "react-hook-form";
-import { toast } from "sonner";
+import { Pencil } from "lucide-react";
 
-import TDForm from "../../form/TDForm";
-import TDSelect from "../../form/TDSelect";
+import { IUser,  } from "@/src/types";
+import ReusableForm from "@/src/components/ui/ReusableForm";
+import ReusableSelect from "@/src/components/ui/ReusableSelect";
 
-
-import { TResponse, TUser } from "@/src/types";
-import { useUpdateUserMutation } from "@/src/redux/features/user/userApi";
-
-export default function EditUser({id,data}:{id:string,data:TUser}) {
+export default function EditUser({id,data}:{id:string,data:IUser}) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [updateUser,{isSuccess}]=useUpdateUserMutation()
 
 //   console.log("--->",data);
   const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const toastId=toast.loading("updating....")
-    try {
-     const payload={
-        id,
-        updateInFo:data,
-     }
-    //  console.log(payload);
-        const res = (await updateUser({payload})) as TResponse<any>;
-        if (res?.data) {
-          toast.success("updated success",{id:toastId,duration:1000});
-          onOpenChange(); 
-        } else {
-          toast.error(res?.error?.data?.message,{id:toastId});
-        }
-      }
-     catch (error: any) {
-      toast.error(error?.message,{id:toastId});
-    }
+    console.log(data);
   };
 
   return (
     <>
       <Button onPress={onOpen} size="sm" variant="flat" className="text-xl">
-        <RiEdit2Fill />
+        <Pencil className="size-4" /> 
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
@@ -56,9 +34,9 @@ export default function EditUser({id,data}:{id:string,data:TUser}) {
             <>
               <ModalBody className="mt-8">
                 <h1 className="text-center font-medium text-xl">Edit User Credential</h1>
-                <TDForm onSubmit={handleSubmit}>
+                <ReusableForm onSubmit={handleSubmit}>
                   <div className="space-y-3">
-                    <TDSelect
+                    <ReusableSelect
                     size="sm"
                       label="Status"
                       name="status"
@@ -68,7 +46,7 @@ export default function EditUser({id,data}:{id:string,data:TUser}) {
                         { key: "Blocked", label: "Blocked" },
                       ]}
                     />
-                    <TDSelect
+                    <ReusableSelect
                     size="sm"
                       label="Role"
                       name="role"
@@ -82,7 +60,7 @@ export default function EditUser({id,data}:{id:string,data:TUser}) {
                       Edit
                     </Button>
                   </div>
-                </TDForm>
+                </ReusableForm>
               </ModalBody>
               <ModalFooter />
             </>

@@ -1,9 +1,9 @@
 /* eslint-disable prettier/prettier */
 import NewsFeedTabs from "./_components/NewsFeedTabs";
+
 import nexiosInstance from "@/src/config/nexios.config";
 import { getCurrentUser } from "@/src/services/AuthService";
 import { TPost } from "@/src/types";
-import CardActions from "./_components/CardActions";
 
 const NewsFeedPage = async () => {
   const currentUser = await getCurrentUser();

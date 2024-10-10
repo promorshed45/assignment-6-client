@@ -41,10 +41,16 @@ export default function Hero() {
               <div>
                 <h1>
                   {" "}
-                  <span className="text-left text-default-900 dark:text-default-500 font-medium tracking-tight max-w-md md:max-w-3xl text-3xl md:text-4xl  mr-auto lg:text-6xl font-geist  text-transparent bg-clip-text bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] leading-0 md:leading-0 md:pb-0 mt-1">
-                    {" "}
-                    Explore the World with Confidence!{" "}
-                  </span>{" "}
+                  <span
+                    className="text-left font-medium tracking-tight max-w-md md:max-w-3xl text-3xl md:text-4xl mr-auto lg:text-6xl font-geist 
+                
+                bg-clip-text 
+                bg-[linear-gradient(180deg,_#FFF_0%,_rgba(255,_255,_255,_0.00)_202.08%)] 
+                leading-0 md:leading-0 md:pb-0 mt-1 
+                text-red-500 "
+                  >
+                    Explore the World with Confidence!
+                  </span>
                   <span className="text-4xl">🌍✈️</span>{" "}
                 </h1>
               </div>

@@ -1,25 +1,29 @@
 
 import PostDetails from "./_components/PostDetails";
+
+import { IParamsProps } from "@/src/types";
 import nexiosInstance from "@/src/config/nexios.config";
 
-interface IProps {
-  params: {
-    id: string;
-  };
-}
 
-const page = async ({ params: { id } }: IProps) => {
+const page = async ({ params: { id } }: IParamsProps) => {
   const response = await nexiosInstance.get(`/post/${id}`, {
     cache: "no-store",
   });
 
-  const { data }: any = response.data; // Fixed the response destructuring
+  const { data }: any = response.data; 
 
-  // console.log('response id', data);
+
+  const commentData = await nexiosInstance.get(`/comment/${id}`, {
+    cache: "no-store",
+  });
+
+  const comment: any = commentData.data; 
+
+  console.log('post details page teke comment', comment);
 
   return (
     <div className="container mx-auto my-3 max-w-[720px]">
-      <PostDetails data={data} />
+      <PostDetails comment={comment} data={data} />
     </div>
   );
 };

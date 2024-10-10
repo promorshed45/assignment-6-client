@@ -1,18 +1,12 @@
-"use client";
 import PostCreationModal from "./_components/CreatePost";
 
-import { useUser } from "@/src/providers/user.provider";
-
-const CreatePost = () => {
-  const { user } = useUser();
-
-  console.log("create post from user id", user);
+const page = () => {
 
   return (
-    <>
-      <PostCreationModal userInfo={user} />
-    </>
+    <div>
+      <PostCreationModal />
+    </div>
   );
 };
 
-export default CreatePost;
+export default page;

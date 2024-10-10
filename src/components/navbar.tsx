@@ -6,7 +6,6 @@ import {
   NavbarMenuToggle,
   NavbarBrand,
   NavbarItem,
-  NavbarMenuItem,
 } from "@nextui-org/navbar";
 import { Link } from "@nextui-org/link";
 import { Input } from "@nextui-org/input";
@@ -17,10 +16,13 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
 import { useUser } from "../providers/user.provider";
+
 import NavDropdownMenu from "./ui/NavDropdownMenu";
+
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { SearchIcon, Logo } from "@/src/components/icons";
+import { LogIn } from "lucide-react";
 
 export const Navbar = () => {
   const { user } = useUser();
@@ -32,7 +34,7 @@ export const Navbar = () => {
   };
 
   const searchInput = (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex">
+    <form className="flex" onSubmit={handleSubmit(onSubmit)}>
       <Input
         {...register("search")} // Register input for form
         aria-label="Search"
@@ -48,7 +50,7 @@ export const Navbar = () => {
         }
         type="search"
       />
-      <button type="submit" className="ml-2">
+      <button className="ml-2" type="submit">
         Search
       </button>
     </form>
@@ -89,12 +91,12 @@ export const Navbar = () => {
         <NavbarItem className="hidden sm:flex gap-2">
           <ThemeSwitch />
         </NavbarItem>
-        <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem>
+        {/* <NavbarItem className="hidden lg:flex">{searchInput}</NavbarItem> */}
 
         {user?.email ? (
           <NavDropdownMenu />
         ) : (
-          <NavbarItem className="hidden md:flex">
+          <NavbarItem className="flex">
             <Link
               className="flex items-center justify-center gap-x-1 py-2 px-4 text-default-500 transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-md md:inline-flex"
               href="/login"
@@ -120,30 +122,43 @@ export const Navbar = () => {
       <NavbarContent className="sm:hidden basis-1 pl-4" justify="end">
         <ThemeSwitch />
         <NavbarMenuToggle />
+        {user?.email ? (
+          <NavDropdownMenu />
+        ) : (
+          <NavbarItem className="flex">
+            <Link
+              className="flex items-center justify-center gap-x-1 py-2 px-2 text-default-500 transform-gpu dark:[border:1px_solid_rgba(255,255,255,.1)] dark:[box-shadow:0_-20px_80px_-20px_#8686f01f_inset] rounded-md md:inline-flex"
+              href="/login"
+            >
+              
+              <LogIn size="16"/>
+            </Link>
+          </NavbarItem>
+        )}
       </NavbarContent>
 
       <NavbarMenu>
         {searchInput}
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {siteConfig.navMenuItems.map((item, index) => (
-            <NavbarMenuItem key={`${item}-${index}`}>
-              <Link
-                color={
-                  index === 2
-                    ? "primary"
-                    : index === siteConfig.navMenuItems.length - 1
-                      ? "danger"
-                      : "foreground"
-                }
-                href="#"
-                size="lg"
+       
+          {siteConfig.navItems.map((item) => (
+            <NavbarItem key={item.href}>
+              <NextLink
+                className={clsx(
+                  linkStyles({ color: "foreground" }),
+                  "data-[active=true]:text-primary data-[active=true]:font-medium",
+                )}
+                color="foreground"
+                href={item.href}
               >
                 {item.label}
-              </Link>
-            </NavbarMenuItem>
+              </NextLink>
+            </NavbarItem>
           ))}
+        
         </div>
       </NavbarMenu>
+      
     </NextUINavbar>
   );
 };

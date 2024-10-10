@@ -1,5 +1,6 @@
 "use server";
 import { FieldValues } from "react-hook-form";
+
 import axiosInstance from "@/src/lib/axiosInstance";
 
 export const addedUpvote = async (voteData: FieldValues) => {
@@ -8,7 +9,7 @@ export const addedUpvote = async (voteData: FieldValues) => {
     
       return data;
     } catch (error: any) {
-        console.error(error);
+        // console.error(error);
       throw new Error(error);
     }
   };
@@ -19,7 +20,7 @@ export const addedUpvote = async (voteData: FieldValues) => {
     
       return data;
     } catch (error: any) {
-        console.error(error);
+        // console.error(error);
       throw new Error(error);
     }
   };

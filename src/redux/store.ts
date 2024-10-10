@@ -1,8 +1,10 @@
 // store.ts
 import { configureStore } from "@reduxjs/toolkit";
 import { persistReducer, persistStore, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from "redux-persist";
+
 import storage from "./storage"; // import the updated storage file
 import { baseApi } from "./Api/baseApi";
+
 import authReducer from "@/src/redux/features/auth/authSlice";
 
 // Configuration for redux-persist
