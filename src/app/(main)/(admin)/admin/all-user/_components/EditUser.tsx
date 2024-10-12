@@ -20,7 +20,6 @@ export default function EditUser({id, data}:{id:string,data:IUser}) {
   const {mutate: handleUpdateUser} = useUpdateUser()
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-//   console.log("--->",data);
   const handleSubmit = (data: any) => {
   
     console.log(id, data);

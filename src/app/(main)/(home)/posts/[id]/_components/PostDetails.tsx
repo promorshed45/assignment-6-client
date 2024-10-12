@@ -14,7 +14,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { EllipsisVertical } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import CardActions from "../../_components/CardActions";
 
@@ -29,8 +29,6 @@ const PostDetails = ({ data, comment }: any) => {
   const { user: currentUser } = useUser();
   const [isFollowed, setIsFollowed] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const redirect = searchParams.get("redirect");
   const router = useRouter();
 
   const {
@@ -149,7 +147,7 @@ const PostDetails = ({ data, comment }: any) => {
           </div>
         </CardBody>
         <div className="p-10">
-          <CardActions comment={comment} post={data} />
+          <CardActions comment={comment} currentUser={currentUser} post={data} />
         </div>
       </Card>
 

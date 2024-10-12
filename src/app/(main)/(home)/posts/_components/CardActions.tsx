@@ -8,24 +8,22 @@ import CommentBox from "./CommentBox";
 
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
-import { useUser } from "@/src/providers/user.provider";
 import { usePostComment } from "@/src/hooks/comments/comments.hook";
 
 interface FormData {
   comment: string;
 }
 
-const CardActions = ({ post, comment }: any) => {
+const CardActions = ({ currentUser, post, comment }: any) => {
   const methods = useForm<FormData>();
   const [isClickToComment, setIsClickToComment] = useState(false);
   const { mutate: handlePostComment } = usePostComment();
-  const { user } = useUser();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const commentData = {
       postId: post?._id,
-      authorId: post?.user?._id,
+      authorId: currentUser?._id,
       content: data.comment,
     };
     handlePostComment(commentData);
@@ -74,10 +72,10 @@ const CardActions = ({ post, comment }: any) => {
         </div>
       </div>
 
-      <CommentBox comment={comment} />
+      <CommentBox comment={comment} currentUser={currentUser} />
 
       {isClickToComment && (
-        user ? (
+        currentUser ? (
           <div className="p-5">
             <ReusableForm onSubmit={onSubmit}>
               <ReusableInput label="Comment" name="comment" type="text" />

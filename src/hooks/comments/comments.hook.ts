@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-import { deleteComment, postComment } from "@/src/services/comments";
+import { deleteComment, postComment, updateComment } from "@/src/services/comments";
 
 export const usePostComment = () => {
     return useMutation<any, Error, FieldValues>({
@@ -17,16 +17,29 @@ export const usePostComment = () => {
     });
   };
   
-  
+
+export const useUpdateComment = () => {
+    return useMutation<any, Error, { commentId: string; commentData: any }>({
+      mutationKey: ["UPDATE_COMMENT"],
+      mutationFn: async ({ commentId, commentData }) => await updateComment(commentId, commentData),
+      onSuccess: () => {
+        toast.success("Comment updated successfully.");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
+    });
+  };
+
   export const useDeleteComment = () => {
-    return useMutation<any, Error, string>({
-        mutationKey: ["DELETE_COMMENT"],
-        mutationFn: async (commentId) => await deleteComment(commentId),
-        onSuccess: () => {
-            toast.success("Comment deleted successfully.");
-        },
-        onError: (error) => {
-            toast.error(error.message);
-        },
+    return useMutation<any, Error, { commentId: string}>({
+      mutationKey: ["DELETE"],
+      mutationFn: async ({ commentId }) => await deleteComment(commentId),
+      onSuccess: () => {
+        toast.success("Comment deleted successfully.");
+      },
+      onError: (error) => {
+        toast.error(error.message);
+      },
     });
   };
