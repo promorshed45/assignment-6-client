@@ -19,7 +19,7 @@ import {
 import Image from "next/image";
 
 import ReusableInput from "@/src/components/ui/ReusableInput";
-import { useUserUpdateProfile } from "@/src/hooks/updateProfile.hooks";
+import { useUserUpdateProfile } from "@/src/hooks/updateProfile.hook";
 
 interface FormInputs {
   name: string;

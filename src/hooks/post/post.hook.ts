@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-import { addPost, deleteComment, deletePost, postComment, updatePost } from "../../services/Post";
+import { addPost, deletePost, updatePost } from "../../services/Post";
 
 
 export const useAddNewPost = () => {
@@ -47,29 +47,4 @@ export const useDeletePost = () => {
   });
 };
 
-export const usePostComment = () => {
-  return useMutation<any, Error, FieldValues>({
-    mutationKey: ["ADD_COMMENT"],
-    mutationFn: async (userData) => await postComment(userData),
-    onSuccess: () => {
-      toast.success("Comment post successful.");
-    },
-    onError: (error) => {
-      toast.error(error.message);
-    },
-  });
-};
 
-
-export const useDeleteComment = () => {
-  return useMutation<any, Error, string>({
-      mutationKey: ["DELETE_COMMENT"],
-      mutationFn: async (commentId) => await deleteComment(commentId),
-      onSuccess: () => {
-          toast.success("Comment deleted successfully.");
-      },
-      onError: (error) => {
-          toast.error(error.message);
-      },
-  });
-};

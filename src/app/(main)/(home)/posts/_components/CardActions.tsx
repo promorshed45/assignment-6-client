@@ -1,53 +1,41 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-"use client";
 import React, { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
-import { SubmitHandler } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { ArrowBigDownIcon, ArrowBigUp, MessageCirclePlus } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 import CommentBox from "./CommentBox";
 
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
-import { usePostComment } from "@/src/hooks/post/post.hook";
 import { useUser } from "@/src/providers/user.provider";
-
-// interface Comment {
-//   authorId: string;
-//   content: string;
-//   _id: string;
-// }
-
-// interface Post {
-//   upvote: number;
-//   downvote: number;
-//   comments: Comment[];
-// }
+import { usePostComment } from "@/src/hooks/comments/comments.hook";
 
 interface FormData {
-  comment: string; // corrected field name
+  comment: string;
 }
 
 const CardActions = ({ post, comment }: any) => {
+  const methods = useForm<FormData>();
   const [isClickToComment, setIsClickToComment] = useState(false);
-  const [showComment, setShowComment] = useState(false);
   const { mutate: handlePostComment } = usePostComment();
-  const {user} = useUser();
+  const { user } = useUser();
+  const router = useRouter();
 
-  // handle comment submit
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const commentData = {
       postId: post?._id,
       authorId: post?.user?._id,
-      content: data?.comment,
+      content: data.comment,
     };
     handlePostComment(commentData);
-    // console.log(commentData);
-    setShowComment(true);
+    methods.reset();
+    router.push(`/posts/${post._id}`);
   };
 
   return (
     <div>
+      
       <div className="mt-4 flex justify-between">
         <div className="flex gap-3 items-center border-2 border-gray-600 px-3 rounded-md">
           <div className="hover:bg-green-500/20 rounded-md px-3 py-2">
@@ -87,9 +75,9 @@ const CardActions = ({ post, comment }: any) => {
       </div>
 
       <CommentBox comment={comment} />
-      {/* handle comment */}
-      {user ? 
-        isClickToComment && (
+
+      {isClickToComment && (
+        user ? (
           <div className="p-5">
             <ReusableForm onSubmit={onSubmit}>
               <ReusableInput label="Comment" name="comment" type="text" />
@@ -98,9 +86,11 @@ const CardActions = ({ post, comment }: any) => {
               </Button>
             </ReusableForm>
           </div>
-        
-      ) : (
-        <div>Please login</div>
+        ) : (
+          <div className="text-center">
+            <p>Please Login to comment</p>
+          </div>
+        )
       )}
     </div>
   );

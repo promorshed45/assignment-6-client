@@ -3,13 +3,14 @@
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
+import { revalidateTag } from "next/cache";
 
 import axiosInstance from "@/src/lib/axiosInstance";
 
 export const registerUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/register", userData);
-
+    revalidateTag("users");
     console.log("service teke", data);
     if (data.success) {
       cookies().set("accessToken", data?.data?.accessToken);

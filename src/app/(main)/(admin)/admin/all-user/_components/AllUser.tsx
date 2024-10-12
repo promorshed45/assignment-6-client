@@ -17,7 +17,7 @@ import { X } from "lucide-react";
 import EditUser from "./EditUser";
 
 import { IUser } from "@/src/types";
-import { useDeleteUser } from "@/src/hooks/user/user.hooks";
+import { useDeleteUser } from "@/src/hooks/user/users.hook";
 
 export default function AllUser({allUser}: any) {
   const {mutate: handleDeleteUser} = useDeleteUser()

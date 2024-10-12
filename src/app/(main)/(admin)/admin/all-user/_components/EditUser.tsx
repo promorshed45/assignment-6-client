@@ -14,7 +14,7 @@ import { Pencil } from "lucide-react";
 import { IUser,  } from "@/src/types";
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableSelect from "@/src/components/ui/ReusableSelect";
-import { useUpdateUser } from "@/src/hooks/user/user.hooks";
+import { useUpdateUser } from "@/src/hooks/user/users.hook";
 
 export default function EditUser({id, data}:{id:string,data:IUser}) {
   const {mutate: handleUpdateUser} = useUpdateUser()

@@ -1,13 +1,13 @@
 "use server";
 import { FieldValues } from "react-hook-form";
+import { revalidateTag } from "next/cache";
 
 import axiosInstance from "@/src/lib/axiosInstance";
-import { revalidateTag } from "next/cache";
 
 export const addPost = async (postData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/post", postData);
-    console.log(data);
+    revalidateTag("posts");
     return data;
   } catch (error: any) {
     console.error(error);
@@ -44,24 +44,3 @@ export const deletePost = async (postId: string) => {
   }
 };
 
-
-export const postComment = async (userData: FieldValues) => {
-  try {
-    const { data } = await axiosInstance.post("/comment", userData);
-
-    return data;
-  } catch (error: any) {
-    console.error(error);
-    throw new Error(error);
-  }
-};
-
-export const deleteComment = async (commentId: string) => {
-  try {
-    const response = await axiosInstance.delete(`/comment/${commentId}`);
-    return response.data;
-  } catch (error: any) {
-    // console.error(error);
-    throw new Error(error);
-  }
-};

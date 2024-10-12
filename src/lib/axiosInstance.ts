@@ -1,3 +1,4 @@
+// "use server"
 /* eslint-disable import/order */
 /* eslint-disable padding-line-between-statements */
 import envConfig from "@/src/config/envConfig";
