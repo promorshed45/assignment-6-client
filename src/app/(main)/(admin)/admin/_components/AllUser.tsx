@@ -16,11 +16,16 @@ import { X } from "lucide-react";
 import EditUser from "./EditUser";
 
 import { IUser } from "@/src/types";
+import { useDeleteUser } from "@/src/hooks/user/user.hooks";
 
 export default function AllUser({allUser}: any) {
-  console.log("alluser", allUser );
-  const handleDeleteUser = async (id: string) => {
+  const {mutate: handleDeleteUser} = useDeleteUser()
+
+
+
+  const handleSubmit = (id: string) => {
     console.log(id);
+    handleDeleteUser({userId: id})
   };
 
   return (
@@ -56,7 +61,7 @@ export default function AllUser({allUser}: any) {
                   className="text-xl text-red-500"
                   size="sm"
                   variant="flat"
-                  onClick={() => handleDeleteUser(user?._id)}
+                  onClick={() => handleSubmit(user?._id)}
                 >
                   <X className="size-5" /> 
                 </Button>
