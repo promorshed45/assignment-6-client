@@ -37,12 +37,12 @@ const CardActions = ({ post, comment }: any) => {
   // handle comment submit
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const commentData = {
-      postId: post._id,
+      postId: post?._id,
       authorId: post?.user?._id,
-      content: data.comment,
+      content: data?.comment,
     };
     handlePostComment(commentData);
-    console.log(commentData);
+    // console.log(commentData);
     setShowComment(true);
   };
 

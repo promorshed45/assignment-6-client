@@ -11,7 +11,7 @@ const NewsFeedPage = async () => {
 
   // console.log("abc", currentUserEmail);
 
-  const respone = await nexiosInstance.get("/post", { cache: "no-store" });
+  const respone = await nexiosInstance.get("/post", { cache: "no-store", next: { tags: ['posts']} });
   const { data }: any = respone?.data;
 
   const premiumPosts = data?.filter((post: TPost) => post.status === "PREMIUM");

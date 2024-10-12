@@ -11,19 +11,24 @@ import {
   Button,
   Image,
 } from "@nextui-org/react";
-import { Delete } from "lucide-react";
+import { X } from "lucide-react";
 
 import AdminUpdatePost from "./AdminUpdatePost";
 
 import { TPost } from "@/src/types";
+import { useDeletePost } from "@/src/hooks/post/post.hook";
 
 
 
 export default function ContentManagement({allPost}: any) {
 
-  const handleDeletePost = async (id: string) => {
+  const {mutate: handleDeletePost} = useDeletePost()
+
+  const handleSubmit = (id: string) => {
     console.log(id);
+    handleDeletePost({postId: id})
   };
+
 
   return (
     <Table aria-label="static collection table">
@@ -41,7 +46,7 @@ export default function ContentManagement({allPost}: any) {
           return (
             <TableRow key={post?._id}>
               <TableCell>
-                <Image className="size-10" src={post?.images} />
+                <Image alt={post.title} className="size-10" src={post?.images} />
               </TableCell>
               <TableCell>{post?.user?.name}</TableCell>
               <TableCell>{post?.category}</TableCell>
@@ -66,9 +71,9 @@ export default function ContentManagement({allPost}: any) {
                   className="text-xl text-red-500"
                   size="sm"
                   variant="flat"
-                  onClick={() => handleDeletePost(post?._id)}
+                  onClick={() => handleSubmit(post?._id)}
                 >
-                  <Delete />
+                  <X className="size-5" /> 
                 </Button>
               </TableCell>
             </TableRow>

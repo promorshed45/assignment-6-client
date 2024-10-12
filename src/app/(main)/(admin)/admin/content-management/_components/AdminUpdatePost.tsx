@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/jsx-sort-props */
 import {
@@ -9,40 +8,37 @@ import {
   Button,
   useDisclosure,
 } from "@nextui-org/react";
-import { FieldValues, SubmitHandler } from "react-hook-form";
 import { Pencil } from "lucide-react";
 
-import { IUser,  } from "@/src/types";
+import { TPost } from "@/src/types";
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableSelect from "@/src/components/ui/ReusableSelect";
-import { useUpdateUser } from "@/src/hooks/user/user.hooks";
+import { useUpdatePost } from "@/src/hooks/post/post.hook";
 
-export default function EditUser({id, data}:{id:string,data:IUser}) {
-  const {mutate: handleUpdateUser} = useUpdateUser()
+export default function AdminUpdatePost({ id, data, }: { id: string; data: TPost; }) {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const { mutate: handleUpdatePost } = useUpdatePost();
 
-//   console.log("--->",data);
-  const handleSubmit = (data: any) => {
-  
+  const handleSubmit = (data: TPost) => {
     console.log(id, data);
-    handleUpdateUser({ userId: id, userData: data });
+    handleUpdatePost({ postId: id, postData: data });
   };
 
   return (
     <>
       <Button onPress={onOpen} size="sm" variant="flat" className="text-xl">
-        <Pencil className="size-4" /> 
+        <Pencil className="size-4" />
       </Button>
       <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalBody className="mt-8">
-                <h1 className="text-center font-medium text-xl">Edit User Credential</h1>
+                <h1 className="text-center font-medium text-xl">Update Post</h1>
                 <ReusableForm onSubmit={handleSubmit}>
                   <div className="space-y-3">
                     <ReusableSelect
-                    size="sm"
+                      size="sm"
                       label="Status"
                       name="status"
                       defaultValue={data?.status}
@@ -52,17 +48,17 @@ export default function EditUser({id, data}:{id:string,data:IUser}) {
                       ]}
                     />
                     <ReusableSelect
-                    size="sm"
-                      label="Role"
-                      name="role"
-                      defaultValue={data?.role}
+                      size="sm"
+                      label="Post Type"
+                      name="type"
+                      defaultValue={data?.type}
                       options={[
-                        { key: "ADMIN", label: "Admin" },
-                        { key: "USER", label: "User" },
+                        { key: "Premium", label: "Premium" },
+                        { key: "Non-Premium", label: "Non-Premium" },
                       ]}
                     />
                     <Button className="w-full" color="primary" type="submit">
-                      Edit
+                      update
                     </Button>
                   </div>
                 </ReusableForm>

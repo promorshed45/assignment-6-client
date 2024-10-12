@@ -54,6 +54,7 @@ export interface IInput {
   
   export interface TPost {
     _id: string;
+    title: string;
     user: IUser;
     images: string;
     category: string;

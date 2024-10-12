@@ -25,13 +25,13 @@ const CommentBox = ({ comment }: any) => {
                 isBordered
                 radius="full"
                 size="md"
-                src={item.authorId.profilePhoto}
+                src={item?.authorId?.profilePhoto}
               />
               <div className="flex flex-col gap-1 items-start justify-center pr-4 bg-gray-50 rounded-xl p-3 shadow-sm">
                 <h4 className="text-base font-semibold leading-tight text-gray-800">
-                  {item.authorId.name}
+                  {item?.authorId?.name}
                 </h4>
-                <h5 className="text-sm text-gray-600">{item.content}</h5>
+                <h5 className="text-sm text-gray-600">{item?.content}</h5>
               </div>
             </div>
 

@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
 
-import AllUser from '../_components/AllUser';
+import AllUser from "./_components/AllUser";
 
-import nexiosInstance from '@/src/config/nexios.config';
+import nexiosInstance from "@/src/config/nexios.config";
 
 const userManagement = async () => {
-  const respone = await nexiosInstance.get("/users", { cache: "no-store" });
+  const respone = await nexiosInstance.get("/users", {
+    cache: "no-store",
+    next: { tags: ['users']}
+  });
 
   const { data }: any = respone?.data;
-
 
   return (
     <div>
