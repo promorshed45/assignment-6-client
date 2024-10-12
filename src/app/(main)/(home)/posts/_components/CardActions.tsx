@@ -10,6 +10,7 @@ import CommentBox from "./CommentBox";
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import { usePostComment } from "@/src/hooks/post/post.hook";
+import { useUser } from "@/src/providers/user.provider";
 
 // interface Comment {
 //   authorId: string;
@@ -27,21 +28,22 @@ interface FormData {
   comment: string; // corrected field name
 }
 
-const CardActions = ({post, comment}: any) => {
+const CardActions = ({ post, comment }: any) => {
   const [isClickToComment, setIsClickToComment] = useState(false);
   const [showComment, setShowComment] = useState(false);
-  const {mutate: handlePostComment} = usePostComment()
+  const { mutate: handlePostComment } = usePostComment();
+  const {user} = useUser();
 
   // handle comment submit
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const commentData = {
-        postId: post._id,
-        authorId: post?.user?._id,
-        content: data.comment,
-    }
+      postId: post._id,
+      authorId: post?.user?._id,
+      content: data.comment,
+    };
     handlePostComment(commentData);
     console.log(commentData);
-    setShowComment(true); 
+    setShowComment(true);
   };
 
   return (
@@ -77,24 +79,28 @@ const CardActions = ({post, comment}: any) => {
             onClick={() => setIsClickToComment(!isClickToComment)}
           >
             <span className="text-xl">
-            <MessageCirclePlus />
+              <MessageCirclePlus />
             </span>{" "}
             <span>Comment</span>
           </Button>
         </div>
       </div>
 
-      <CommentBox  comment={comment}/>
+      <CommentBox comment={comment} />
       {/* handle comment */}
-      {isClickToComment && (
-        <div className="p-5">
-          <ReusableForm onSubmit={onSubmit}>
-            <ReusableInput label="Comment" name="comment" type="text" />
-            <Button className="w-full mt-4" type="submit">
-              Submit
-            </Button>
-          </ReusableForm>
-        </div>
+      {user ? 
+        isClickToComment && (
+          <div className="p-5">
+            <ReusableForm onSubmit={onSubmit}>
+              <ReusableInput label="Comment" name="comment" type="text" />
+              <Button className="w-full mt-4" type="submit">
+                Submit
+              </Button>
+            </ReusableForm>
+          </div>
+        
+      ) : (
+        <div>Please login</div>
       )}
     </div>
   );

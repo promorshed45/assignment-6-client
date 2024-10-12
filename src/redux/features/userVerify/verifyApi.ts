@@ -8,9 +8,18 @@ export const verifyApi = baseApi.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["user", "verify"],
+      invalidatesTags: ["verify"],
+    }),
+    
+    getAllVerifyInFo: builder.query({
+      query: () => ({
+        url: "/verifyAccount/all-payment",
+        method: "GET",
+        
+      }),
+      providesTags: ["verify"],
     }),
   }),
 });
 
-export const { useVerifyAccoutMutation } = verifyApi;
+export const { useVerifyAccoutMutation ,useGetAllVerifyInFoQuery} = verifyApi;

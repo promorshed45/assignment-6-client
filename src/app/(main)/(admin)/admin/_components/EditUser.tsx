@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/jsx-sort-props */
 import {
@@ -14,13 +15,17 @@ import { Pencil } from "lucide-react";
 import { IUser,  } from "@/src/types";
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableSelect from "@/src/components/ui/ReusableSelect";
+import { useUpdateUser } from "@/src/hooks/user/user.hooks";
 
-export default function EditUser({id,data}:{id:string,data:IUser}) {
+export default function EditUser({id, data}:{id:string,data:IUser}) {
+  const {mutate: handleUpdateUser} = useUpdateUser()
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 //   console.log("--->",data);
-  const handleSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+  const handleSubmit = (data: any) => {
+  
+    console.log(id, data);
+    handleUpdateUser({ userId: id, userData: data });
   };
 
   return (

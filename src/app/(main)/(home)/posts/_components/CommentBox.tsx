@@ -11,10 +11,10 @@ import React from "react";
 
 // Adjusted CommentBox with improved design
 const CommentBox = ({ comment }: any) => {
-  console.log(comment);
+  // console.log(comment);
 
   return (
-    <div className="px-4 py-5 mt-5  shadow-lg rounded-lg">
+    <div className="px-4 py-5 mt-5">
       {comment?.data?.length === 0 ? (
         <div className="px-4 py-5 mt-5 bg-blue-500/10 shadow-lg rounded-lg"> <p className="text-gray-500 text-center">No comments available.</p> </div>
       ) : (

@@ -6,6 +6,8 @@ import { motion } from "framer-motion";
 import { GitCommitVerticalIcon, ShieldEllipsis } from "lucide-react";
 import { Button } from "@nextui-org/button";
 
+import VerifyAccount from "../../verify-account/_components/VerifyAccount";
+
 import UserUpdateProfile from "./userUpdateProfile";
 
 export default function Profile({ user }: any) {
@@ -80,6 +82,8 @@ export default function Profile({ user }: any) {
           </div>
         </div>
         <Divider className="my-6" />
+
+        <VerifyAccount/>
       </div>
     </motion.div>
   );

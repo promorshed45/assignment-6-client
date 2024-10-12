@@ -38,7 +38,7 @@ export default function AllUser({allUser}: any) {
           return (
             <TableRow key={user?._id}>
               <TableCell>
-                <Image className="size-10" src={user?.profilePhoto} />
+                <Image alt={user.name} className="size-10" src={user?.profilePhoto} />
               </TableCell>
               <TableCell>{user?.name}</TableCell>
               <TableCell>{user?.role}</TableCell>
