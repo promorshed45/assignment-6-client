@@ -22,14 +22,12 @@ import CardActions from "./CardActions";
 
 import { timeAgo } from "@/src/utilis/timeFormat";
 import { useUser } from "@/src/providers/user.provider";
-import { useAddFollow, useGetFollowing } from "@/src/hooks/following/follows.hook";
+import { useAddFollow, } from "@/src/hooks/following/follows.hook";
 
 const PostCard = ({ post }: any) => {
-  const {data: followingData} = useGetFollowing()
   const {mutate: handleFollowUser} = useAddFollow()
   const {user: currentUser} = useUser();
 
-  console.log('post card hote following data', followingData);
   // console.log("user post card", currentUser);
 
   const [isFollowed, setIsFollowed] = useState(false);

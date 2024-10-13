@@ -12,7 +12,7 @@ import { ISearchResult } from "../types";
 
 const SearchButton = () => {
   const { register, handleSubmit, watch } = useForm();
-  const { mutate: handleSearch, data, isPending, isSuccess } = useSearchPost();
+  const { mutate: handleSearch, data, isLoading: isPending, isSuccess } = useSearchPost();
   const [searchResults, setSearchResults] = useState<ISearchResult[]>([]);
   const router = useRouter();
 

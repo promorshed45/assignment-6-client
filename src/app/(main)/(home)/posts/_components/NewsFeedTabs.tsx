@@ -30,6 +30,7 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
   myPosts,
 }) => {
   const { user } = useUser();
+ 
 
   return (
     <>
