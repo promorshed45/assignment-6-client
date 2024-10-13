@@ -41,6 +41,7 @@ const CardActions = ({ currentUser, post, comment }: any) => {
               <button className="flex items-center gap-2">
                 <ArrowBigUp className="size-5 text-green-600" />
                 {/* {upvoteCount} */}
+                00
               </button>
             </Tooltip>
           </div>
@@ -52,6 +53,7 @@ const CardActions = ({ currentUser, post, comment }: any) => {
               <button className="flex items-center gap-2">
                 <ArrowBigDownIcon className="size-5 text-red-600" />
                 {/* {downvoteCount} */}
+                00
               </button>
             </Tooltip>
           </div>

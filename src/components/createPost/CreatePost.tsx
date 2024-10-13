@@ -18,13 +18,14 @@ import {
   useForm,
 } from "react-hook-form";
 
-import QuillEditor from "./_components/QuillEditor";
 
 import { useAddNewPost } from "@/src/hooks/post/post.hook";
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import ImageUpload from "@/src/components/ui/ImageUpload";
 import ReusableSelect from "@/src/components/ui/ReusableSelect";
 import { useUser } from "@/src/providers/user.provider";
+
+import QuillEditor from "./QuillEditor";
 
 const categoriesList = [
   "Business Travel",

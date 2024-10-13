@@ -6,18 +6,18 @@ import { Heart, UserRound } from "lucide-react";
 
 import VerifyAccount from "../../../(user)/profile/my-profile/_components/VerifyAccount";
 
-import { useUser } from "@/src/providers/user.provider"
+import { useUser } from "@/src/providers/user.provider";
 
 const NewsFeedSideBar = () => {
   const { user } = useUser();
 
   return (
     <>
-    {/* {userLoading && <Loading/>} */}
+      {/* {userLoading && <Loading/>} */}
       {user ? (
         <div className="justify-center items-center text-center w-full mx-auto">
           <div className="flex justify-center">
-            <Avatar className="w-32 h-32 text-large" src={user?.profilePhoto} />
+            <Avatar isBordered className="h-32 w-32" radius="full" src={user?.profilePhoto} />
           </div>
           <div className="pb-0 pt-2 px-4 flex-col items-start space-y-1">
             <p className="text-lg uppercase font-bold"> {user?.name} </p>
@@ -55,9 +55,8 @@ const NewsFeedSideBar = () => {
 
             <Divider className="w-full" />
             <div className="py-4">
-              <VerifyAccount/>
+              <VerifyAccount />
             </div>
-
           </div>
         </div>
       ) : (

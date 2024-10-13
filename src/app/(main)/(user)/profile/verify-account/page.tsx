@@ -1,4 +1,3 @@
-import React from 'react';
 import VerifyAccount from './_components/VerifyAccount';
 
 const page = () => {

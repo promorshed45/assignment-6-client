@@ -54,7 +54,7 @@ const CommentBox = ({
           <p className="text-gray-500 text-center">No comments available.</p>
         </div>
       ) : (
-        comment.data.map((item: any) => (
+        comment?.data?.map((item: any) => (
           <div
             key={item._id}
             className="pb-4 px-4 py-5 mb-5 flex items-start justify-between w-full bg-blue-500/10 transition-all duration-200 rounded-md"
@@ -93,7 +93,7 @@ const CommentBox = ({
             </div>
 
             {currentUser && currentUser._id === item?.authorId?._id ? (
-              <div className="w-[5%] mr-3">
+              <div className="w-[5%] mr-2">
                 <Dropdown>
                   <DropdownTrigger>
                     <Button isIconOnly variant="light">

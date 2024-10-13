@@ -4,8 +4,10 @@ import {
   Button,
   Card,
   CardBody,
+  CardFooter,
   CardHeader,
   Divider,
+  Tooltip,
 } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -19,13 +21,32 @@ import Link from "next/link";
 import CardActions from "./CardActions";
 
 import { timeAgo } from "@/src/utilis/timeFormat";
+import { useUser } from "@/src/providers/user.provider";
+import { useAddFollow, useGetFollowing } from "@/src/hooks/following/follows.hook";
 
 const PostCard = ({ post }: any) => {
+  const {data: followingData} = useGetFollowing()
+  const {mutate: handleFollowUser} = useAddFollow()
+  const {user: currentUser} = useUser();
+
+  console.log('post card hote following data', followingData);
+  // console.log("user post card", currentUser);
+
   const [isFollowed, setIsFollowed] = useState(false);
-  const { title, description, images, user, createdAt } = post || {};
+  const { title, description, images, user, category, createdAt } = post || {};
   const userPhoto =
     user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
   const postDate = createdAt ? timeAgo(createdAt) : "";
+
+  const handleSubmit = () => {
+    const followingId = post?.user?._id;
+    const followerId = currentUser?._id;
+  
+    if (followingId && followerId) {
+      handleFollowUser({ followingId, followerId }); 
+    }
+  };
+  
 
   return (
     <div className="w-full">
@@ -41,15 +62,96 @@ const PostCard = ({ post }: any) => {
               <Card className="overflow-hidden w-full md:w-2/3 bg-transparent shadow-none rounded-none">
                 <CardHeader className="justify-between">
                   <div className="flex gap-5">
-                    <Avatar
-                      isBordered
-                      radius="full"
-                      size="md"
-                      src={userPhoto}
-                    />
+                    <Tooltip
+                      className="p-2"
+                      content={
+                        <div className="">
+                          <Card className="max-w-[340px] shadow-none rounded-none bg-transparent">
+                            <CardHeader className="justify-between">
+                              <div className="flex gap-5">
+                                <Avatar
+                                  isBordered
+                                  radius="full"
+                                  size="md"
+                                  src={userPhoto}
+                                />
+                                <div className="flex flex-col gap-1 items-start justify-center">
+                                  <h4 className="text-small font-semibold leading-none text-default-600">
+                                    {user?.name}
+                                  </h4>
+                                  <h5 className="text-small tracking-tight text-default-400">
+                                    {user?.email}
+                                  </h5>
+                                </div>
+                              </div>
+                              
+                            </CardHeader>
+                            {/* <CardBody className="px-3 py-0 text-small text-default-400">
+                              <p>
+                                Frontend developer and UI/UX enthusiast. Join me
+                                on this coding adventure!
+                              </p>
+                              <span className="pt-2">
+                                #FrontendWithZoey
+                                <span
+                                  className="py-2"
+                                  aria-label="computer"
+                                  role="img"
+                                >
+                                  💻
+                                </span>
+                              </span>
+                            </CardBody> */}
+                            <CardFooter className="gap-3">
+                              <div className="flex gap-1">
+                                <p className="font-semibold text-default-400 text-small">
+                                  4
+                                </p>
+                                <p className=" text-default-400 text-small">
+                                  Following
+                                </p>
+                              </div>
+                              <div className="flex gap-1">
+                                <p className="font-semibold text-default-400 text-small">
+                                  97.1K
+                                </p>
+                                <p className="text-default-400 text-small">
+                                  Followers
+                                </p>
+                              </div>
+                            </CardFooter>
+                            <div className="p-2 w-full">
+                            <Button
+                                className={
+                                  isFollowed
+                                    ? "bg-transparent w-full text-foreground border-default-200"
+                                    : "w-full"
+                                }
+                                color="primary"
+                                radius="full"
+                                size="sm"
+                                variant={isFollowed ? "bordered" : "solid"}
+                                onClick={handleSubmit}
+                                // onPress={() => setIsFollowed(!isFollowed)}
+                              >
+                                {isFollowed ? "Unfollow" : "Follow"}
+                              </Button>
+                            </div>
+                          </Card>
+                        </div>
+                      }
+                    >
+                      <Avatar
+                        isBordered
+                        radius="lg"
+                        size="md"
+                        src={userPhoto}
+                      />
+                    </Tooltip>
+
                     <div className="flex flex-col gap-1 items-start justify-center">
                       <h4 className="text-small font-semibold leading-none text-default-800">
-                        {user?.name} 
+                        {user?.name}
                       </h4>
                       <h5 className="text-small tracking-tight text-default-400">
                         {postDate}
@@ -79,7 +181,7 @@ const PostCard = ({ post }: any) => {
                   </p>
                   <p className="text-black dark:text-gray-400">{description}</p>
                   <span className="pt-2">
-                    #FrontendWithZoey
+                    {category}
                     <span aria-label="computer" className="py-2" role="img">
                       💻
                     </span>

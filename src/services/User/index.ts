@@ -25,3 +25,4 @@ export const deleteUser = async (userId: string) => {
       throw new Error(error);
   }
 };
+

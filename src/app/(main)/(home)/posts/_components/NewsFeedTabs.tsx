@@ -3,12 +3,14 @@
 import { Tabs, Tab } from "@nextui-org/react";
 import Link from "next/link";
 
-import CreatePost from "../../../(user)/profile/create-post/page";
 
 import PostCard from "./PostCard";
 import NewsFeedSideBar from "./NewsFeedSideBar";
 
 import { useUser } from "@/src/providers/user.provider";
+import PostModal from "@/src/components/createPost/CreatePost";
+
+
 
 interface Post {
   _id: string;
@@ -35,7 +37,7 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
         {/* <div className={`w-2/3 ${user ? "md:w-4/5" : "md:max-w-3/4"}`}> */}
         {user ? (
           <div className="">
-            <CreatePost />
+            <PostModal/>
           </div>
         ) : (
           ""
@@ -63,7 +65,7 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
               >
                 <div>
                   {freePost?.map((post: Post) => (
-                    <PostCard key={post._id} post={post} />
+                    <PostCard key={post._id}  post={post}/>
                   ))}
                 </div>
               </Tab>
