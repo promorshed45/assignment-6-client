@@ -13,7 +13,6 @@ const NewsFeedSideBar = () => {
 
   return (
     <>
-      {/* {userLoading && <Loading/>} */}
       {user ? (
         <div className="justify-center items-center text-center w-full mx-auto">
           <div className="flex justify-center">

@@ -25,8 +25,8 @@ import { useUser } from "@/src/providers/user.provider";
 import { useAddFollow, } from "@/src/hooks/following/follows.hook";
 
 const PostCard = ({ post }: any) => {
-  const {mutate: handleFollowUser} = useAddFollow()
-  const {user: currentUser} = useUser();
+  const { mutate: handleFollowUser } = useAddFollow()
+  const { user: currentUser } = useUser();
 
   // console.log("user post card", currentUser);
 
@@ -39,12 +39,12 @@ const PostCard = ({ post }: any) => {
   const handleSubmit = () => {
     const followingId = post?.user?._id;
     const followerId = currentUser?._id;
-  
+
     if (followingId && followerId) {
-      handleFollowUser({ followingId, followerId }); 
+      handleFollowUser({ followingId, followerId });
     }
   };
-  
+
 
   return (
     <div className="w-full">
@@ -53,8 +53,7 @@ const PostCard = ({ post }: any) => {
         initial={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.5 }}
       >
-        {/* <Link className="block" href={`/posts/${post._id}`}> */}
-        <div className="mx-auto rounded-lg pb-10">
+        <div className="mx-auto rounded-lg">
           <Link className="block" href={`/posts/${post?._id}`}>
             <div className="flex flex-col md:flex-row gap-5 justify-between items-center">
               <Card className="overflow-hidden w-full md:w-2/3 bg-transparent shadow-none rounded-none">
@@ -82,24 +81,7 @@ const PostCard = ({ post }: any) => {
                                   </h5>
                                 </div>
                               </div>
-                              
                             </CardHeader>
-                            {/* <CardBody className="px-3 py-0 text-small text-default-400">
-                              <p>
-                                Frontend developer and UI/UX enthusiast. Join me
-                                on this coding adventure!
-                              </p>
-                              <span className="pt-2">
-                                #FrontendWithZoey
-                                <span
-                                  className="py-2"
-                                  aria-label="computer"
-                                  role="img"
-                                >
-                                  💻
-                                </span>
-                              </span>
-                            </CardBody> */}
                             <CardFooter className="gap-3">
                               <div className="flex gap-1">
                                 <p className="font-semibold text-default-400 text-small">
@@ -119,7 +101,7 @@ const PostCard = ({ post }: any) => {
                               </div>
                             </CardFooter>
                             <div className="p-2 w-full">
-                            <Button
+                              <Button
                                 className={
                                   isFollowed
                                     ? "bg-transparent w-full text-foreground border-default-200"
@@ -130,7 +112,7 @@ const PostCard = ({ post }: any) => {
                                 size="sm"
                                 variant={isFollowed ? "bordered" : "solid"}
                                 onClick={handleSubmit}
-                                // onPress={() => setIsFollowed(!isFollowed)}
+                              // onPress={() => setIsFollowed(!isFollowed)}
                               >
                                 {isFollowed ? "Unfollow" : "Follow"}
                               </Button>
@@ -156,22 +138,7 @@ const PostCard = ({ post }: any) => {
                       </h5>
                     </div>
                   </div>
-                  <Button
-                    className={
-                      isFollowed
-                        ? "bg-transparent text-foreground border-default-200"
-                        : ""
-                    }
-                    color="primary"
-                    radius="full"
-                    size="sm"
-                    variant={isFollowed ? "bordered" : "solid"}
-                    onPress={() => {
-                      setIsFollowed(!isFollowed);
-                    }}
-                  >
-                    {isFollowed ? "Unfollow" : "Follow"}
-                  </Button>
+                  
                 </CardHeader>
                 <CardBody className="px-3 space-y-1 overflow-hidden py-0 text-small text-default-400">
                   <p className="text-xl text-black font-bold dark:text-gray-100">
@@ -212,12 +179,11 @@ const PostCard = ({ post }: any) => {
               </div>
             </div>
           </Link>
-          <div className="pt-10">
-            <CardActions post={post} />
+          <div className="pt-5">
+            <CardActions currentUser={currentUser} post={post} />
           </div>
-          <Divider className="border-2 my-4" />
+          <Divider className="border-2 mb-4" />
         </div>
-        {/* </Link> */}
       </motion.div>
     </div>
   );

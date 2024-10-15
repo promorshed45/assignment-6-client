@@ -1,21 +1,23 @@
-import React, { useState } from "react";
+'use client'
+import { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ArrowBigDownIcon, ArrowBigUp, MessageCirclePlus } from "lucide-react";
+import { ArrowBigDownIcon, ArrowBigUp, MessageCircleMore } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 import CommentBox from "./CommentBox";
 
 import ReusableForm from "@/src/components/ui/ReusableForm";
-import ReusableInput from "@/src/components/ui/ReusableInput";
 import { usePostComment } from "@/src/hooks/comments/comments.hook";
+import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
 
 interface FormData {
   comment: string;
 }
 
 const CardActions = ({ currentUser, post, comment }: any) => {
-  const methods = useForm<FormData>();
+
+  const {reset} = useForm<FormData>();
   const [isClickToComment, setIsClickToComment] = useState(false);
   const { mutate: handlePostComment } = usePostComment();
   const router = useRouter();
@@ -26,15 +28,17 @@ const CardActions = ({ currentUser, post, comment }: any) => {
       authorId: currentUser?._id,
       content: data.comment,
     };
+    // console.log("commentData", commentData);
     handlePostComment(commentData);
-    methods.reset();
+    reset();
+    setIsClickToComment(false);
     router.push(`/posts/${post._id}`);
   };
 
   return (
-    <div>
+    <>
       
-      <div className="mt-4 flex justify-between">
+      <div className="md:flex space-y-3 justify-between">
         <div className="flex gap-3 items-center border-2 border-gray-600 px-3 rounded-md">
           <div className="hover:bg-green-500/20 rounded-md px-3 py-2">
             <Tooltip content={<div className="text-sm font-bold">Upvotes</div>}>
@@ -67,7 +71,7 @@ const CardActions = ({ currentUser, post, comment }: any) => {
             onClick={() => setIsClickToComment(!isClickToComment)}
           >
             <span className="text-xl">
-              <MessageCirclePlus />
+              <MessageCircleMore />
             </span>{" "}
             <span>Comment</span>
           </Button>
@@ -78,21 +82,21 @@ const CardActions = ({ currentUser, post, comment }: any) => {
 
       {isClickToComment && (
         currentUser ? (
-          <div className="p-5">
+          <div className="md:p-5">
             <ReusableForm onSubmit={onSubmit}>
-              <ReusableInput label="Comment" name="comment" type="text" />
+              <ReusableTextarea label="Comment" name="comment" rows={2} type="text" />
               <Button className="w-full mt-4" type="submit">
                 Submit
               </Button>
             </ReusableForm>
           </div>
         ) : (
-          <div className="text-center">
+          <div className="text-center mb-4">
             <p>Please Login to comment</p>
           </div>
         )
       )}
-    </div>
+    </>
   );
 };
 

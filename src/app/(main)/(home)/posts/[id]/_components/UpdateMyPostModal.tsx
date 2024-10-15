@@ -7,6 +7,7 @@ import { FieldValues, FormProvider, SubmitHandler, useForm } from "react-hook-fo
 
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import { useUpdatePost } from "@/src/hooks/post/post.hook";
+import { title } from "process";
 
 interface FormInputs {
   title: string;
@@ -61,20 +62,16 @@ const UpdateMyPostModal = ({ id, post, isOpen, onClose }: { id: string; post: an
     }
   };
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    const formData = new FormData();
-
-    if (imageFiles) {
-      imageFiles.forEach((file) => {
-        formData.append("images", file);
-      });
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
+    const payload = {
+      title: data.tile,
+      description: data.description,
     }
-
-    formData.append("data", JSON.stringify({ ...data }));
-
-    await handlePostUpdate({ postId: id, postData: formData });
+    console.log(id, payload);
+    handlePostUpdate({ id, payload });
     onClose();
-  };
+};
+
   
 
   return (

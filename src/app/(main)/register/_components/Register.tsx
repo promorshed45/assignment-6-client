@@ -3,6 +3,8 @@ import { Button } from "@nextui-org/button";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FieldValues, SubmitHandler } from "react-hook-form";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import ReusableInput from "@/src/components/ui/ReusableInput";
@@ -10,7 +12,8 @@ import { useUserRegistration } from "@/src/hooks/auth.hook";
 import RegistrationValidationSchema from "@/src/schemas/register.schema";
 
 const Register = () => {
-  const { mutate: handleUserRegistration } = useUserRegistration();
+  const { mutate: handleUserRegistration, isLoading, isSuccess } = useUserRegistration();
+  const router = useRouter();
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     const userData = {
@@ -22,6 +25,13 @@ const Register = () => {
 
     handleUserRegistration(userData);
   };
+
+  useEffect(() => {
+    if (!isLoading && isSuccess) {
+      window.location.reload();
+      router.push("/posts");
+    }
+  }, [isLoading, isSuccess]);
 
   return (
     <section>

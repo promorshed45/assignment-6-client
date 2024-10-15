@@ -4,7 +4,7 @@ import { Navbar } from "@/src/components/navbar";
 
 const layout = ({ children }: { children: ReactNode }) => {
   return (
-    <div className="relative flex flex-col h-screen">
+    <div className="relative flex flex-col h-screen light:bg-[#f9f6ef]">
       <Navbar />
       <main className="container mx-auto max-w-7xl px-6 flex-grow">
         {children}

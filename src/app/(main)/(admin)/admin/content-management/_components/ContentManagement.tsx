@@ -25,7 +25,7 @@ export default function ContentManagement({allPost}: any) {
   const {mutate: handleDeletePost} = useDeletePost()
 
   const handleSubmit = (id: string) => {
-    console.log(id);
+    // console.log(id);
     handleDeletePost({postId: id})
   };
 
@@ -37,12 +37,11 @@ export default function ContentManagement({allPost}: any) {
         <TableColumn>User</TableColumn>
         <TableColumn>Category</TableColumn>
         <TableColumn>Type</TableColumn>
-        <TableColumn>Status</TableColumn>
         <TableColumn>Like</TableColumn>
         <TableColumn>Action</TableColumn>
       </TableHeader>
       <TableBody>
-        {allPost?.map((post: TPost) => {
+        {allPost?.map((post: any) => {
           return (
             <TableRow key={post?._id}>
               <TableCell>
@@ -50,7 +49,6 @@ export default function ContentManagement({allPost}: any) {
               </TableCell>
               <TableCell>{post?.user?.name}</TableCell>
               <TableCell>{post?.category}</TableCell>
-              <TableCell>{post?.type}</TableCell>
               <TableCell>
                 <span
                   className={`${post?.status == "PREMIUM" ? "text-green-500" : "text-blue-500"}`}

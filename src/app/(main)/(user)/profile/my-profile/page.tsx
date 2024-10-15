@@ -9,7 +9,7 @@ const page = async () => {
   const token = await gettoken();
 
   const response = await nexiosInstance.get("/profile", {
-    cache: "no-store",
+    cache: "no-store", next: { tags: ['users']},
     headers: {
       Authorization: `${token}`,
     },

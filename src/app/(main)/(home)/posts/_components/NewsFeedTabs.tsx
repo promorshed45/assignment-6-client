@@ -34,7 +34,7 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
 
   return (
     <>
-      <div className="w-full md:w-4/5 mx-auto px-16">
+      <div className="w-full md:w-4/5 mx-auto md:px-16">
         {/* <div className={`w-2/3 ${user ? "md:w-4/5" : "md:max-w-3/4"}`}> */}
         {user ? (
           <div className="">

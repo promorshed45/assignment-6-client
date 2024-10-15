@@ -19,13 +19,14 @@ import {
 } from "react-hook-form";
 
 
+import QuillEditor from "./QuillEditor";
+
 import { useAddNewPost } from "@/src/hooks/post/post.hook";
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import ImageUpload from "@/src/components/ui/ImageUpload";
 import ReusableSelect from "@/src/components/ui/ReusableSelect";
 import { useUser } from "@/src/providers/user.provider";
 
-import QuillEditor from "./QuillEditor";
 
 const categoriesList = [
   "Business Travel",
@@ -39,14 +40,14 @@ const categoriesList = [
 
 const PostModal = () => {
   const { user: userInfo } = useUser();
-  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange,  } = useDisclosure();
   const [editorContent, setEditorContent] = useState<string>("");
   const methods = useForm();
   const { mutate: handleAddPost } = useAddNewPost();
-  const { handleSubmit } = methods;
+  const { handleSubmit, reset } = methods;
   const [imageFiles, setImageFiles] = useState<File[]>([]);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+  const onSubmit: SubmitHandler<FieldValues> = (data) => {
     const formData = new FormData();
     const postData = {
       ...data,
@@ -58,8 +59,9 @@ const PostModal = () => {
     formData.append("data", JSON.stringify(postData));
     imageFiles.forEach((image) => formData.append("postImages", image));
 
-    await handleAddPost(formData); // Await the post submission
+    handleAddPost(formData); // Await the post submission
     onClose();
+    reset();
   };
 
   const formattedCategoriesList = categoriesList.map((category) => ({
@@ -69,10 +71,11 @@ const PostModal = () => {
 
   return (
     <div className="max-w-auto">
-      <div className="flex items-center gap-4 pb-8 mx-auto pl-3">
+      <div className="flex items-center gap-4 pb-8 mx-auto md:pl-3">
         <Avatar
           isBordered
           as="button"
+          className="hidden md:flex"
           color="success"
           size="sm"
           src={userInfo?.profilePhoto}

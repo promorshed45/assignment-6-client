@@ -4,7 +4,6 @@ import { revalidateTag } from "next/cache";
 import axiosInstance from "@/src/lib/axiosInstance";
 import { TFollow } from "@/src/types";
 import nexiosInstance from "@/src/config/nexios.config";
-import envconfig from "@/src/config/envConfig";
 
 
 // export const getFollowing = async () => {
@@ -40,6 +39,6 @@ export const getFollowing = async () => {
   const res = await nexiosInstance.get("/following", fetchOptions);
 
   
-  console.log("server hote", res.data);
+  // console.log("server hote", res.data);
   return res.data;
 };

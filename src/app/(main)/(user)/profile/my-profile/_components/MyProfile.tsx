@@ -6,9 +6,8 @@ import { motion } from "framer-motion";
 import { GitCommitVerticalIcon, ShieldEllipsis } from "lucide-react";
 import { Button } from "@nextui-org/button";
 
-import VerifyAccount from "../../verify-account/_components/VerifyAccount";
-
 import UserUpdateProfile from "./userUpdateProfile";
+import VerifyAccount from "./VerifyAccount";
 
 export default function Profile({ user }: any) {
   const { name, email, profilePhoto, verified, flower } = user.data;
@@ -28,7 +27,7 @@ export default function Profile({ user }: any) {
         </div>
         {/* Avatar and Name */}
 
-        <div className="flex flex-col mx-auto text-center space-y-3">
+        <div className="flex flex-col items-center mx-auto text-center space-y-3">
           <div className="pl-4">
             <Avatar className="w-28 h-28 text-large" src={profilePhoto} />
           </div>
@@ -81,9 +80,11 @@ export default function Profile({ user }: any) {
             </h2> */}
           </div>
         </div>
+        <div className="w-full text-center">
+          <VerifyAccount />
+        </div>
         <Divider className="my-6" />
-
-        <VerifyAccount/>
+        
       </div>
     </motion.div>
   );

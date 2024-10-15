@@ -12,24 +12,22 @@ import {
 } from "@nextui-org/react";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import { EllipsisVertical } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { Delete, DeleteIcon, EllipsisVertical, Pencil, Trash, X } from "lucide-react";
 
 import CardActions from "../../_components/CardActions";
 
 import UpdateMyPostModal from "./UpdateMyPostModal";
+import DeletePostModal from "./DeletePostModal";
 
 import { timeAgo } from "@/src/utilis/timeFormat";
 import { useUser } from "@/src/providers/user.provider";
-import { useDeletePost } from "@/src/hooks/post/post.hook";
 
 const PostDetails = ({ data, comment }: any) => {
-  const { mutate: handleDeletePost, isLoading, isSuccess } = useDeletePost();
   const { user: currentUser } = useUser();
   const [isFollowed, setIsFollowed] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const router = useRouter();
+  const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
   const {
     title = "Untitled Post",
@@ -40,36 +38,32 @@ const PostDetails = ({ data, comment }: any) => {
   } = data || {};
 
   const postDate = createdAt ? timeAgo(createdAt) : "";
-  const userPhoto =
-    user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
+  const userPhoto = user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
 
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
+  const handleUpdateModalOpen = () => {
+    setIsUpdateModalOpen(true);
   };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
+  const handleUpdateModalClose = () => {
+    setIsUpdateModalOpen(false);
   };
 
-  const handleSubmit = (id: string) => {
-    console.log(id);
-    handleDeletePost({ postId: id });
+  const handleDeleteModalOpen = () => {
+    setIsDeleteModalOpen(true);
   };
 
-  useEffect(() => {
-    if (!isLoading && isSuccess) {
-      router.push("/posts");
-    }
-  }, [isLoading, isSuccess]);
+  const handleDeleteModalClose = () => {
+    setIsDeleteModalOpen(false);
+  };
 
   return (
     <motion.div
       animate={{ opacity: 1, y: 0 }}
-      className="max-w-3xl mx-auto py-10"
+      className="max-w-3xl mx-auto py-6 md:py-10"
       initial={{ opacity: 0, y: 20 }}
       transition={{ duration: 0.5 }}
     >
-      <Card className="shadow-lg">
+      <Card className="shadow-lg md:p-5">
         <CardHeader className="justify-between">
           <div className="flex gap-5">
             <Avatar isBordered radius="full" size="md" src={userPhoto} />
@@ -93,18 +87,21 @@ const PostDetails = ({ data, comment }: any) => {
                   variant="bordered"
                 />
               </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions" variant="faded">
-                <DropdownItem key="new" onClick={handleModalOpen}>
-                  Update Post
+              <DropdownMenu aria-label="Static Actions" variant="faded" className="space-y-3">
+                <DropdownItem key="update"  onClick={handleUpdateModalOpen}>
+                  <div className="flex items-center gap-4">
+                  <Pencil className="size-4"/> Update Post
+                  </div>
                 </DropdownItem>
-
                 <DropdownItem
                   key="delete"
-                  className="text-danger"
+                  className="flex gap-2 text-danger"
                   color="danger"
-                  onClick={() => handleSubmit(data?._id)}
+                  onClick={handleDeleteModalOpen}
                 >
-                  Delete Post
+                  <div className="flex items-center gap-4"> 
+                 <Trash className="size-4"/> Delete Post
+                  </div>
                 </DropdownItem>
               </DropdownMenu>
             </Dropdown>
@@ -126,36 +123,65 @@ const PostDetails = ({ data, comment }: any) => {
           )}
         </CardHeader>
         <CardBody className="px-4">
-          <h2 className="text-2xl font-bold my-4">{title}</h2>
-          <p className="text-lg text-gray-700 mb-4">{description}</p>
-          <div className="grid grid-cols-2 gap-4 mx-auto">
+          <h2 className="text-xl md:text-2xl font-bold md:my-4">{title}</h2>
+          <p className="text-base md:text-lg text-gray-500 mb-4">
+            {description}
+          </p>
+          <div className="mx-auto">
             {images.length ? (
-              images.map((image: string, index: number) => (
-                <div key={index} className="flex justify-center items-center">
-                  <Image
-                    alt={`Post image ${index + 1}`}
-                    className="rounded-lg h-56 object-cover"
-                    height={400}
-                    src={image}
-                    width={700}
-                  />
-                </div>
-              ))
+              <div className="flex-cols md:flex gap-6 justify-center">
+                {images.length > 1 ? (
+                  images.map((image: string, index: number) => (
+                    <div
+                      key={index}
+                      className="flex gap-5 py-2 md:py-0 justify-center items-center md:w-1/2 "
+                    >
+                      <Image
+                        alt={`Post image ${index + 1}`}
+                        className="flex rounded-lg w-full h-56 object-cover"
+                        height={400}
+                        src={image}
+                        width={700}
+                      />
+                    </div>
+                  ))
+                ) : (
+                  <div className="flex justify-center items-center w-full">
+                    <Image
+                      alt="Post image 1"
+                      className="rounded-lg w-96 h-56 object-cover"
+                      height={400}
+                      src={images[0]}
+                      width={700}
+                    />
+                  </div>
+                )}
+              </div>
             ) : (
               <p>No images available</p>
             )}
           </div>
         </CardBody>
-        <div className="p-10">
-          <CardActions comment={comment} currentUser={currentUser} post={data} />
+        <div className="p-4 md:p-10">
+          <CardActions
+            comment={comment}
+            currentUser={currentUser}
+            post={data}
+          />
         </div>
       </Card>
 
       <UpdateMyPostModal
         id={data?._id}
-        isOpen={isModalOpen}
+        isOpen={isUpdateModalOpen}
         post={data}
-        onClose={handleModalClose}
+        onClose={handleUpdateModalClose}
+      />
+      
+      <DeletePostModal
+        isOpen={isDeleteModalOpen}
+        postId={data?._id} // Pass the post ID to the delete modal for handling
+        onClose={handleDeleteModalClose}
       />
     </motion.div>
   );

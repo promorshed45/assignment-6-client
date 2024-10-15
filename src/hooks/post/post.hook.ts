@@ -10,10 +10,11 @@ export const useAddNewPost = () => {
       mutationKey: ["ADD_POST"],
       mutationFn: async (postData) => await addPost(postData),
       onSuccess: () => {
-        toast.success("post successfully created...");
+        toast.success("Post successfully created...");
       },
-      onError: (error) => {
-        toast.error(error.message);
+      onError: (error: any) => {
+        const errorMessage = error?.response?.data?.message || "Failed to create post... try again";
+        toast.error(errorMessage);
       },
     });
   };
@@ -21,9 +22,9 @@ export const useAddNewPost = () => {
 
 
 export const useUpdatePost = () => {
-  return useMutation<any, Error, { postId: string; postData: any }>({
+  return useMutation<any, Error, { id: string; payload: any }>({
     mutationKey: ["UPDATE_POST"],
-    mutationFn: async ({ postId, postData }) => await updatePost(postId, postData),
+    mutationFn: async ({ id, payload }) => await updatePost(id, payload),
     onSuccess: () => {
       toast.success("Post updated successfully.");
     },

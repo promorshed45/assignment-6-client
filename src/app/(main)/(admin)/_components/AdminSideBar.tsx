@@ -1,63 +1,76 @@
 "use client";
-import { DollarSign, TableOfContents, User } from "lucide-react";
+import { DollarSign, Menu, TableOfContents, User } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
+
+export const navItems = [
+  {
+    icon: <User />,
+    label: "All User",
+    href: "/admin/all-user",
+  },
+  {
+    icon: <TableOfContents />,
+    label: "Content Management",
+    href: "/admin/content-management",
+  },
+  {
+    icon: <DollarSign />,
+    label: "Payment Management",
+    href: "/admin/payment-management",
+  }
+];
 
 const AdminSideBar = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsOpen(!isOpen);
+  };
+
+  const handleLinkClick = () => {
+    setIsOpen(false); // Sidebar বন্ধ হবে
+  };
+
   return (
     <div>
+      <div className="absolute top-14 left-0">
       <button
         aria-controls="default-sidebar"
         className="inline-flex items-center p-2 mt-2 ms-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        data-drawer-target="default-sidebar"
-        data-drawer-toggle="default-sidebar"
         type="button"
+        onClick={toggleSidebar}
       >
-        <span className="sr-only">Open sidebar</span>
-        <svg
-          aria-hidden="true"
-          className="w-6 h-6"
-          fill="currentColor"
-          viewBox="0 0 20 20"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            clipRule="evenodd"
-            d="M2 4.75A.75.75 0 012.75 4h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 4.75zm0 10.5a.75.75 0 01.75-.75h7.5a.75.75 0 010 1.5h-7.5a.75.75 0 01-.75-.75zM2 10a.75.75 0 01.75-.75h14.5a.75.75 0 010 1.5H2.75A.75.75 0 012 10z"
-            fillRule="evenodd"
-          />
-        </svg>
+        {/* <span className="sr-only">Open sidebar</span> */}
+        <Menu/>
       </button>
+      </div>
 
-      <div className="h-screen pr-3 py-4 overflow-y-auto  border-r border-gray-800">
+      <div className={`h-screen pr-3 py-4 overflow-y-auto border-r border-gray-800 hidden sm:block`}>
         <ul className="space-y-2 font-medium">
-          <li>
-            <Link
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              href="/admin/all-user"
-            >
-              <User />
-              <span className="ms-3">All User</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              href="/admin/content-management"
-            >
-              <TableOfContents />
-              <span className="ms-3">Content Management</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              href="/admin/payment-Management"
-            >
-              <DollarSign />
-              <span className="ms-3">Payment Management</span>
-            </Link>
-          </li>
+        {navItems.map((item) => (
+            <li key={item.href} className="flex items-center text-gray-400 hover:rounded-md p-2 hover:bg-gray-700">
+              {item.icon}
+              <Link className="ms-3" href={item.href} onClick={handleLinkClick}>
+                {item.label}
+              </Link>
+            </li>
+          ))}
+
+        </ul>
+      </div>
+
+      
+      <div className={`h-screen pr-3 p-6 overflow-y-auto border-r border-gray-800 fixed inset-y-0 left-0 bg-black transform ${isOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out z-50`}>
+        <ul className="space-y-3 text-sm font-medium">
+          {navItems.map((item) => (
+            <li key={item.href} className="flex text-gray-400 hover:rounded-md hover:p-2 hover:bg-gray-700 items-center">
+              {item.icon}
+              <Link className="ms-3" href={item.href} onClick={handleLinkClick}>
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
       </div>
     </div>

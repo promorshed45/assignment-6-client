@@ -20,8 +20,8 @@ export default function AdminUpdatePost({ id, data, }: { id: string; data: TPost
   const { mutate: handleUpdatePost } = useUpdatePost();
 
   const handleSubmit = (data: TPost) => {
-    console.log(id, data);
-    handleUpdatePost({ postId: id, postData: data });
+    // console.log(id, data);
+    handleUpdatePost({ id: id, payload: data });
   };
 
   return (
@@ -37,24 +37,15 @@ export default function AdminUpdatePost({ id, data, }: { id: string; data: TPost
                 <h1 className="text-center font-medium text-xl">Update Post</h1>
                 <ReusableForm onSubmit={handleSubmit}>
                   <div className="space-y-3">
-                    <ReusableSelect
-                      size="sm"
-                      label="Status"
-                      name="status"
-                      defaultValue={data?.status}
-                      options={[
-                        { key: "Active", label: "Active" },
-                        { key: "Blocked", label: "Blocked" },
-                      ]}
-                    />
+                    
                     <ReusableSelect
                       size="sm"
                       label="Post Type"
                       name="type"
-                      defaultValue={data?.type}
+                      defaultValue={data?.status}
                       options={[
-                        { key: "Premium", label: "Premium" },
-                        { key: "Non-Premium", label: "Non-Premium" },
+                        { key: "Premium", label: "PREMIUM" },
+                        { key: "Free", label: "FREE" },
                       ]}
                     />
                     <Button className="w-full" color="primary" type="submit">

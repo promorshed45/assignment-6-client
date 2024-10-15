@@ -17,11 +17,11 @@ export const addPost = async (postData: FieldValues) => {
 
 
 
-export const updatePost = async (postId: string, postData: any) => {
+export const updatePost = async (id: string, payload: any) => {
   try {
     const response = await axiosInstance.patch(
-      `/post/${postId}`,
-      postData
+      `/post/${id}`,
+      payload
     );
     revalidateTag("posts");
     console.log("update post", response.data);

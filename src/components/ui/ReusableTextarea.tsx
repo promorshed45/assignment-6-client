@@ -13,7 +13,7 @@ const ReusableTextarea = ({
   label,
   name,
   required = false,
-  rows = 4,
+  rows
 }: IProps) => {
   const {
     register,

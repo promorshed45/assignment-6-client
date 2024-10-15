@@ -29,18 +29,14 @@ const NewsFeedPage = async ({ searchParams }: { searchParams: Record<string, str
   // console.log("API Response Data:", data); 
 
 
-  const { data: foData }: any = await getFollowing();
-  console.log("foData...@", foData);
-
+  const { data: followingData }: any = await getFollowing();
+  console.log('followingData', followingData);
+  
   // Filter posts by status
   const premiumPosts = data?.filter((post: TPost) => post.status === "PREMIUM") || [];
   const freePosts = data?.filter((post: TPost) => post.status === "FREE") || [];
   const myPosts = data.filter((post: TPost) => post?.user?.email === currentUserEmail);
 
-  // Show a message if no posts are available
-  if (!data || data.length === 0) {
-    return <div>No posts available.</div>; // Optional: Add a loader or message
-  }
 
   // Return the component
   return (

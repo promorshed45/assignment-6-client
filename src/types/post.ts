@@ -38,36 +38,16 @@ export interface IInput {
     updatedAt?: string;
   }
   
-  // export interface IPost {
-  //   _id?: string;
-  //   user: string[];
-  //   images?: string[];
-  //   title: string;
-  //   description: string;
-  //   comments?: string[];
-  //   status: string;
-  //   report?: string[];
-  //   reportCount: number;
-  //   Upvotes: string;
-  //   downvotes: string;
-  // }
-  
   export interface TPost {
-    _id: string;
-    title: string;
+    _id?: string;
     user: IUser;
-    images: string;
-    category: string;
-    postContent: string;
-    type: string;
-    like: [string];
-    comment: [IComment] | [];
-    share: number;
-    createdAt: string;
-    updatedAt: string;
+    images?: string[];
+    title: string;
+    description: string;
     status: string;
-    __v: number;
   }
+  
+  
 
   export interface IParamsProps {
     params: {

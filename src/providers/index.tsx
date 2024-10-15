@@ -9,10 +9,7 @@ import { ThemeProviderProps } from "next-themes/dist/types";
 import { Toaster } from "sonner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserProvider from "./user.provider";
-import { Provider } from "react-redux";
 
-import { persistor, store } from "../redux/store";
-import { PersistGate } from "redux-persist/integration/react";
 
 export interface ProvidersProps {
   children: React.ReactNode;
@@ -25,19 +22,15 @@ export function Providers({ children, themeProps }: ProvidersProps) {
   const router = useRouter();
 
   return (
-    <Provider store={store}>
-      <PersistGate persistor={persistor}>
         <QueryClientProvider client={queryClient}>
           <UserProvider>
             <NextUIProvider navigate={router.push}>
-              <Toaster />
+              <Toaster richColors  />
               <NextThemesProvider {...themeProps}>
                 {children}
               </NextThemesProvider>
             </NextUIProvider>
           </UserProvider>
         </QueryClientProvider>
-      </PersistGate>
-    </Provider>
   );
 }

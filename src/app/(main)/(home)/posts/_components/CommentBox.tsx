@@ -6,24 +6,16 @@ import {
   DropdownItem,
   DropdownMenu,
   DropdownTrigger,
-  Input,
+  Textarea,
 } from "@nextui-org/react";
 import { EllipsisVertical } from "lucide-react";
 import { useState } from "react";
+import { toast } from "sonner";
 
-import {
-  useDeleteComment,
-  useUpdateComment,
-} from "@/src/hooks/comments/comments.hook";
+import { useDeleteComment, useUpdateComment } from "@/src/hooks/comments/comments.hook";
 import { IUser } from "@/src/types";
 
-const CommentBox = ({
-  currentUser,
-  comment,
-}: {
-  currentUser: IUser;
-  comment: any;
-}) => {
+const CommentBox = ({ currentUser, comment }: { currentUser: IUser, comment: any }) => {
   const { mutate: handleDeleteComment } = useDeleteComment();
   const { mutate: handleCommentUpdate } = useUpdateComment();
 
@@ -36,10 +28,11 @@ const CommentBox = ({
         commentId: id,
         commentData: { content: newContent },
       });
+      console.log("commentId", id, "commentData", newContent);
       setEditingCommentId(null);
       setNewContent("");
     } else {
-      alert("Comment cannot be empty.");
+      toast.error("Comment cannot be empty.");
     }
   };
 
@@ -48,7 +41,7 @@ const CommentBox = ({
   };
 
   return (
-    <div className="px-4 py-5 mt-5">
+    <div className="md:px-4 py-5 mt-5">
       {comment?.data?.length === 0 ? (
         <div className="px-4 py-5 mt-5 bg-blue-500/10 shadow-lg rounded-lg">
           <p className="text-gray-500 text-center">No comments available.</p>
@@ -57,23 +50,26 @@ const CommentBox = ({
         comment?.data?.map((item: any) => (
           <div
             key={item._id}
-            className="pb-4 px-4 py-5 mb-5 flex items-start justify-between w-full bg-blue-500/10 transition-all duration-200 rounded-md"
+            className="flex pb-4 px-4 py-5 mb-5 items-start justify-between w-full bg-blue-500/10 transition-all duration-200 rounded-md"
           >
-            <div className="flex gap-3 w-[95%] items-start">
-              <Avatar
-                isBordered
-                radius="full"
-                size="md"
-                src={item?.authorId?.profilePhoto}
-              />
-              <div className="flex flex-col gap-1 items-start justify-center pr-4 bg-gray-50 rounded-xl p-3 shadow-sm">
+            <div className="flex gap-3 md:w-[95%] items-start">
+              <div className="">
+                <Avatar
+                  isBordered
+                  radius="full"
+                  size="md"
+                  src={item?.authorId?.profilePhoto}
+                />
+              </div>
+              <div className="flex-col md:flex md:gap-1 items-start justify-center md:pr-4 bg-gray-50 rounded-xl p-3 w-full shadow-sm">
                 <h4 className="text-base font-semibold leading-tight text-gray-800">
                   {item?.authorId?.name}
                 </h4>
                 {editingCommentId === item._id ? (
-                  <div className="flex items-center">
-                    <Input
+                  <div className="flex w-full items-center">
+                    <Textarea
                       fullWidth
+                      className="w-full"
                       value={newContent}
                       onChange={(e) => setNewContent(e.target.value)}
                     />
@@ -87,7 +83,7 @@ const CommentBox = ({
                     </Button>
                   </div>
                 ) : (
-                  <h5 className="text-sm text-gray-600">{item?.content}</h5>
+                  <div className="w-full"><h5 className="text-sm text-gray-600">{item?.content}</h5></div>
                 )}
               </div>
             </div>

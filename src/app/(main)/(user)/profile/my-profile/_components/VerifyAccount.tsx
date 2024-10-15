@@ -24,8 +24,8 @@ const VerifyAccount = () => {
 
   return (
     <Card isFooterBlurred className="w-full h-[200px] col-span-12 sm:col-span-7">
-      <CardHeader className="absolute z-10 top-1 flex-col items-start space-y-4">
-        <h1 className="text-xl font-semibold">Verify Your Account</h1>
+      <CardHeader className="absolute z-10 top-1 flex-col items-center space-y-4">
+        <h1 className="text-xl font-semibold ">Verify Your Account</h1>
         <p className="text-sm text-gray-600">
           Verify your account to unlock exciting new features and access premium content.
         </p>
