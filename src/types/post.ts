@@ -45,6 +45,7 @@ export interface IInput {
     title: string;
     description: string;
     status: string;
+    category: string;
   }
   
   

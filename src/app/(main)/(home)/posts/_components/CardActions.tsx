@@ -2,16 +2,16 @@
 import { useState } from "react";
 import { Button, Tooltip } from "@nextui-org/react";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { ArrowBigDownIcon, ArrowBigUp, MessageCircleMore } from "lucide-react";
+import { ArrowBigDownIcon, ArrowBigUp, Download, MessageCircleMore } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { jsPDF } from "jspdf";
 
 import CommentBox from "./CommentBox";
+
 import ReusableForm from "@/src/components/ui/ReusableForm";
 import { usePostComment } from "@/src/hooks/comments/comments.hook";
 import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
-import { usePdfGenerate } from "@/src/hooks/post/post.hook";
 import { IUser, TPost } from "@/src/types";
-import { pdftGenerate } from "@/src/services/Post";
 
 interface FormData {
   comment: string;
@@ -27,34 +27,67 @@ const CardActions: React.FC<CardActionsProps> = ({ currentUser, post, comment })
   const { reset } = useForm<FormData>();
   const [isClickToComment, setIsClickToComment] = useState(false);
   const { mutate: handlePostComment, isLoading: isCommenting } = usePostComment();
-  const { mutateAsync: handlePostGeneratePdf } = usePdfGenerate();
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<FormData> = async (data) => {
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     const commentData = {
       postId: post?._id,
       authorId: currentUser?._id,
       content: data.comment,
     };
     
-    await handlePostComment(commentData);
+    handlePostComment(commentData);
     reset();
     setIsClickToComment(false);
     router.push(`/posts/${post._id}`);
   };
 
-  const handleDownload = () => {
-    const pdfData = {
-      title: post.title,
-      description: post.description,
-    };
   
-    try {
-      handlePostGeneratePdf(pdfData); // Call the PDF generation function
-    } catch (error) {
-      console.error('Error during PDF download:', error.message);
-    }
-  };
+  const handleDownload = () => {
+    const doc = new jsPDF({
+      orientation: "portrait",
+      unit: "in", 
+      format: "a4",
+    });
+    
+    const margin = 1;
+    const pageWidth = 8.27; 
+
+    let yPosition = margin; 
+    doc.setTextColor('green');
+    doc.setFont('helvetica', 'normal'); 
+
+    
+    doc.setTextColor('black'); 
+    doc.text(`Author Name: ${post.user.name}`, margin, yPosition);
+    yPosition += 0.5;
+    
+    doc.setTextColor('blue');
+    doc.setFont('helvetica', 'normal');
+    doc.text(`Post Title: ${post.title}`, margin, yPosition); 
+    yPosition += 0.5; 
+
+    doc.setTextColor('black'); 
+    doc.setFont('helvetica', 'normal','12');
+    doc.text(`Post Description: ${post.description}`, margin, yPosition, { maxWidth: pageWidth - 2 * margin }); 
+    yPosition += 0.5;
+
+    doc.setTextColor('gray');
+    doc.setFont('helvetica', 'normal');
+    yPosition += 1.2; 
+    doc.text(`Post Category: ${post.category}`, margin, yPosition);
+
+    // Add an image
+    if (post.images) {
+      post.images.map((imgData) => {
+          yPosition += 0.5; 
+          doc.addImage(imgData, 'JPEG', margin+1, yPosition -0.2, 3, 2.5); 
+          yPosition += 1.5; 
+      });
+  }
+
+    doc.save("download.pdf");
+};
 
   return (
     <>
@@ -79,10 +112,20 @@ const CardActions: React.FC<CardActionsProps> = ({ currentUser, post, comment })
           </div>
         </div>
 
+
+        
         <div>
-          <button className="text-blue-600 hover:underline" onClick={handleDownload}>
-            Download PDF
-          </button>
+
+        <div className="bg-blue-500/20 rounded-md px-3 py-2">
+            <Tooltip content={<div className="text-sm font-bold">Download</div>}>
+              <button className="flex items-center gap-2" onClick={handleDownload}>
+                <Download className="size-5 text-blue-700" />
+              </button>
+            </Tooltip>
+          </div>
+
+
+          
         </div>
 
         <div className="flex items-center gap-2">
