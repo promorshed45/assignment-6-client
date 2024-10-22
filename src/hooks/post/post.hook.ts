@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
-import { addPost, deletePost, updatePost } from "../../services/Post";
+import { addPost, deletePost, pdftGenerate, updatePost } from "../../services/Post";
 
 
 export const useAddNewPost = () => {
@@ -48,4 +48,17 @@ export const useDeletePost = () => {
   });
 };
 
-
+export const usePdfGenerate = () => {
+  return useMutation({
+    mutationKey: ["GENERATE_PDFPOST"],
+    mutationFn: async (post) => {
+      return await pdftGenerate(post);
+    },
+    onSuccess: () => {
+      toast.success("PDF generated successfully.");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to generate PDF.");
+    },
+  });
+};

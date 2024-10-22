@@ -112,7 +112,7 @@ const PostCard = ({ post }: any) => {
                                 size="sm"
                                 variant={isFollowed ? "bordered" : "solid"}
                                 onClick={handleSubmit}
-                              // onPress={() => setIsFollowed(!isFollowed)}
+                              onPress={() => setIsFollowed(!isFollowed)}
                               >
                                 {isFollowed ? "Unfollow" : "Follow"}
                               </Button>

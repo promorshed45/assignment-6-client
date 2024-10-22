@@ -18,15 +18,12 @@ import {
   useForm,
 } from "react-hook-form";
 
-
-import QuillEditor from "./QuillEditor";
-
 import { useAddNewPost } from "@/src/hooks/post/post.hook";
 import ReusableInput from "@/src/components/ui/ReusableInput";
 import ImageUpload from "@/src/components/ui/ImageUpload";
 import ReusableSelect from "@/src/components/ui/ReusableSelect";
 import { useUser } from "@/src/providers/user.provider";
-
+import QuillEditor from "./QuillEditor";
 
 const categoriesList = [
   "Business Travel",
@@ -40,7 +37,7 @@ const categoriesList = [
 
 const PostModal = () => {
   const { user: userInfo } = useUser();
-  const { isOpen, onOpen, onClose, onOpenChange,  } = useDisclosure();
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
   const [editorContent, setEditorContent] = useState<string>("");
   const methods = useForm();
   const { mutate: handleAddPost } = useAddNewPost();
@@ -59,7 +56,7 @@ const PostModal = () => {
     formData.append("data", JSON.stringify(postData));
     imageFiles.forEach((image) => formData.append("postImages", image));
 
-    handleAddPost(formData); // Await the post submission
+    handleAddPost(formData); // Handle post submission
     onClose();
     reset();
   };

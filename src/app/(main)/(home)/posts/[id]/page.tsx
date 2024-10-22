@@ -7,7 +7,7 @@ import nexiosInstance from "@/src/config/nexios.config";
 
 const page = async ({ params: { id } }: IParamsProps) => {
   const response = await nexiosInstance.get(`/post/${id}`, {
-    cache: "no-store", next: { tags: ['posts']}
+    next: { tags: ['posts']}
   });
 
   const { data }: any = response.data; 
@@ -20,6 +20,7 @@ const page = async ({ params: { id } }: IParamsProps) => {
   const comment: any = commentData.data; 
 
   // console.log('post details page teke comment', comment);
+
 
   return (
     <div className="container mx-auto my-3 max-w-[720px]">

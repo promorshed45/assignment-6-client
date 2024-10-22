@@ -10,7 +10,7 @@ const ReusableInput = ({
   // variant = "bordered",
   // size = "md",
   required = false,
-  // type = "text",
+  type,
   label,
   name,
 }: IProps) => {
@@ -28,6 +28,7 @@ const ReusableInput = ({
         }
         isInvalid={!!errors[name]}
         label={label}
+        type={type}
         required={required}
       />
     </div>
