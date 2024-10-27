@@ -22,10 +22,11 @@ import CardActions from "./CardActions";
 
 import { timeAgo } from "@/src/utilis/timeFormat";
 import { useUser } from "@/src/providers/user.provider";
-import { useAddFollow, } from "@/src/hooks/following/follows.hook";
+import { useAddFollow, useUnFollow, } from "@/src/hooks/following/follows.hook";
 
 const PostCard = ({ post }: any) => {
   const { mutate: handleFollowUser } = useAddFollow()
+  const { mutate: handleUnFollowUser } = useUnFollow()
   const { user: currentUser } = useUser();
 
   // console.log("user post card", currentUser);
@@ -36,12 +37,19 @@ const PostCard = ({ post }: any) => {
     user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
   const postDate = createdAt ? timeAgo(createdAt) : "";
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const followingId = post?.user?._id;
     const followerId = currentUser?._id;
-
+  
     if (followingId && followerId) {
-      handleFollowUser({ followingId, followerId });
+      if (isFollowed) {
+        // Unfollow user
+        handleUnFollowUser({followingId, followerId })
+      } else {
+        // Follow user
+        handleFollowUser({followingId, followerId })
+      }
+      setIsFollowed(!isFollowed);
     }
   };
 
@@ -180,7 +188,7 @@ const PostCard = ({ post }: any) => {
             </div>
           </Link>
           <div className="pt-5">
-            <CardActions currentUser={currentUser} post={post} />
+            <CardActions comment={undefined} currentUser={currentUser} post={post} />
           </div>
           <Divider className="border-2 mb-4" />
         </div>

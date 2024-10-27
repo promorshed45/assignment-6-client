@@ -29,8 +29,8 @@ const NewsFeedPage = async ({ searchParams }: { searchParams: Record<string, str
   // console.log("API Response Data:", data); 
 
 
-  const { data: followingData }: any = await getFollowing();
-  console.log('followingData', followingData);
+  // const { data: followingData }: any = await getFollowing();
+  // console.log('followingData', followingData);
   
   // Filter posts by status
   const premiumPosts = data?.filter((post: TPost) => post.status === "PREMIUM") || [];

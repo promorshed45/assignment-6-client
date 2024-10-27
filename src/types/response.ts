@@ -14,9 +14,8 @@ export type TResponse<T> = {
 };
 
 export type TFollow = {
-  followingId: string;
   followerId: string;
-  status?: string;
+  followingId: string;
 };
 
 export interface ISearchResult {

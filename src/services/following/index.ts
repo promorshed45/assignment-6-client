@@ -29,6 +29,18 @@ export const addFollow = async (followData: TFollow) => {
 };
 
 
+export const unFollow = async (fData: any) => {
+  try {
+    const response = await nexiosInstance.delete("/following", fData);
+    revalidateTag("follows");
+    return response.data;
+  } catch (error: any) {
+    console.error(error);
+    throw new Error(error);
+  }
+};
+
+
 export const getFollowing = async () => {
   let fetchOptions = {};
 

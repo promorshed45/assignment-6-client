@@ -13,7 +13,7 @@ import {
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useState } from "react";
-import { Delete, DeleteIcon, EllipsisVertical, Pencil, Trash, X } from "lucide-react";
+import { EllipsisVertical, Pencil, Trash } from "lucide-react";
 
 import CardActions from "../../_components/CardActions";
 
@@ -87,7 +87,7 @@ const PostDetails = ({ data, comment }: any) => {
                   variant="bordered"
                 />
               </DropdownTrigger>
-              <DropdownMenu aria-label="Static Actions" variant="faded" className="space-y-3">
+              <DropdownMenu aria-label="Static Actions" className="space-y-3" variant="faded">
                 <DropdownItem key="update"  onClick={handleUpdateModalOpen}>
                   <div className="flex items-center gap-4">
                   <Pencil className="size-4"/> Update Post

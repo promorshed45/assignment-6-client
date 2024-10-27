@@ -1,6 +1,6 @@
 import { Input } from "@nextui-org/input";
 import { SearchIcon } from "lucide-react";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -31,7 +31,7 @@ const SearchButton = () => {
   const handleSeeAll = (query: string) => {
     const queryString = query.trim().split(" ").join("+");
     router.push(`/posts?query=${queryString}`);
-    setSearchResults([]); // Clear search results on navigating
+    setSearchResults([]);
   };
 
   useEffect(() => {

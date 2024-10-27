@@ -3,7 +3,7 @@ import { toast } from "sonner";
 import { useEffect, useState } from "react";
 
 import { TFollow } from "@/src/types";
-import { addFollow, getFollowing } from "@/src/services/following";
+import { addFollow, getFollowing, unFollow } from "@/src/services/following";
 
 // Custom hook to add a follow
 export const useAddFollow = () => {
@@ -18,6 +18,22 @@ export const useAddFollow = () => {
     },
   });
 };
+
+export const useUnFollow = () => {
+  return useMutation<any, Error, TFollow>({
+    mutationKey: ["DELETE_FOLLOW"],
+    mutationFn: async (fData) => await unFollow(fData),
+    onSuccess: () => {
+      toast.success("Follow action successful.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+
+
 
 // Custom hook to fetch following data
 export const useFollowing = () => {

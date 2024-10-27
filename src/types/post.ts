@@ -33,7 +33,6 @@ export interface IInput {
     mobileNumber?: string;
     profilePhoto?: string;
     verified: string;
-    // flower: string;
     createdAt?: string;
     updatedAt?: string;
   }
