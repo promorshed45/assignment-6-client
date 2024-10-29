@@ -3,8 +3,7 @@ import React from "react";
 import { Avatar } from "@nextui-org/avatar";
 import { Divider } from "@nextui-org/divider";
 import { motion } from "framer-motion";
-import { GitCommitVerticalIcon, ShieldEllipsis } from "lucide-react";
-import { Button } from "@nextui-org/button";
+import { GitCommitVerticalIcon } from "lucide-react";
 
 import UserUpdateProfile from "./userUpdateProfile";
 import VerifyAccount from "./VerifyAccount";
@@ -38,15 +37,7 @@ export default function Profile({ user }: any) {
           <h2 className="text-xl font-semibold mt-2">
             {verified && <GitCommitVerticalIcon className="text-green-500" />}
           </h2>
-        </div>
-
-        {/* Verify Now Button */}
-        {!verified && (
-          <Button className="border-green-700/50" variant="bordered">
-            <ShieldEllipsis className="text-green-500 size-6" />
-            Verify Now
-          </Button>
-        )}
+        </div>       
 
         {/* Followers and Following */}
         <motion.div
@@ -81,7 +72,7 @@ export default function Profile({ user }: any) {
           </div>
         </div>
         <div className="w-full text-center">
-          <VerifyAccount />
+          <VerifyAccount user={user} />
         </div>
         <Divider className="my-6" />
         

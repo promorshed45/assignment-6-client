@@ -8,7 +8,7 @@ interface IProps extends IInput {}
 
 const ReusableInput = ({
   // variant = "bordered",
-  // size = "md",
+  size = "md",
   required = false,
   type,
   label,
@@ -28,8 +28,9 @@ const ReusableInput = ({
         }
         isInvalid={!!errors[name]}
         label={label}
-        type={type}
         required={required}
+        size={size}
+        type={type}
       />
     </div>
   );

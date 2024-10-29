@@ -1,20 +1,19 @@
 import { useMutation } from "@tanstack/react-query";
-import { FieldValues } from "react-hook-form";
 import { toast } from "sonner";
 
 import { verifyAccount } from "../services/verifyAccount";
 
 export const useUserVerifyAccount = () => {
-  return useMutation<any, Error, FieldValues>({
+  return useMutation<any, Error, any>({
     mutationKey: ["ACCOUNT_VERIFY"],
-    mutationFn: async (userId) => await verifyAccount(userId),
+    mutationFn: async (userData) => await verifyAccount(userData),
     onSuccess: (data) => {
-        if (data?.payment_url) {
-          window.location.href = data.payment_url;
-        } else {
-          toast.error("Verification failed. Please try again.");
-        }
-      },
+      if(data.success){
+        toast.success("success verification")
+        window.location.href = data.data.payment_url;
+        console.log('hook hote', data);
+      }     
+    },
       onError: (error) => {
         console.error(error);
       toast.error(error.message);

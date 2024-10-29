@@ -19,11 +19,11 @@ import { LogIn, SearchIcon } from "lucide-react";
 import { useUser } from "../providers/user.provider";
 
 import NavDropdownMenu from "./ui/NavDropdownMenu";
+import SearchButton from "./SearchButton";
 
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/theme-switch";
 import { Logo } from "@/src/components/icons";
-import SearchButton from "./SearchButton";
 
 export const Navbar = () => {
   const { user } = useUser();

@@ -10,7 +10,7 @@ export interface IInput {
     variant?: "flat" | "bordered" | "faded" | "underlined";
     size?: "sm" | "md" | "lg";
     type?: string;
-    label: string;
+    label?: string;
     name: string;
     disabled?: boolean;
   }

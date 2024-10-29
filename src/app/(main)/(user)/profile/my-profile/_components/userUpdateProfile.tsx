@@ -34,8 +34,6 @@ interface UpdateUserModalProps {
       _id: string;
       name: string;
       profilePhoto: string;
-      country?: string;
-      address?: string;
     };
   };
 }
@@ -46,9 +44,7 @@ export default function UserUpdateProfile({ user }: UpdateUserModalProps) {
   const methods = useForm<FormInputs>({
     defaultValues: {
       name: user.data.name,
-      imageFile: null,
-      country: user.data.country || "",
-      address: user.data.address || "",
+      imageFile: null
     },
   });
 

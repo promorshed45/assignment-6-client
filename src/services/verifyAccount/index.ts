@@ -1,15 +1,14 @@
 "use server";
-import { FieldValues } from "react-hook-form";
 
-import axiosInstance from "@/src/lib/axiosInstance";
+import nexiosInstance from "@/src/config/nexios.config";
 
-export const verifyAccount = async (userId: FieldValues) => {
+export const verifyAccount = async (userData: any) => {
     try {
-      const { data } = await axiosInstance.post("/verifyAccount", userId);
-      // console.log(data);
+      const { data } = await nexiosInstance.post("/verify", userData);
+      console.log('verifi server', data);
       return data;
     } catch (error: any) {
-        console.error(error);
+      console.error(error);
       throw new Error(error);
     }
   };
