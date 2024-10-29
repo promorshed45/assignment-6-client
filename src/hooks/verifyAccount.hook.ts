@@ -12,11 +12,12 @@ export const useUserVerifyAccount = () => {
         toast.success("success verification")
         window.location.href = data.data.payment_url;
         console.log('hook hote', data);
-      }     
+      }else{
+        toast.error(data.message)
+      } 
     },
       onError: (error) => {
         console.error(error);
-      toast.error(error.message);
     },
   });
 };

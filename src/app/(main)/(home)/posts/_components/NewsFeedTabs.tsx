@@ -3,14 +3,11 @@
 import { Tabs, Tab } from "@nextui-org/react";
 import Link from "next/link";
 
-
 import PostCard from "./PostCard";
 import NewsFeedSideBar from "./NewsFeedSideBar";
 
 import { useUser } from "@/src/providers/user.provider";
 import PostModal from "@/src/components/createPost/CreatePost";
-
-
 
 interface Post {
   _id: string;
@@ -30,7 +27,6 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
   myPosts,
 }) => {
   const { user } = useUser();
- 
 
   return (
     <>
@@ -38,7 +34,7 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
         {/* <div className={`w-2/3 ${user ? "md:w-4/5" : "md:max-w-3/4"}`}> */}
         {user ? (
           <div className="">
-            <PostModal/>
+            <PostModal />
           </div>
         ) : (
           ""
@@ -46,15 +42,18 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
 
         {user ? (
           <div>
-            <Tabs aria-label="Options" 
+            <Tabs
+              aria-label="Options"
               classNames={{
-                tabList: "gap-6 w-full relative rounded-none p-0 border-b border-divider",
+                tabList:
+                  "gap-6 w-full relative rounded-none p-0 border-b border-divider",
                 cursor: "w-full bg-[#22d3ee]",
                 tab: "max-w-fit px-0 h-12",
-                tabContent: "group-data-[selected=true]:text-[#06b6d4]"
-              }} 
+                tabContent: "group-data-[selected=true]:text-[#06b6d4]",
+              }}
               color="primary"
-              variant="underlined">
+              variant="underlined"
+            >
               {/* All Posts Tab */}
               <Tab
                 key="all-posts"
@@ -66,7 +65,7 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
               >
                 <div>
                   {freePost?.map((post: Post) => (
-                    <PostCard key={post._id}  post={post}/>
+                    <PostCard key={post._id} post={post} />
                   ))}
                 </div>
               </Tab>
@@ -80,14 +79,16 @@ const NewsFeedTabs: React.FC<NewsFeedTabsProps> = ({
                   </div>
                 }
               >
-                {user && user?.verified === "false" ? (
+                {user.verified ? (
                   <div>
-                    {premiumPosts?.map((post: Post) => (
-                      <PostCard key={post._id} post={post} />
-                    ))}
+                    {
+                      premiumPosts.map((post) => (
+                        <PostCard key={post._id} post={post} />
+                      ))
+                    }
                   </div>
                 ) : (
-                  <Link href="/verify-account">
+                  <Link href="/profile/my-profile">
                     <p className="text-rose-500 py-5 cursor-pointer text-lg text-center">
                       Please verify your account to see premium posts...
                     </p>

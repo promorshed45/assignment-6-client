@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { jsPDF } from "jspdf";
+import Link from "next/link";
 
 import CommentBox from "./CommentBox";
 
@@ -17,7 +18,7 @@ import ReusableForm from "@/src/components/ui/ReusableForm";
 import { usePostComment } from "@/src/hooks/comments/comments.hook";
 import ReusableTextarea from "@/src/components/ui/ReusableTextarea";
 import { TPost } from "@/src/types";
-import Link from "next/link";
+import { useUpdateUpVote } from "@/src/hooks/post/post.hook";
 
 interface FormData {
   comment: string;
@@ -29,20 +30,21 @@ interface CardActionsProps {
   comment: any;
 }
 
-const CardActions: React.FC<CardActionsProps> = ({
-  currentUser,
-  post,
-  comment,
-}) => {
+const CardActions: React.FC<CardActionsProps> = ({ currentUser, post, comment }) => {
+
+  const { _id, upvote, downVote } = post || { _id: '', upvote: 0, downVote: 0 };
   const { reset } = useForm<FormData>();
   const [isClickToComment, setIsClickToComment] = useState(false);
-  const { mutate: handlePostComment, isLoading: isCommenting } =
-    usePostComment();
+  const [addUpvote, setAddUpvote] = useState(upvote);
+  const [addDownvote, setAddDownVote] = useState(downVote);
+  const { mutate: handlePostComment, isLoading: isCommenting } = usePostComment();
+  const { mutate: handleAddedUpvote } = useUpdateUpVote();
+  const { mutate: handleAddedDownvote } = useUpdateUpVote();
   const router = useRouter();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     const commentData = {
-      postId: post?._id,
+      postId: _id,
       authorId: currentUser?._id,
       content: data.comment,
     };
@@ -50,7 +52,43 @@ const CardActions: React.FC<CardActionsProps> = ({
     handlePostComment(commentData);
     reset();
     setIsClickToComment(false);
-    router.push(`/posts/${post._id}`);
+    router.push(`/posts/${_id}`);
+  };
+
+  const handleUpvote = () => {
+    const id = _id as string;
+
+    // Update the state and create the payload based on the new count
+    setAddUpvote(prevUpvote => {
+      const newUpvoteCount = prevUpvote + 1;
+      const payload = {
+        upvote: newUpvoteCount,
+      };
+
+      // Call the function with the id and the payload
+      handleAddedUpvote({ id, payload });
+      console.log({ id, payload }); 
+
+      return newUpvoteCount;
+    });
+  };
+
+  const handleDownvote = () => {
+    const id = _id as string;
+
+    // Update the state and create the payload based on the less count
+    setAddDownVote(prevUpvote => {
+      const newUpvoteCount = prevUpvote + 1;
+      const payload = {
+        downVote: newUpvoteCount,
+      };
+
+      // Call the function with the id and the payload
+      handleAddedDownvote({ id, payload });
+      console.log({ id, payload }); 
+
+      return newUpvoteCount;
+    });
   };
 
   const handleDownload = () => {
@@ -106,9 +144,9 @@ const CardActions: React.FC<CardActionsProps> = ({
         <div className="flex items-center border ml-3 border-gray-200 dark:border-gray-700 rounded-md justify-between">
           <div className="hover:bg-green-500/20 rounded-md px-3 py-2">
             <Tooltip content={<div className="text-sm font-bold">Upvotes</div>}>
-              <button className="flex items-center gap-2">
+              <button className="flex items-center gap-2" onClick={handleUpvote}>
                 <ArrowBigUp className="size-5 text-green-600" />
-                00
+                {addUpvote}
               </button>
             </Tooltip>
           </div>
@@ -117,14 +155,14 @@ const CardActions: React.FC<CardActionsProps> = ({
             <Tooltip
               content={<div className="text-sm font-bold">Downvotes</div>}
             >
-              <button className="flex items-center gap-2">
+              <button className="flex items-center gap-2" onClick={handleDownvote}>
                 <ArrowBigDownIcon className="size-5 text-red-600" />
-                00
+                {addDownvote}
               </button>
             </Tooltip>
           </div>
         </div>
-        
+
         <div className="flex gap-2 pt-3 md:pt-0 justify-between w-full md:w-1/2">
           <div className="bg-blue-500/20 rounded-md px-3 py-2">
             <Tooltip
@@ -140,16 +178,16 @@ const CardActions: React.FC<CardActionsProps> = ({
           </div>
 
           <div className="flex items-center gap-2 bg-violet-500/20 px-3 py-1.5 rounded-md">
-          <button
-            className="flex gap-2 text-[16px] text-violet-700 hover:text-white/70"
-            onClick={() => setIsClickToComment((prev) => !prev)}
-          >
-            <span className="text-xl">
-              <MessageCircleMore />
-            </span>{" "}
-            <span>Comment</span>
-          </button>
-        </div>
+            <button
+              className="flex gap-2 text-[16px] text-violet-700 hover:text-white/70"
+              onClick={() => setIsClickToComment((prev) => !prev)}
+            >
+              <span className="text-xl">
+                <MessageCircleMore />
+              </span>{" "}
+              <span>Comment</span>
+            </button>
+          </div>
         </div>
       </div>
 

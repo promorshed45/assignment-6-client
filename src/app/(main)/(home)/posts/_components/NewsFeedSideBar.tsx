@@ -2,15 +2,16 @@
 
 import { Avatar, Button, Divider, Tooltip } from "@nextui-org/react";
 import Link from "next/link";
-import { Heart, UserRound } from "lucide-react";
+import { Heart, ShieldEllipsis, UserRound } from "lucide-react";
+import { Card, CardHeader, CardFooter } from "@nextui-org/react";
 
-import VerifyAccount from "../../../(user)/profile/my-profile/_components/VerifyAccount";
 
 import { useUser } from "@/src/providers/user.provider";
 
 const NewsFeedSideBar = () => {
   const { user } = useUser();
 
+  console.log('usernewsfeed', user);
   return (
     <>
       {user ? (
@@ -54,7 +55,24 @@ const NewsFeedSideBar = () => {
 
             <Divider className="w-full" />
             <div className="py-4">
-              <VerifyAccount />
+              <Card isFooterBlurred className="w-full h-[220px] col-span-12 sm:col-span-7">
+                <CardHeader className="absolute z-10 top-1 flex-col items-center space-y-4">
+                  <h1 className="text-xl font-semibold">Verify Your Account</h1>
+                  <p className="text-sm text-gray-600">
+                    Unlock exciting new features and gain access to premium content by verifying your account today!
+                  </p>
+                </CardHeader>
+                <CardFooter className="flex justify-center absolute bg-black/40 bottom-0 z-10 border-t-1 border-default-600 dark:border-default-100">
+                  <>
+                    <Link href="/profile/my-profile">
+                    <Button className="border-green-700/50" variant="bordered">
+                      <ShieldEllipsis className="text-green-500 size-5" />
+                      Verify Now
+                    </Button>
+                    </Link>
+                  </>
+                </CardFooter>
+              </Card>
             </div>
           </div>
         </div>

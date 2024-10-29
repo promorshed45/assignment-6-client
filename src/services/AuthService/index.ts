@@ -6,20 +6,29 @@ import { jwtDecode } from "jwt-decode";
 import { revalidateTag } from "next/cache";
 
 import axiosInstance from "@/src/lib/axiosInstance";
+import nexiosInstance from "@/src/config/nexios.config";
+
+interface AuthResponse {
+  success: boolean;
+  data: {
+    accessToken: string;
+    refreshToken: string;
+  };
+}
 
 export const registerUser = async (userData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/auth/register", userData);
+    const { data } = await nexiosInstance.post<AuthResponse>("/auth/register", userData);
     revalidateTag("users");
     console.log("service teke", data);
-    if (data.success) {
+    if(data?.success) {
       cookies().set("accessToken", data?.data?.accessToken);
       cookies().set("refreshToken", data?.data?.refreshToken);
     }
 
     return data;
   } catch (error: any) {
-    // console.error(error);
+    console.error(error);
     throw new Error(error);
   }
 };

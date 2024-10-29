@@ -35,6 +35,20 @@ export const useUpdatePost = () => {
 };
 
 
+export const useUpdateUpVote = () => {
+  return useMutation<any, Error, { id: string; payload: any }>({
+    mutationKey: ["UPDATE_POST"],
+    mutationFn: async ({ id, payload }) => await updatePost(id, payload),
+    onSuccess: () => {
+      // toast.success("Post updated successfully.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+};
+
+
 export const useDeletePost = () => {
   return useMutation<any, Error, { postId: string}>({
     mutationKey:  ["DELETE_POST"],

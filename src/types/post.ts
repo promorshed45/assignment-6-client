@@ -43,6 +43,8 @@ export interface IInput {
     images?: string[];
     title: string;
     description: string;
+    upvote: number;
+    downVote: number;
     status: string;
     category: string;
   }
