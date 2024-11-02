@@ -22,7 +22,7 @@ const Login = () => {
 
   const redirect = searchParams.get("redirect");
 
-  const { mutate: handleUserLogin, isLoading, isSuccess } = useUserLogin();
+  const { mutate: handleUserLogin, isLoading, isSuccess, isError } = useUserLogin();
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     handleUserLogin(data);
@@ -30,14 +30,14 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (!isLoading && isSuccess) {
+    if (!isLoading && !isError && isSuccess) {
       if (redirect) {
         router.push(redirect);
       } else {
         router.push("/posts");
       }
     }
-  }, [isLoading, isSuccess]);
+  }, [isLoading, isSuccess, isError, redirect]);
 
   return (
     <>

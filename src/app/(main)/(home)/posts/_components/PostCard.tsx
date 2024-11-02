@@ -22,36 +22,31 @@ import CardActions from "./CardActions";
 
 import { timeAgo } from "@/src/utilis/timeFormat";
 import { useUser } from "@/src/providers/user.provider";
-import { useAddFollow, useUnFollow, } from "@/src/hooks/following/follows.hook";
+import { useUpdateUser } from "@/src/hooks/user/users.hook";
 
 const PostCard = ({ post }: any) => {
-  const { mutate: handleFollowUser } = useAddFollow()
-  const { mutate: handleUnFollowUser } = useUnFollow()
+  const { mutate: handleFollowUser } = useUpdateUser()
   const { user: currentUser } = useUser();
 
   // console.log("user post card", currentUser);
 
   const [isFollowed, setIsFollowed] = useState(false);
-  const { title, description, images, user, category, createdAt } = post || {};
-  const userPhoto =
-    user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
+  const { _id, title, description, images, user, category, createdAt } = post;
+  const userPhoto = user?.profilePhoto || "https://nextui.org/avatars/avatar-1.png";
   const postDate = createdAt ? timeAgo(createdAt) : "";
 
-  const handleSubmit = async () => {
-    const followingId = post?.user?._id;
+  const handleSubmit = () => {
+    const userId = post?.user?._id;
     const followerId = currentUser?._id;
-  
-    if (followingId && followerId) {
-      if (isFollowed) {
-        // Unfollow user
-        handleUnFollowUser({followingId, followerId })
-      } else {
-        // Follow user
-        handleFollowUser({followingId, followerId })
+
+    const userData = {
+      flowerStatus: {
+        followerId
       }
-      setIsFollowed(!isFollowed);
     }
-  };
+    handleFollowUser({ userId, userData });
+  }
+
 
 
   return (
@@ -62,7 +57,7 @@ const PostCard = ({ post }: any) => {
         transition={{ duration: 0.5 }}
       >
         <div className="mx-auto rounded-lg">
-          <Link className="block" href={`/posts/${post?._id}`}>
+          <Link className="block" href={`/posts/${_id}`}>
             <div className="flex flex-col md:flex-row gap-5 justify-between items-center">
               <Card className="overflow-hidden w-full md:w-2/3 bg-transparent shadow-none rounded-none">
                 <CardHeader className="justify-between">
@@ -120,7 +115,7 @@ const PostCard = ({ post }: any) => {
                                 size="sm"
                                 variant={isFollowed ? "bordered" : "solid"}
                                 onClick={handleSubmit}
-                              onPress={() => setIsFollowed(!isFollowed)}
+                                onPress={() => setIsFollowed(!isFollowed)}
                               >
                                 {isFollowed ? "Unfollow" : "Follow"}
                               </Button>
@@ -146,7 +141,7 @@ const PostCard = ({ post }: any) => {
                       </h5>
                     </div>
                   </div>
-                  
+
                 </CardHeader>
                 <CardBody className="px-3 space-y-1 overflow-hidden py-0 text-small text-default-400">
                   <p className="text-xl text-black font-bold dark:text-gray-100">
@@ -196,5 +191,6 @@ const PostCard = ({ post }: any) => {
     </div>
   );
 };
+
 
 export default PostCard;

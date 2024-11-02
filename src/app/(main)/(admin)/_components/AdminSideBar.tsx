@@ -29,7 +29,7 @@ const AdminSideBar = () => {
   };
 
   const handleLinkClick = () => {
-    setIsOpen(false); // Sidebar বন্ধ হবে
+    setIsOpen(false); 
   };
 
   return (

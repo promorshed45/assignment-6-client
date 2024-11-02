@@ -35,7 +35,7 @@ export const registerUser = async (userData: FieldValues) => {
 
 export const loginUser = async (userData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/auth/login", userData);
+    const { data } = await nexiosInstance.post<AuthResponse>("/auth/login", userData);
 
     if (data.success) {
       cookies().set("accessToken", data?.data?.accessToken);
@@ -44,6 +44,7 @@ export const loginUser = async (userData: FieldValues) => {
 
     return data;
   } catch (error: any) {
+    console.error(error);
     throw new Error(error);
   }
 };

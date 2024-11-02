@@ -4,7 +4,6 @@ import NewsFeedTabs from "./_components/NewsFeedTabs";
 
 import nexiosInstance from "@/src/config/nexios.config";
 import { getCurrentUser } from "@/src/services/AuthService";
-import { getFollowing } from "@/src/services/following";
 import { TPost } from "@/src/types";
 
 const NewsFeedPage = async ({ searchParams }: { searchParams: Record<string, string> }) => {
@@ -15,10 +14,10 @@ const NewsFeedPage = async ({ searchParams }: { searchParams: Record<string, str
 
   // Fetch posts based on the search parameters
   const response = await nexiosInstance.get(`/post`, {
-    headers: {
-      'Cache-Control': 'no-store',
-    },
-    next: { tags: ["posts"] },
+    // headers: {
+    //   'Cache-Control': 'no-store',
+    // },
+    next: { revalidate: 3600, tags: ["posts"] },
     params: {
       searchTerm: params.get("query") || "", 
     },
@@ -28,9 +27,6 @@ const NewsFeedPage = async ({ searchParams }: { searchParams: Record<string, str
 
   // console.log("API Response Data:", data); 
 
-
-  // const { data: followingData }: any = await getFollowing();
-  // console.log('followingData', followingData);
   
   // Filter posts by status
   const premiumPosts = data?.filter((post: TPost) => post.status === "PREMIUM") || [];
